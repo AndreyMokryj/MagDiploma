@@ -1,7 +1,7 @@
-package SunPackage1.Controllers;
+package SunPackage.Controllers;
 
-import SunPackage1.Coordinates.Coordinates;
-import SunPackage1.Coordinates.SunCoordinatesList;
+import SunPackage.Coordinates.Coordinates;
+import SunPackage.Coordinates.SunCoordinatesList;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 

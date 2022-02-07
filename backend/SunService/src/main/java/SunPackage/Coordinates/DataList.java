@@ -1,4 +1,4 @@
-package SunPackage1.Coordinates;
+package SunPackage.Coordinates;
 
 public class DataList {
     public static String[] dates = {

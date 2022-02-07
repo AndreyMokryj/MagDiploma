@@ -14,10 +14,10 @@ import java.util.concurrent.TimeUnit;
 @EnableDiscoveryClient
 @SpringBootApplication
 @RestController
-public class Application1 {
+public class PowerPlantService {
     public static void main(String[] args) throws Exception {
         System.out.println("Before");
-        SpringApplication.run(Application1.class, args);
+        SpringApplication.run(PowerPlantService.class, args);
         System.out.println("After");
 
         TimerTask repeatedTask = new TimerTask() {

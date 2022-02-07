@@ -1,12 +1,12 @@
-package SunPackage1;
+package SunPackage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application1 {
+public class SunService {
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(Application1.class, args);
+        SpringApplication.run(SunService.class, args);
     }
 }
 

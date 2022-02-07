@@ -5,12 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>avm</groupId>
-    <artifactId>app</artifactId>
+    <artifactId>backend</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-<!--    <modules>-->
-<!--        <module>SunService</module>-->
-<!--    </modules>-->
+    <modules>
+        <module>DiscoveryService</module>
+        <module>ControlService</module>
+        <module>GridService</module>
+        <module>PowerPlantService</module>
+        <module>SunService</module>
+    </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>

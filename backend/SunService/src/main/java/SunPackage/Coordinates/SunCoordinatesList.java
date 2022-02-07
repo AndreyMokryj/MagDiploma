@@ -1,4 +1,4 @@
-package SunPackage1.Coordinates;
+package SunPackage.Coordinates;
 
 public class SunCoordinatesList {
     public static double sunDegRad = (31 * 60 + 59) / 7200;
