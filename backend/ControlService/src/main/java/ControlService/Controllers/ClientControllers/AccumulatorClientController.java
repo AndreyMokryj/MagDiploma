@@ -17,12 +17,12 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping(path="/app/accumulator")
 @Component
 public class AccumulatorClientController {
-    @Autowired
-    RestTemplate restTemplate1;
+//    @Autowired
+    RestTemplate restTemplate;
 
     @Bean
     @LoadBalanced
-    public RestTemplate restTemplate1() {
+    public RestTemplate restTemplate() {
         return new RestTemplate();
     }
 
@@ -37,7 +37,7 @@ public class AccumulatorClientController {
     public @ResponseBody
     Object getAccumulatorByUserId(@PathVariable String userId) {
         String sid = userRepository.findSID(userId);
-        Object response = restTemplate1.exchange("http://" + sid + "/accumulator/",
+        Object response = restTemplate.exchange("http://" + sid + "/accumulator/",
                 HttpMethod.GET, null, new ParameterizedTypeReference<Object>() {}).getBody();
 
         return response;
@@ -51,7 +51,7 @@ public class AccumulatorClientController {
             return false;
         }
         String sid = userRepository.findSID(userId);
-        AccumulatorVO response = restTemplate1.exchange("http://" + sid + "/accumulator/turn-station-" + action,
+        AccumulatorVO response = restTemplate.exchange("http://" + sid + "/accumulator/turn-station-" + action,
                 HttpMethod.GET, null, new ParameterizedTypeReference<AccumulatorVO>() {}).getBody();
 
         if(!(response == null)){
@@ -70,7 +70,7 @@ public class AccumulatorClientController {
             return false;
         }
         String sid = userRepository.findSID(userId);
-        AccumulatorVO response = restTemplate1.exchange("http://" + sid + "/accumulator/turn-grid-" + action,
+        AccumulatorVO response = restTemplate.exchange("http://" + sid + "/accumulator/turn-grid-" + action,
                 HttpMethod.GET, null, new ParameterizedTypeReference<AccumulatorVO>() {}).getBody();
 
         if(!(response == null)){
