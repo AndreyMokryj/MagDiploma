@@ -2,6 +2,7 @@ package PowerPlantPackage.Workflow;
 
 import PowerPlantPackage.Model.AccumulatorVO;
 import PowerPlantPackage.Model.PanelVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.context.ServletWebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
@@ -17,9 +18,12 @@ public class MyListener implements ApplicationListener<ServletWebServerInitializ
     @Value("${spring.application.name}")
     private String serviceName;
 
+    @Autowired
+    RestTemplate restTemplate;
+
     @Override
     public void onApplicationEvent(final ServletWebServerInitializedEvent event) {
-        RestTemplate restTemplate = WorkProcess.getInstance().getRestTemplate();
+//        RestTemplate restTemplate = WorkProcess.getInstance().getRestTemplate();
         String baseUrl = WorkProcess.getInstance().baseUrl;
 
         String userId = null;
@@ -31,6 +35,7 @@ public class MyListener implements ApplicationListener<ServletWebServerInitializ
             }
         }
         WorkProcess.getInstance().setUserId(userId);
+        WorkProcess.getInstance().setRestTemplate(restTemplate);
         WorkProcess.getInstance().accumulator = AccumulatorVO.fromMap(restTemplate.exchange(baseUrl + "accumulators/" + userId, HttpMethod.GET, null, Map.class).getBody());
         List<Object> objectList = (List<Object>) restTemplate.exchange(baseUrl + "panels/", HttpMethod.GET, null, Iterable.class).getBody();
         for (Object object : objectList){

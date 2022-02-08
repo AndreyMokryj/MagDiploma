@@ -4,14 +4,16 @@ import PowerPlantPackage.Model.*;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 public class WorkProcess {
     private static WorkProcess workProcess;
 
     private WorkProcess(){
         panels = new ArrayList<PanelVO>();
-        restTemplate = new RestTemplate();
         userId = null;
         index = 50;
     }
@@ -23,10 +25,9 @@ public class WorkProcess {
         return workProcess;
     }
 
-    public final String baseUrl = "http://localhost:4444/";
-    public final String sunUrl = "http://localhost:4441/sun/power-coef/";
-    public final String dateTimeUrl = "http://localhost:4441/sun/datetime/";
-    public final String gridUrl = "http://localhost:4442/power/status/";
+    public final String baseUrl = "http://control-service/";
+    public final String sunUrl = "http://sun-service/sun/power-coef/";
+    public final String dateTimeUrl = "http://sun-service/sun/datetime/";
 
     public List<PanelVO> panels;
     private RestTemplate restTemplate;
@@ -301,5 +302,9 @@ public class WorkProcess {
 
     public RestTemplate getRestTemplate(){
         return restTemplate;
+    }
+
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 }
