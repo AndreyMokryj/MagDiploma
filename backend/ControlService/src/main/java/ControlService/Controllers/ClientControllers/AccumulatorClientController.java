@@ -5,8 +5,6 @@ import ControlService.Repositories.AccumulatorRepository;
 import ControlService.Repositories.UserRepository;
 import ControlService.vo.AccumulatorVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
@@ -17,14 +15,8 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping(path="/app/accumulator")
 @Component
 public class AccumulatorClientController {
-//    @Autowired
+    @Autowired
     RestTemplate restTemplate;
-
-    @Bean
-    @LoadBalanced
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
 
     @Autowired
     private UserRepository userRepository;

@@ -82,7 +82,8 @@ class _LoginPageState extends State<LoginPage> {
                         val.isEmpty
                           ? "Введіть ім'я користувача"
                           : null,
-                        autovalidate: validate,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        // autovalidate: validate,
                         onSaved: (val) => newUser.username = val,
                       ),
                       const SizedBox(height: 20.0),
@@ -98,7 +99,8 @@ class _LoginPageState extends State<LoginPage> {
                         val.isEmpty
                           ? "Введіть пароль"
                           : null,
-                        autovalidate: validate,
+                        // autovalidate: validate,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         onSaved: (val) => newUser.password = val,
                       ),
                       SizedBox(height: 10.0),
@@ -108,9 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       SizedBox(height: 10.0),
 
-                      FlatButton(
-                        color: buttonColor,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
+                      TextButton(
                         child: SizedBox(
                           height: 50,
                           child: Align(
@@ -122,6 +122,10 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
+                        ),
+                        style: TextButton.styleFrom(
+                          backgroundColor: buttonColor,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
                         ),
                         onPressed: () => _submit(),
                       ),
