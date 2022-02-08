@@ -46,7 +46,7 @@ public class PanelController {
     double getPanelPower(@PathVariable String id) {
         for (PanelVO panel : WorkProcess.getInstance().panels){
             if (panel.getId().equals(id)){
-                return WorkProcess.getInstance().getPower(panel);
+                return WorkProcess.getInstance().getPanelPower(panel);
             }
         }
         return 0;
@@ -55,10 +55,6 @@ public class PanelController {
     @GetMapping(path="/power/")
     public @ResponseBody
     double getTotalPower() {
-        double power = 0;
-        for (PanelVO panel : WorkProcess.getInstance().panels){
-            power += WorkProcess.getInstance().getPower(panel);
-        }
-        return power;
+        return WorkProcess.getInstance().getTotalPower();
     }
 }

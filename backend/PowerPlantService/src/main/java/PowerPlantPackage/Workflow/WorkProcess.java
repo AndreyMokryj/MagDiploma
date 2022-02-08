@@ -40,7 +40,7 @@ public class WorkProcess {
             if(accumulator.getStationConnection() == 1) {
                 for (PanelVO panel : panels) {
                     if (panel.getConnected() == 1) {
-                        double power = getPower(panel);
+                        double power = getPanelPower(panel);
                         if (power >= 10) {
                             preparePanel(panel);
                             findSun(panel);
@@ -79,7 +79,7 @@ public class WorkProcess {
 
         int iterator = 0;
         while (azPlus >= 0 || azMinus >= 0 || altPlus >= 0 || altMinus >= 0) {
-            double prevPower = getPower(panel);
+            double prevPower = getPanelPower(panel);
             Random random = new Random();
 
             StateVO prevState = getState(panel);
@@ -146,7 +146,7 @@ public class WorkProcess {
             }
 
             StateVO newState = getState(panel);
-            double newPower = getPower(panel);
+            double newPower = getPanelPower(panel);
 
             double diff = newPower - prevPower;
 
@@ -193,12 +193,24 @@ public class WorkProcess {
             iterator++;
         }
 
-        System.out.println("Panel " + panel.getName() + ": final azimuth: " + panel.getAzimuth() + "; altitude: " + panel.getAltitude() + "; index: " + index + "; power: " + getPower(panel));
+        System.out.println("Panel " + panel.getName() + ": final azimuth: " + panel.getAzimuth() + "; altitude: " + panel.getAltitude() + "; index: " + index + "; power: " + getPanelPower(panel));
         System.out.println("Iterations: " + iterator);
     }
 
-    public double getPower(PanelVO panel){
-        if (panel.getConnected() == 0){
+    public double getTotalPower(){
+        if(accumulator.getStationConnection() == 0) {
+            return 0;
+        }
+
+        double power = 0;
+        for (PanelVO panel : panels){
+            power += getPanelPower(panel);
+        }
+        return power;
+    }
+
+    public double getPanelPower(PanelVO panel){
+        if (panel.getConnected() == 0 || accumulator.getStationConnection() == 0){
             return 0;
         }
         double coef = 0;
@@ -243,7 +255,7 @@ public class WorkProcess {
         logVO.setPanelId(panelVO.getId());
         String dateTime = restTemplate.exchange(dateTimeUrl + index, HttpMethod.GET, null, String.class).getBody();
         logVO.setDateTime(dateTime);
-        logVO.setProduced(getPower(panelVO) * 60 * 10);
+        logVO.setProduced(getPanelPower(panelVO) * 60 * 10);
 
         accumulator.setEnergy(accumulator.getEnergy() + logVO.getProduced());
         updateAccumulator(accumulator);
