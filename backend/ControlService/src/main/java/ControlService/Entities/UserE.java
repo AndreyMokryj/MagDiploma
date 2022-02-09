@@ -15,9 +15,6 @@ public class UserE {
     private String phone;
     private String email;
 
-    @Column(name = "station_id")
-    private String stationId;
-
     public String getUsername() {
         return username;
     }
@@ -70,13 +67,5 @@ public class UserE {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getStationId() {
-        return stationId;
-    }
-
-    public void setStationId(String stationId) {
-        this.stationId = stationId;
     }
 }

@@ -13,15 +13,15 @@ public class HistoryGivenLogE {
 
     private String date;
 
-    @Column(name = "user_id")
-    private String userId;
+    @Column(name = "station_id")
+    private String stationId;
 
     private double given;
 
     public static HistoryGivenLogE fromVO(LogVO logVO){
         HistoryGivenLogE historyLog = new HistoryGivenLogE();
         historyLog.setId(logVO.getId());
-        historyLog.setUserId(logVO.getUserId());
+        historyLog.setStationId(logVO.getStationId());
 
         String dateTime = logVO.getDateTime().substring(0, 10);
         historyLog.setDate(dateTime);
@@ -37,12 +37,12 @@ public class HistoryGivenLogE {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getStationId() {
+        return stationId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setStationId(String userId) {
+        this.stationId = userId;
     }
 
     public double getGiven() {

@@ -5,7 +5,7 @@ public class PanelVO {
     private String name;
     private String model;
     private int nominalPower;
-    private String userId;
+    private String stationId;
     private int azimuth;
     private int altitude;
     private int connected;
@@ -43,12 +43,12 @@ public class PanelVO {
         this.nominalPower = nominalPower;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getStationId() {
+        return stationId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setStationId(String stationId) {
+        this.stationId = stationId;
     }
 
     public int getAzimuth() {

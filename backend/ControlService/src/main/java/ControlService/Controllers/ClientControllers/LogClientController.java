@@ -32,27 +32,27 @@ public class LogClientController {
     @GetMapping(path="/history-produced/userId/{userId}")
     public @ResponseBody
     Iterable<HistoryProducedLogE> getHistoryProducedLogs(@PathVariable String userId) {
-        return historyProducedLogRepository.findByUserId(userId);
+        return historyProducedLogRepository.findByStationId(userId);
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping(path="/history-given/userId/{userId}")
     public @ResponseBody
     Iterable<HistoryGivenLogE> getHistoryGivenLogs(@PathVariable String userId) {
-        return historyGivenLogRepository.findByUserId(userId);
+        return historyGivenLogRepository.findByStationId(userId);
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping(path="/today-produced/userId/{userId}")
     public @ResponseBody
     Iterable<TodayProducedLogE> getTodayProducedLogs(@PathVariable String userId) {
-        return todayProducedLogRepository.findByUserId(userId);
+        return todayProducedLogRepository.findByStationId(userId);
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping(path="/today-given/userId/{userId}")
     public @ResponseBody
     Iterable<TodayGivenLogE> getTodayGivenLogs(@PathVariable String userId) {
-        return todayGivenLogRepository.findByUserId(userId);
+        return todayGivenLogRepository.findByStationId(userId);
     }
 }

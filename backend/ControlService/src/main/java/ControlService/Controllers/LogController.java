@@ -36,7 +36,7 @@ public class LogController {
         HistoryProducedLogE historyLog = HistoryProducedLogE.fromVO(logVO);
         try {
             Optional<HistoryProducedLogE> historyLog1 = historyProducedLogRepository.findByParams(
-                    historyLog.getUserId(),
+                    historyLog.getStationId(),
                     historyLog.getPanelId(),
                     historyLog.getDate()
             );
@@ -53,7 +53,7 @@ public class LogController {
         HistoryGivenLogE historyLog = HistoryGivenLogE.fromVO(logVO);
         try {
             Optional<HistoryGivenLogE> historyLog1 = historyGivenLogRepository.findByParams(
-                    historyLog.getUserId(),
+                    historyLog.getStationId(),
                     historyLog.getDate()
             );
             return historyLog1.get();
@@ -69,7 +69,7 @@ public class LogController {
         TodayProducedLogE todayLog = TodayProducedLogE.fromVO(logVO);
         try {
             Optional<TodayProducedLogE> todayLog1 = todayProducedLogRepository.findByParams(
-                    todayLog.getUserId(),
+                    todayLog.getStationId(),
                     todayLog.getPanelId(),
                     todayLog.getTime()
             );
@@ -86,7 +86,7 @@ public class LogController {
         TodayGivenLogE todayLog = TodayGivenLogE.fromVO(logVO);
         try {
             Optional<TodayGivenLogE> todayLog1 = todayGivenLogRepository.findByParams(
-                    todayLog.getUserId(),
+                    todayLog.getStationId(),
                     todayLog.getTime()
             );
             return todayLog1.get();
@@ -107,8 +107,8 @@ public class LogController {
             historyGivenLogRepository.save(historyLog);
 
             if(logVO.getDateTime().contains("00:00:00")){
-                todayGivenLogRepository.deleteByUserId(logVO.getUserId());
-                todayProducedLogRepository.deleteByUserId(logVO.getUserId());
+                todayGivenLogRepository.deleteByStationId(logVO.getStationId());
+                todayProducedLogRepository.deleteByStationId(logVO.getStationId());
             }
 
             TodayGivenLogE todayLog = getTodayGivenLog(logVO);
@@ -126,12 +126,12 @@ public class LogController {
         }
     }
 
-    @GetMapping(path="/clear/{userId}")
+    @GetMapping(path="/clear/{stationId}")
     public @ResponseBody
-    void clearLogs(@PathVariable String userId) {
-        todayGivenLogRepository.deleteByUserId(userId);
-        todayProducedLogRepository.deleteByUserId(userId);
-        historyGivenLogRepository.deleteByUserId(userId);
-        historyProducedLogRepository.deleteByUserId(userId);
+    void clearLogs(@PathVariable String stationId) {
+        todayGivenLogRepository.deleteByStationId(stationId);
+        todayProducedLogRepository.deleteByStationId(stationId);
+        historyGivenLogRepository.deleteByStationId(stationId);
+        historyProducedLogRepository.deleteByStationId(stationId);
     }
 }

@@ -58,9 +58,7 @@ public class UserController {
     @PostMapping("/update/")
     public boolean updateUser(@RequestBody UserVO userVO) {
         try {
-            UserE dbUser = userRepository.findById(userVO.getId()).get();
             UserE newUser = UserE.fromVO(userVO);
-            newUser.setStationId(dbUser.getStationId());
             userRepository.save(newUser);
             return true;
         }

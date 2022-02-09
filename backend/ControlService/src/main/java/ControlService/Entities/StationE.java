@@ -1,18 +1,21 @@
 package ControlService.Entities;
 
-import ControlService.vo.AccumulatorVO;
+import ControlService.vo.StationVO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity(name = "accumulators")
-public class AccumulatorE {
+@Entity(name = "stations")
+public class StationE {
     @Id
     private String id;
 
-    @Column(name = "max_power")
-    private int maxPower;
+    @Column(name = "user_id")
+    private String userId;
+
+    @Column(name = "max_output_power")
+    private int maxOutputPower;
 
     private double energy;
 
@@ -22,14 +25,15 @@ public class AccumulatorE {
     @Column(name = "station_connection")
     private int stationConnection;
 
-    public static AccumulatorE fromVO(AccumulatorVO accumulatorVO){
-        AccumulatorE accumulator = new AccumulatorE();
-        accumulator.setId(accumulatorVO.getId());
-        accumulator.setMaxPower(accumulatorVO.getMaxPower());
-        accumulator.setEnergy(accumulatorVO.getEnergy());
-        accumulator.setGridConnection(accumulatorVO.getGridConnection());
-        accumulator.setStationConnection(accumulatorVO.getStationConnection());
-        return accumulator;
+    public static StationE fromVO(StationVO stationVO){
+        StationE stationE = new StationE();
+        stationE.setId(stationVO.getId());
+        stationE.setUserId(stationVO.getUserId());
+        stationE.setMaxOutputPower(stationVO.getMaxPower());
+        stationE.setEnergy(stationVO.getEnergy());
+        stationE.setGridConnection(stationVO.getGridConnection());
+        stationE.setStationConnection(stationVO.getStationConnection());
+        return stationE;
     }
 
     public String getId() {
@@ -40,12 +44,12 @@ public class AccumulatorE {
         this.id = id;
     }
 
-    public int getMaxPower() {
-        return maxPower;
+    public int getMaxOutputPower() {
+        return maxOutputPower;
     }
 
-    public void setMaxPower(int maxPower) {
-        this.maxPower = maxPower;
+    public void setMaxOutputPower(int maxPower) {
+        this.maxOutputPower = maxPower;
     }
 
     public double getEnergy() {
@@ -70,5 +74,13 @@ public class AccumulatorE {
 
     public void setStationConnection(int stationConnection) {
         this.stationConnection = stationConnection;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

@@ -1,6 +1,6 @@
 package PowerPlantPackage.Workflow;
 
-import PowerPlantPackage.Model.AccumulatorVO;
+import PowerPlantPackage.Model.StationVO;
 import PowerPlantPackage.Model.PanelVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,24 +23,23 @@ public class MyListener implements ApplicationListener<ServletWebServerInitializ
 
     @Override
     public void onApplicationEvent(final ServletWebServerInitializedEvent event) {
-//        RestTemplate restTemplate = WorkProcess.getInstance().getRestTemplate();
         String baseUrl = WorkProcess.getInstance().baseUrl;
 
-        String userId = null;
-        while (userId == null) {
+        StationVO station = null;
+        while (station == null) {
             try {
-                userId = restTemplate.postForObject(baseUrl + "connect/", serviceName, String.class);
+                station = StationVO.fromMap(restTemplate.exchange(baseUrl + "stations/" + serviceName, HttpMethod.GET, null, Map.class).getBody());
                 Thread.sleep(10000L);
             } catch (Exception e) {
             }
         }
-        WorkProcess.getInstance().setUserId(userId);
+
+        WorkProcess.getInstance().station = station;
         WorkProcess.getInstance().setRestTemplate(restTemplate);
-        WorkProcess.getInstance().accumulator = AccumulatorVO.fromMap(restTemplate.exchange(baseUrl + "accumulators/" + userId, HttpMethod.GET, null, Map.class).getBody());
-        List<Object> objectList = (List<Object>) restTemplate.exchange(baseUrl + "panels/", HttpMethod.GET, null, Iterable.class).getBody();
+        List<Object> objectList = (List<Object>) restTemplate.exchange(baseUrl + "panels/stationId/" + station.getId(), HttpMethod.GET, null, Iterable.class).getBody();
         for (Object object : objectList){
             WorkProcess.getInstance().panels.add(PanelVO.fromMap((Map) object));
         }
-        restTemplate.exchange(baseUrl + "logs/clear/" + userId, HttpMethod.GET, null, void.class);
+        restTemplate.exchange(baseUrl + "logs/clear/" + station.getId(), HttpMethod.GET, null, void.class);
     }
 }

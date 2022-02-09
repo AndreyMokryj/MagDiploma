@@ -1,7 +1,8 @@
 package ControlService.vo;
 
-public class AccumulatorVO {
+public class StationVO {
     private String id;
+    private String userId;
     private int maxPower;
     private double energy;
     private int gridConnection;
@@ -46,5 +47,13 @@ public class AccumulatorVO {
 
     public void setStationConnection(int stationConnection) {
         this.stationConnection = stationConnection;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

@@ -13,15 +13,15 @@ public class TodayGivenLogE {
 
     private String time;
 
-    @Column(name = "user_id")
-    private String userId;
+    @Column(name = "station_id")
+    private String stationId;
 
     private double given;
 
     public static TodayGivenLogE fromVO(LogVO logVO){
         TodayGivenLogE todayLog = new TodayGivenLogE();
         todayLog.setId(logVO.getId());
-        todayLog.setUserId(logVO.getUserId());
+        todayLog.setStationId(logVO.getStationId());
 
         String time = logVO.getDateTime().substring(11, 13) + ":00:00";
         todayLog.setTime(time);
@@ -37,12 +37,12 @@ public class TodayGivenLogE {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getStationId() {
+        return stationId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setStationId(String userId) {
+        this.stationId = userId;
     }
 
     public double getGiven() {

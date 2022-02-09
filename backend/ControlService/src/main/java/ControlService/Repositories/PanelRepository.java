@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface PanelRepository extends CrudRepository<PanelE, String> {
-    @Query("SELECT p FROM panels p where p.userId = :userId")
+    @Query("SELECT p FROM panels p where p.stationId = :stationId")
     @Transactional
-    public Iterable<PanelE> findByUserId(String userId);
+    public Iterable<PanelE> findByStationId(String stationId);
 }

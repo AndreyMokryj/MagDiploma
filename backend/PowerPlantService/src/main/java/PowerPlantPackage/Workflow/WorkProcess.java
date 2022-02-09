@@ -14,7 +14,7 @@ public class WorkProcess {
 
     private WorkProcess(){
         panels = new ArrayList<PanelVO>();
-        userId = null;
+        station = null;
         index = 50;
     }
 
@@ -31,14 +31,13 @@ public class WorkProcess {
 
     public List<PanelVO> panels;
     private RestTemplate restTemplate;
-    private String userId;
-    public AccumulatorVO accumulator;
+    public StationVO station;
 
     private int index;
 
     public void execute(){
-        if(!(userId == null)) {
-            if(accumulator.getStationConnection() == 1) {
+        if(!(station == null)) {
+            if(station.getStationConnection() == 1) {
                 for (PanelVO panel : panels) {
                     if (panel.getConnected() == 1) {
                         double power = getPanelPower(panel);
@@ -199,7 +198,7 @@ public class WorkProcess {
     }
 
     public double getTotalPower(){
-        if(accumulator.getStationConnection() == 0) {
+        if(station.getStationConnection() == 0) {
             return 0;
         }
 
@@ -211,7 +210,7 @@ public class WorkProcess {
     }
 
     public double getPanelPower(PanelVO panel){
-        if (panel.getConnected() == 0 || accumulator.getStationConnection() == 0){
+        if (panel.getConnected() == 0 || station.getStationConnection() == 0){
             return 0;
         }
         double coef = 0;
@@ -252,52 +251,44 @@ public class WorkProcess {
 
     public void updateProducedLogs(PanelVO panelVO){
         LogVO logVO = new LogVO();
-        logVO.setUserId(userId);
+        logVO.setStationId(station.getId());
         logVO.setPanelId(panelVO.getId());
         String dateTime = restTemplate.exchange(dateTimeUrl + index, HttpMethod.GET, null, String.class).getBody();
         logVO.setDateTime(dateTime);
         logVO.setProduced(getPanelPower(panelVO) * 60 * 10);
 
-        accumulator.setEnergy(accumulator.getEnergy() + logVO.getProduced());
-        updateAccumulator(accumulator);
+        station.setEnergy(station.getEnergy() + logVO.getProduced());
+        updateAccumulator(station);
         restTemplate.postForObject(baseUrl + "logs/update/", logVO, void.class);
     }
 
     public void updateGivenLogs(){
         LogVO logVO = new LogVO();
-        logVO.setUserId(userId);
+        logVO.setStationId(station.getId());
         String dateTime = restTemplate.exchange(dateTimeUrl + index, HttpMethod.GET, null, String.class).getBody();
         logVO.setDateTime(dateTime);
 
-        if (accumulator.getGridConnection() == 1){
-            double maxEnergyGiven = accumulator.getMaxPower() * 60 * 10;
-            double additionalEnergy = Math.min(accumulator.getEnergy(), maxEnergyGiven);
+        if (station.getGridConnection() == 1){
+            double maxEnergyGiven = station.getMaxOutputPower() * 60 * 10;
+            double additionalEnergy = Math.min(station.getEnergy(), maxEnergyGiven);
             logVO.setGiven(additionalEnergy);
-            accumulator.setEnergy(accumulator.getEnergy() - additionalEnergy);
+            station.setEnergy(station.getEnergy() - additionalEnergy);
         }
         else {
             logVO.setGiven(0);
         }
 
-        updateAccumulator(accumulator);
+        updateAccumulator(station);
         restTemplate.postForObject(baseUrl + "logs/update/", logVO, void.class);
     }
 
-    private void updateAccumulator(AccumulatorVO accumulatorVO) {
-        Void response = restTemplate.postForObject(baseUrl + "accumulators/" + userId, accumulatorVO, void.class);
+    private void updateAccumulator(StationVO stationVO) {
+        Void response = restTemplate.postForObject(baseUrl + "stations/" + station.getId(), stationVO, void.class);
     }
 
     public String getDateTime() {
         String dateTime = restTemplate.exchange(dateTimeUrl + index, HttpMethod.GET, null, String.class).getBody();
         return dateTime;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public RestTemplate getRestTemplate(){

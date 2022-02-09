@@ -2,7 +2,7 @@ package ControlService.vo;
 
 public class LogVO {
     private String id;
-    private String userId;
+    private String stationId;
     private String panelId;
     private String dateTime;
     private double produced;
@@ -16,12 +16,12 @@ public class LogVO {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getStationId() {
+        return stationId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setStationId(String stationId) {
+        this.stationId = stationId;
     }
 
     public String getPanelId() {

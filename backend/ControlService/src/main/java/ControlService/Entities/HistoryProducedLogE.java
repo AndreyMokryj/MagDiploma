@@ -13,8 +13,8 @@ public class HistoryProducedLogE {
 
     private String date;
 
-    @Column(name = "user_id")
-    private String userId;
+    @Column(name = "station_id")
+    private String stationId;
 
     @Column(name = "panel_id")
     private String panelId;
@@ -24,7 +24,7 @@ public class HistoryProducedLogE {
     public static HistoryProducedLogE fromVO(LogVO logVO){
         HistoryProducedLogE historyLog = new HistoryProducedLogE();
         historyLog.setId(logVO.getId());
-        historyLog.setUserId(logVO.getUserId());
+        historyLog.setStationId(logVO.getStationId());
         historyLog.setPanelId(logVO.getPanelId());
 
         String dateTime = logVO.getDateTime().substring(0, 10);
@@ -41,12 +41,12 @@ public class HistoryProducedLogE {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getStationId() {
+        return stationId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setStationId(String userId) {
+        this.stationId = userId;
     }
 
     public String getPanelId() {

@@ -13,8 +13,8 @@ public class TodayProducedLogE {
 
     private String time;
 
-    @Column(name = "user_id")
-    private String userId;
+    @Column(name = "station_id")
+    private String stationId;
 
     @Column(name = "panel_id")
     private String panelId;
@@ -24,7 +24,7 @@ public class TodayProducedLogE {
     public static TodayProducedLogE fromVO(LogVO logVO){
         TodayProducedLogE todayLog = new TodayProducedLogE();
         todayLog.setId(logVO.getId());
-        todayLog.setUserId(logVO.getUserId());
+        todayLog.setStationId(logVO.getStationId());
         todayLog.setPanelId(logVO.getPanelId());
 
         String time = logVO.getDateTime().substring(11, 13) + ":00:00";
@@ -41,12 +41,12 @@ public class TodayProducedLogE {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getStationId() {
+        return stationId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setStationId(String userId) {
+        this.stationId = userId;
     }
 
     public String getPanelId() {

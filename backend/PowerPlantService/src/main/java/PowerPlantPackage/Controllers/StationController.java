@@ -1,37 +1,37 @@
 package PowerPlantPackage.Controllers;
 
-import PowerPlantPackage.Model.AccumulatorVO;
+import PowerPlantPackage.Model.StationVO;
 import PowerPlantPackage.Workflow.WorkProcess;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path="/accumulator")
+@RequestMapping(path="/station")
 @Component
-public class AccumulatorController {
+public class StationController {
     @GetMapping(path="/")
     public @ResponseBody
-    AccumulatorVO get() {
-        return WorkProcess.getInstance().accumulator;
+    StationVO get() {
+        return WorkProcess.getInstance().station;
     }
 
     @GetMapping(path="/turn-station-{action}")
     public @ResponseBody
-    AccumulatorVO turnStation(@PathVariable int action) {
+    StationVO turnStation(@PathVariable int action) {
         if(action != 0 && action != 1){
             return null;
         }
-        WorkProcess.getInstance().accumulator.setStationConnection(action);
-        return WorkProcess.getInstance().accumulator;
+        WorkProcess.getInstance().station.setStationConnection(action);
+        return WorkProcess.getInstance().station;
     }
 
     @GetMapping(path="/turn-grid-{action}")
     public @ResponseBody
-    AccumulatorVO turnGrid(@PathVariable int action) {
+    StationVO turnGrid(@PathVariable int action) {
         if(action != 0 && action != 1){
             return null;
         }
-        WorkProcess.getInstance().accumulator.setGridConnection(action);
-        return WorkProcess.getInstance().accumulator;
+        WorkProcess.getInstance().station.setGridConnection(action);
+        return WorkProcess.getInstance().station;
     }
 }

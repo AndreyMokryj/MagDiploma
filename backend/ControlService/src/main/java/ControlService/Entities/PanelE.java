@@ -20,8 +20,8 @@ public class PanelE {
     @Column(name = "nominal_power")
     private int nominalPower;
 
-    @Column(name = "user_id")
-    private String userId;
+    @Column(name = "station_id")
+    private String stationId;
 
     private int azimuth;
     private int altitude;
@@ -34,7 +34,7 @@ public class PanelE {
         panel.setName(panelVO.getName());
         panel.setModel(panelVO.getModel());
         panel.setNominalPower(panelVO.getNominalPower());
-        panel.setUserId(panelVO.getUserId());
+        panel.setStationId(panelVO.getStationId());
         panel.setAzimuth(panelVO.getAzimuth());
         panel.setAltitude(panelVO.getAltitude());
         panel.setConnected(panelVO.getConnected());
@@ -73,12 +73,12 @@ public class PanelE {
         this.nominalPower = nominalPower;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getStationId() {
+        return stationId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setStationId(String userId) {
+        this.stationId = userId;
     }
 
     public int getAzimuth() {

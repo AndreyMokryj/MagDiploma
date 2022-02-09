@@ -30,10 +30,10 @@ public class PanelController {
         return panelRepository.findAll();
     }
 
-    @GetMapping(path="/userId/{userId}")
+    @GetMapping(path="/stationId/{stationId}")
     public @ResponseBody
-    Iterable<PanelE> getByUserId(@PathVariable String userId) {
-        return panelRepository.findByUserId(userId);
+    Iterable<PanelE> getByStationId(@PathVariable String stationId) {
+        return panelRepository.findByStationId(stationId);
     }
 
     @GetMapping(path="/{id}")
