@@ -32,7 +32,7 @@ public class StationController {
     @PostMapping(path="/{id}")
     public @ResponseBody
     void updateById(@PathVariable String id, @RequestBody StationVO stationVO) {
-        StationE accumulator = StationE.fromVO(stationVO);
-        stationRepository.save(accumulator);
+        StationE station = StationE.fromVO(stationVO);
+        stationRepository.save(station);
     }
 }

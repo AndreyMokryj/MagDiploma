@@ -2,6 +2,7 @@ package PowerPlantPackage.Workflow;
 
 import PowerPlantPackage.Model.StationVO;
 import PowerPlantPackage.Model.PanelVO;
+import PowerPlantPackage.Repositories.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.context.ServletWebServerInitializedEvent;
@@ -21,6 +22,9 @@ public class MyListener implements ApplicationListener<ServletWebServerInitializ
     @Autowired
     RestTemplate restTemplate;
 
+    @Autowired
+    StateRepository stateRepository;
+
     @Override
     public void onApplicationEvent(final ServletWebServerInitializedEvent event) {
         String baseUrl = WorkProcess.getInstance().baseUrl;
@@ -36,6 +40,7 @@ public class MyListener implements ApplicationListener<ServletWebServerInitializ
 
         WorkProcess.getInstance().station = station;
         WorkProcess.getInstance().setRestTemplate(restTemplate);
+        WorkProcess.getInstance().setStateRepository(stateRepository);
         List<Object> objectList = (List<Object>) restTemplate.exchange(baseUrl + "panels/stationId/" + station.getId(), HttpMethod.GET, null, Iterable.class).getBody();
         for (Object object : objectList){
             WorkProcess.getInstance().panels.add(PanelVO.fromMap((Map) object));

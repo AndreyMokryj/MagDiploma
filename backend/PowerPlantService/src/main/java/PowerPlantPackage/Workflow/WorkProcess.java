@@ -1,13 +1,12 @@
 package PowerPlantPackage.Workflow;
 
+import PowerPlantPackage.Entities.StateE;
 import PowerPlantPackage.Model.*;
+import PowerPlantPackage.Repositories.StateRepository;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class WorkProcess {
     private static WorkProcess workProcess;
@@ -31,11 +30,13 @@ public class WorkProcess {
 
     public List<PanelVO> panels;
     private RestTemplate restTemplate;
+    private StateRepository stateRepository;
     public StationVO station;
 
     private int index;
 
     public void execute(){
+        Date startTime = new Date();
         if(!(station == null)) {
             if(station.getStationConnection() == 1) {
                 for (PanelVO panel : panels) {
@@ -58,6 +59,11 @@ public class WorkProcess {
             }
             updateGivenLogs();
             index += 2;
+
+            Date endTime = new Date();
+            System.out.println("Time to correct all panels: " + (endTime.getTime() - startTime.getTime()));
+
+
             System.out.println("Task executed on " + new Date());
         }
     }
@@ -193,8 +199,8 @@ public class WorkProcess {
             iterator++;
         }
 
-        System.out.println("Panel " + panel.getName() + ": final azimuth: " + panel.getAzimuth() + "; altitude: " + panel.getAltitude() + "; index: " + index + "; power: " + getPanelPower(panel));
-        System.out.println("Iterations: " + iterator);
+//        System.out.println("Panel " + panel.getName() + ": final azimuth: " + panel.getAzimuth() + "; altitude: " + panel.getAltitude() + "; index: " + index + "; power: " + getPanelPower(panel));
+//        System.out.println("Iterations: " + iterator);
     }
 
     public double getTotalPower(){
@@ -229,12 +235,15 @@ public class WorkProcess {
         stateVOSent.setPanelId(panel.getId());
         stateVOSent.setAzimuth(panel.getAzimuth());
         stateVOSent.setAltitude(panel.getAltitude());
-        StateVO state = restTemplate.postForObject(baseUrl + "states/get/", stateVOSent, StateVO.class);
-        return state;
+//        StateVO state = restTemplate.postForObject(baseUrl + "states/get/", stateVOSent, StateVO.class);
+//        return state;
+
+        return (fetchState(stateVOSent)).toVO();
     }
 
     public void sendUpdate(PreviousVO previousVO){
-        Void response = restTemplate.postForObject(baseUrl + "states/update/", previousVO, void.class);
+//        Void response = restTemplate.postForObject(baseUrl + "states/update/", previousVO, void.class);
+        updatePrevState(previousVO);
     }
 
     public void updatePanel(PanelVO panelVO){
@@ -258,7 +267,7 @@ public class WorkProcess {
         logVO.setProduced(getPanelPower(panelVO) * 60 * 10);
 
         station.setEnergy(station.getEnergy() + logVO.getProduced());
-        updateAccumulator(station);
+        updateStation(station);
         restTemplate.postForObject(baseUrl + "logs/update/", logVO, void.class);
     }
 
@@ -278,11 +287,11 @@ public class WorkProcess {
             logVO.setGiven(0);
         }
 
-        updateAccumulator(station);
+        updateStation(station);
         restTemplate.postForObject(baseUrl + "logs/update/", logVO, void.class);
     }
 
-    private void updateAccumulator(StationVO stationVO) {
+    private void updateStation(StationVO stationVO) {
         Void response = restTemplate.postForObject(baseUrl + "stations/" + station.getId(), stationVO, void.class);
     }
 
@@ -297,5 +306,49 @@ public class WorkProcess {
 
     public void setRestTemplate(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
+    }
+
+    public StateRepository getStateRepository() {
+        return stateRepository;
+    }
+
+    public void setStateRepository(StateRepository stateRepository) {
+        this.stateRepository = stateRepository;
+    }
+
+
+
+
+
+
+    private StateE fetchState(StateVO stateVO) {
+        StateE state = StateE.fromVO(stateVO);
+        try {
+            Optional<StateE> state1 = stateRepository.findByParams(
+                    state.getPanelId(),
+                    state.getAzimuth(),
+                    state.getAltitude()
+            );
+            return state1.get();
+        }
+        catch (Exception ex){
+            state.setId(UUID.randomUUID().toString());
+            StateE saved = stateRepository.save(state);
+            return saved;
+        }
+    }
+
+    public void updatePrevState(PreviousVO previousVO) {
+        StateE state = getById(previousVO.getId());
+        state.setAltPlus(state.getAltPlus() + previousVO.getAltPlus());
+        state.setAltMinus(state.getAltMinus() + previousVO.getAltMinus());
+        state.setAzPlus(state.getAzPlus() + previousVO.getAzPlus());
+        state.setAzMinus(state.getAzMinus() + previousVO.getAzMinus());
+        stateRepository.save(state);
+    }
+
+    StateE getById(String id) {
+        Optional<StateE> direction = stateRepository.findById(id);
+        return direction.get();
     }
 }
