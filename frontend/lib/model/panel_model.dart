@@ -1,6 +1,6 @@
 class Panel{
   String id;
-  String userId;
+  String stationId;
   String name;
   String model;
   int nominalPower;
@@ -8,12 +8,12 @@ class Panel{
   int altitude;
   int connected;
 
-  Panel({this.id, this.userId, this.name, this.model, this.nominalPower, this.azimuth, this.altitude, this.connected});
+  Panel({this.id, this.stationId, this.name, this.model, this.nominalPower, this.azimuth, this.altitude, this.connected});
 
   Map<String, dynamic> toMap(){
     return {
       'id' : id,
-      'userId' : userId,
+      'stationId' : stationId,
       'name' : name,
       'model' : model,
       'nominalPower' : nominalPower,
@@ -26,7 +26,7 @@ class Panel{
   factory Panel.fromMap(Map<String, dynamic> map){
     return Panel(
       id: map['id'] as String,
-      userId: map['userId'] as String,
+      stationId: map['stationId'] as String,
       name: map['name'] as String,
       model: map['model'] as String,
       nominalPower: map['nominalPower'] as int,

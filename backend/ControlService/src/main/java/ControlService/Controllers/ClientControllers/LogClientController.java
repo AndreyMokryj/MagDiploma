@@ -29,30 +29,30 @@ public class LogClientController {
     private TodayGivenLogRepository todayGivenLogRepository;
 
     @CrossOrigin(origins = "*")
-    @GetMapping(path="/history-produced/userId/{userId}")
+    @PostMapping(path="/history-produced/")
     public @ResponseBody
-    Iterable<HistoryProducedLogE> getHistoryProducedLogs(@PathVariable String userId) {
-        return historyProducedLogRepository.findByStationId(userId);
+    Iterable<HistoryProducedLogE> getHistoryProducedLogs(@RequestBody String stationId) {
+        return historyProducedLogRepository.findByStationId(stationId);
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(path="/history-given/userId/{userId}")
+    @PostMapping(path="/history-given/")
     public @ResponseBody
-    Iterable<HistoryGivenLogE> getHistoryGivenLogs(@PathVariable String userId) {
-        return historyGivenLogRepository.findByStationId(userId);
+    Iterable<HistoryGivenLogE> getHistoryGivenLogs(@RequestBody String stationId) {
+        return historyGivenLogRepository.findByStationId(stationId);
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(path="/today-produced/userId/{userId}")
+    @PostMapping(path="/today-produced/")
     public @ResponseBody
-    Iterable<TodayProducedLogE> getTodayProducedLogs(@PathVariable String userId) {
-        return todayProducedLogRepository.findByStationId(userId);
+    Iterable<TodayProducedLogE> getTodayProducedLogs(@RequestBody String stationId) {
+        return todayProducedLogRepository.findByStationId(stationId);
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(path="/today-given/userId/{userId}")
+    @PostMapping(path="/today-given/")
     public @ResponseBody
-    Iterable<TodayGivenLogE> getTodayGivenLogs(@PathVariable String userId) {
-        return todayGivenLogRepository.findByStationId(userId);
+    Iterable<TodayGivenLogE> getTodayGivenLogs(@RequestBody String stationId) {
+        return todayGivenLogRepository.findByStationId(stationId);
     }
 }

@@ -29,7 +29,7 @@ public class StationE {
         StationE stationE = new StationE();
         stationE.setId(stationVO.getId());
         stationE.setUserId(stationVO.getUserId());
-        stationE.setMaxOutputPower(stationVO.getMaxPower());
+        stationE.setMaxOutputPower(stationVO.getMaxOutputPower());
         stationE.setEnergy(stationVO.getEnergy());
         stationE.setGridConnection(stationVO.getGridConnection());
         stationE.setStationConnection(stationVO.getStationConnection());

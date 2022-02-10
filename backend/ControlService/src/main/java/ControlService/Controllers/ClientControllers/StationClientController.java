@@ -2,7 +2,6 @@ package ControlService.Controllers.ClientControllers;
 
 import ControlService.Entities.StationE;
 import ControlService.Repositories.StationRepository;
-import ControlService.Repositories.UserRepository;
 import ControlService.vo.StationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -19,55 +18,53 @@ public class StationClientController {
     RestTemplate restTemplate;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private StationRepository stationRepository;
 
     @CrossOrigin(origins = "*")
     @GetMapping(path="/userId/{userId}")
     public @ResponseBody
-    Object getAccumulatorByUserId(@PathVariable String userId) {
-        String sid = userRepository.findSID(userId);
-        Object response = restTemplate.exchange("http://" + sid + "/station/",
-                HttpMethod.GET, null, new ParameterizedTypeReference<Object>() {}).getBody();
-
-        return response;
+    StationE getStationByUserId(@PathVariable String userId) {
+        Iterable<StationE> stations = stationRepository.findByUserId(userId);
+        StationE result = null;
+        for (StationE stationE : stations) {
+            result = stationE;
+        }
+        return result;
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(path="/turn-station-{action}/userId/{userId}")
+    @PostMapping(path="/turn-station-{action}")
     public @ResponseBody
-    boolean turnStationConn(@PathVariable String userId, @PathVariable int action) {
+    boolean turnStationConn(@RequestBody String sid, @PathVariable int action) {
         if(action != 0 && action != 1){
             return false;
         }
-        String sid = userRepository.findSID(userId);
+
         StationVO response = restTemplate.exchange("http://" + sid + "/station/turn-station-" + action,
                 HttpMethod.GET, null, new ParameterizedTypeReference<StationVO>() {}).getBody();
 
         if(!(response == null)){
-            StationE accumulator = StationE.fromVO(response);
-            stationRepository.save(accumulator);
+            StationE station = StationE.fromVO(response);
+            stationRepository.save(station);
             return true;
         }
         return false;
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(path="/turn-grid-{action}/userId/{userId}")
+    @PostMapping(path="/turn-grid-{action}")
     public @ResponseBody
-    boolean turnGridConn(@PathVariable String userId, @PathVariable int action) {
+    boolean turnGridConn(@RequestBody String sid, @PathVariable int action) {
         if(action != 0 && action != 1){
             return false;
         }
-        String sid = userRepository.findSID(userId);
+
         StationVO response = restTemplate.exchange("http://" + sid + "/station/turn-grid-" + action,
                 HttpMethod.GET, null, new ParameterizedTypeReference<StationVO>() {}).getBody();
 
         if(!(response == null)){
-            StationE accumulator = StationE.fromVO(response);
-            stationRepository.save(accumulator);
+            StationE station = StationE.fromVO(response);
+            stationRepository.save(station);
             return true;
         }
         return false;

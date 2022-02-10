@@ -1,26 +1,29 @@
-class Accumulator{
+class Station{
   String id;
-  int maxPower;
+  String userId;
+  int maxOutputPower;
   double energy;
   int gridConnection;
   int stationConnection;
 
-  Accumulator({this.id, this.maxPower, this.energy, this.gridConnection, this.stationConnection});
+  Station({this.id, this.userId, this.maxOutputPower, this.energy, this.gridConnection, this.stationConnection});
 
   Map<String, dynamic> toMap(){
     return {
       'id' : id,
-      'maxPower' : maxPower,
+      'userId' : userId,
+      'maxOutputPower' : maxOutputPower,
       'energy' : energy,
       'gridConnection' : gridConnection,
       'stationConnection' : stationConnection,
     };
   }
 
-  factory Accumulator.fromMap(Map<String, dynamic> map){
-    return Accumulator(
+  factory Station.fromMap(Map<String, dynamic> map){
+    return Station(
       id: map['id'] as String,
-      maxPower: map['maxPower'] as int,
+      userId: map['userId'] as String,
+      maxOutputPower: map['maxOutputPower'] as int,
       energy: map['energy'] as double,
       gridConnection: map['gridConnection'] as int,
       stationConnection: map['stationConnection'] as int,

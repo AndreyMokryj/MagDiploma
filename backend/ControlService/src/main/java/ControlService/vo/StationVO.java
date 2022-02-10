@@ -3,7 +3,7 @@ package ControlService.vo;
 public class StationVO {
     private String id;
     private String userId;
-    private int maxPower;
+    private int maxOutputPower;
     private double energy;
     private int gridConnection;
     private int stationConnection;
@@ -17,12 +17,12 @@ public class StationVO {
     }
 
 
-    public int getMaxPower() {
-        return maxPower;
+    public int getMaxOutputPower() {
+        return maxOutputPower;
     }
 
-    public void setMaxPower(int maxPower) {
-        this.maxPower = maxPower;
+    public void setMaxOutputPower(int maxOutputPower) {
+        this.maxOutputPower = maxOutputPower;
     }
 
     public double getEnergy() {

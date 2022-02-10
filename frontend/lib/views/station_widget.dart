@@ -2,10 +2,10 @@ import 'package:SUNMAX/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:SUNMAX/database/database.dart';
 import 'package:SUNMAX/helpers/utils.dart';
-import 'package:SUNMAX/model/accumulator_model.dart' as acc;
+import 'package:SUNMAX/model/station_model.dart' as acc;
 
 class StationWidget extends StatefulWidget{
-  final acc.Accumulator accumulator;
+  final acc.Station accumulator;
 
   const StationWidget({Key key, this.accumulator}) : super(key: key);
 
@@ -14,7 +14,7 @@ class StationWidget extends StatefulWidget{
 }
 
 class _StationWidgetState extends State<StationWidget> {
-  acc.Accumulator _accumulator;
+  acc.Station _accumulator;
   bool showHistory;
 
   @override

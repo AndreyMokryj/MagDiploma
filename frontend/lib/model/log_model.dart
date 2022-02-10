@@ -2,17 +2,17 @@ class Log{
   String id;
   String date;
   String time;
-  String userId;
+  String stationId;
   String panelId;
   double produced;
   double given;
 
-  Log({this.id, this.userId, this.date, this.time, this.panelId, this.produced, this.given,});
+  Log({this.id, this.stationId, this.date, this.time, this.panelId, this.produced, this.given,});
 
   Map<String, dynamic> toMap(){
     return {
       'id' : id,
-      'userId' : userId,
+      'stationId' : stationId,
       'date' : date,
       'time' : time,
       'panelId' : panelId,
@@ -24,7 +24,7 @@ class Log{
   factory Log.fromMap(Map<String, dynamic> map){
     return Log(
       id: map['id'] as String,
-      userId: map['userId'] as String,
+      stationId: map['stationId'] as String,
       date: map['date'] as String,
       time: map['time'] as String,
       panelId: map['panelId'] as String,

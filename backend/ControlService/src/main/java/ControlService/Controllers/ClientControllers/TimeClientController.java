@@ -1,6 +1,5 @@
 package ControlService.Controllers.ClientControllers;
 
-import ControlService.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -15,14 +14,10 @@ public class TimeClientController {
     @Autowired
     RestTemplate restTemplate;
 
-    @Autowired
-    private UserRepository userRepository;
-
     @CrossOrigin(origins = "*")
-    @GetMapping(path="/userId/{userId}")
+    @PostMapping(path="/")
     public @ResponseBody
-    String getTime(@PathVariable String userId) {
-        String sid = userRepository.findSID(userId);
+    String getTime(@RequestBody String sid) {
         String response = restTemplate.exchange("http://" + sid + "/time/",
                 HttpMethod.GET, null, new ParameterizedTypeReference<String>() {}).getBody();
 

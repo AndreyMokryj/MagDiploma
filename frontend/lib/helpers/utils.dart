@@ -18,7 +18,7 @@ double formatDouble(double number, [int n = 0]){
 
 Future<List<Log>> getPanelHistoryLogs(Panel panel) async{
   List<Log> result = [];
-  final logProducedMaps = await DBProvider.db.getHistoryProducedLogs(panel.userId);
+  final logProducedMaps = await DBProvider.db.getHistoryProducedLogs(panel.stationId);
 
   logProducedMaps.forEach((element) {
     Log log = Log.fromMap(element);
@@ -33,7 +33,7 @@ Future<List<Log>> getPanelHistoryLogs(Panel panel) async{
 
 Future<List<Log>> getPanelTodayLogs(Panel panel) async{
   List<Log> result = [];
-  final logProducedMaps = await DBProvider.db.getTodayProducedLogs(panel.userId);
+  final logProducedMaps = await DBProvider.db.getTodayProducedLogs(panel.stationId);
 
   logProducedMaps.forEach((element) {
     Log log = Log.fromMap(element);
@@ -50,8 +50,8 @@ Future<List<Log>> getAlllHistoryLogs(BuildContext context) async{
   List<Log> result = [];
 
   final user = Provider.of<LoginNotifier>(context, listen: false).user;
-  final logProducedMaps = await DBProvider.db.getHistoryProducedLogs(user.id);
-  final logGivenMaps = await DBProvider.db.getHistoryGivenLogs(user.id);
+  final logProducedMaps = await DBProvider.db.getHistoryProducedLogs(user.station.id);
+  final logGivenMaps = await DBProvider.db.getHistoryGivenLogs(user.station.id);
 
   for(Map element in logGivenMaps) {
     Log resultLog = Log.fromMap(element);
@@ -73,8 +73,8 @@ Future<List<Log>> getAlllTodayLogs(BuildContext context) async{
   List<Log> result = [];
 
   final user = Provider.of<LoginNotifier>(context, listen: false).user;
-  final logProducedMaps = await DBProvider.db.getTodayProducedLogs(user.id);
-  final logGivenMaps = await DBProvider.db.getTodayGivenLogs(user.id);
+  final logProducedMaps = await DBProvider.db.getTodayProducedLogs(user.station.id);
+  final logGivenMaps = await DBProvider.db.getTodayGivenLogs(user.station.id);
 
   logGivenMaps.forEach((element) {
     Log resultLog = Log.fromMap(element);
@@ -95,7 +95,7 @@ Future<List<Log>> getAlllTodayLogs(BuildContext context) async{
 Future<double> getRequiredPower(BuildContext context, {Panel panel}) async{
   final user = Provider.of<LoginNotifier>(context, listen: false).user;
   final power = panel == null
-    ? await DBProvider.db.getPanelsTotalPower(user.id)
+    ? await DBProvider.db.getPanelsTotalPower(user)
     : await DBProvider.db.getPanelPower(panel);
 
   return power;
@@ -149,21 +149,21 @@ String formatDateTime( String dateTime){
 
 Future<String> getDateTime(BuildContext context) async{
   final user = Provider.of<LoginNotifier>(context, listen: false).user;
-  final String dt = await DBProvider.db.getDateTime(user.id);
+  final String dt = await DBProvider.db.getDateTime(user.station.id);
 
   return formatDateTime(dt);
 }
 
 Future<double> getAccumulatedEnergy(BuildContext context, {Panel panel}) async{
   final user = Provider.of<LoginNotifier>(context, listen: false).user;
-  final accumulator = await DBProvider.db.getAccumulator(user.id);
+  final accumulator = await DBProvider.db.getStation(user.id);
 
   return accumulator.energy / 3600000;
 }
 
 Future<Panel> getPanelInfo(BuildContext context, {Panel panel}) async{
   final user = Provider.of<LoginNotifier>(context, listen: false).user;
-  final panel1 = await DBProvider.db.getPanel(panel.id, user.id);
+  final panel1 = await DBProvider.db.getPanel(panel.id, user);
 
   return panel1;
 }

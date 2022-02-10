@@ -35,8 +35,7 @@ class MainView extends StatelessWidget {
       child: FutureBuilder(
         future: panelId != null ? DBProvider.db.getPanel(panelId, Provider
           .of<LoginNotifier>(context, listen: false)
-          .user
-          .id) : null,
+          .user) : null,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             panel = snapshot.data;
