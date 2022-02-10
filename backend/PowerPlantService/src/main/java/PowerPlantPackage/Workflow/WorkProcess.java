@@ -1,8 +1,7 @@
 package PowerPlantPackage.Workflow;
 
-import PowerPlantPackage.Entities.StateE;
 import PowerPlantPackage.Model.*;
-import PowerPlantPackage.Repositories.StateRepository;
+import PowerPlantPackage.Utils.StateUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
@@ -30,7 +29,7 @@ public class WorkProcess {
 
     public List<PanelVO> panels;
     private RestTemplate restTemplate;
-    private StateRepository stateRepository;
+    private StateUtils stateUtils;
     public StationVO station;
 
     private int index;
@@ -194,10 +193,12 @@ public class WorkProcess {
 
             sendUpdate(previousVO);
             sendUpdate(currentVO);
-            updatePanel(panel);
+//            updatePanel(panel);
 
             iterator++;
         }
+
+        updatePanel(panel);
 
 //        System.out.println("Panel " + panel.getName() + ": final azimuth: " + panel.getAzimuth() + "; altitude: " + panel.getAltitude() + "; index: " + index + "; power: " + getPanelPower(panel));
 //        System.out.println("Iterations: " + iterator);
@@ -235,15 +236,12 @@ public class WorkProcess {
         stateVOSent.setPanelId(panel.getId());
         stateVOSent.setAzimuth(panel.getAzimuth());
         stateVOSent.setAltitude(panel.getAltitude());
-//        StateVO state = restTemplate.postForObject(baseUrl + "states/get/", stateVOSent, StateVO.class);
-//        return state;
 
-        return (fetchState(stateVOSent)).toVO();
+        return (stateUtils.fetchState(stateVOSent)).toVO();
     }
 
     public void sendUpdate(PreviousVO previousVO){
-//        Void response = restTemplate.postForObject(baseUrl + "states/update/", previousVO, void.class);
-        updatePrevState(previousVO);
+        stateUtils.updatePrevState(previousVO);
     }
 
     public void updatePanel(PanelVO panelVO){
@@ -251,11 +249,11 @@ public class WorkProcess {
     }
 
     public void preparePanel(PanelVO panelVO){
-        Void response = restTemplate.exchange(baseUrl + "panels/prepare/" + panelVO.getId(), HttpMethod.GET, null, void.class).getBody();
+        stateUtils.preparePanel(panelVO);
     }
 
     public void reduceForPanel(String panelId){
-        Void response = restTemplate.exchange(baseUrl + "panels/reduce/" + panelId, HttpMethod.GET, null, void.class).getBody();
+        stateUtils.reduceByPanelId(panelId);
     }
 
     public void updateProducedLogs(PanelVO panelVO){
@@ -308,47 +306,11 @@ public class WorkProcess {
         this.restTemplate = restTemplate;
     }
 
-    public StateRepository getStateRepository() {
-        return stateRepository;
+    public StateUtils getStateUtils() {
+        return stateUtils;
     }
 
-    public void setStateRepository(StateRepository stateRepository) {
-        this.stateRepository = stateRepository;
-    }
-
-
-
-
-
-
-    private StateE fetchState(StateVO stateVO) {
-        StateE state = StateE.fromVO(stateVO);
-        try {
-            Optional<StateE> state1 = stateRepository.findByParams(
-                    state.getPanelId(),
-                    state.getAzimuth(),
-                    state.getAltitude()
-            );
-            return state1.get();
-        }
-        catch (Exception ex){
-            state.setId(UUID.randomUUID().toString());
-            StateE saved = stateRepository.save(state);
-            return saved;
-        }
-    }
-
-    public void updatePrevState(PreviousVO previousVO) {
-        StateE state = getById(previousVO.getId());
-        state.setAltPlus(state.getAltPlus() + previousVO.getAltPlus());
-        state.setAltMinus(state.getAltMinus() + previousVO.getAltMinus());
-        state.setAzPlus(state.getAzPlus() + previousVO.getAzPlus());
-        state.setAzMinus(state.getAzMinus() + previousVO.getAzMinus());
-        stateRepository.save(state);
-    }
-
-    StateE getById(String id) {
-        Optional<StateE> direction = stateRepository.findById(id);
-        return direction.get();
+    public void setStateUtils(StateUtils stateUtils) {
+        this.stateUtils = stateUtils;
     }
 }
