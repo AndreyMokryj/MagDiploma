@@ -40,20 +40,6 @@ public class WorkProcess {
             if(station.getStationConnection() == 1) {
                 List<Thread> threads = new ArrayList<>();
                 for (PanelVO panel : panels) {
-//                    if (panel.getConnected() == 1) {
-//                        double power = getPanelPower(panel);
-//                        if (power >= 10) {
-//                            preparePanel(panel);
-//                            findSun(panel);
-//                            updateProducedLogs(panel);
-//                        } else {
-//                            turnPanelEast(panel);
-//                            System.out.println("No sun found");
-//                        }
-//                    } else {
-//                        System.out.println("Panel " + panel.getName() + " is disconnected");
-//                    }
-
                     Thread thread = new Thread(() -> doTaskForPanel(panel));
                     thread.start();
                     threads.add(thread);
