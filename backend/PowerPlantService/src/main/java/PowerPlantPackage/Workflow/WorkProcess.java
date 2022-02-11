@@ -38,19 +38,27 @@ public class WorkProcess {
         Date startTime = new Date();
         if(!(station == null)) {
             if(station.getStationConnection() == 1) {
+                List<Thread> threads = new ArrayList<>();
                 for (PanelVO panel : panels) {
-                    if (panel.getConnected() == 1) {
-                        double power = getPanelPower(panel);
-                        if (power >= 10) {
-                            preparePanel(panel);
-                            findSun(panel);
-                            updateProducedLogs(panel);
-                        } else {
-                            turnPanelEast(panel);
-                            System.out.println("No sun found");
-                        }
-                    } else {
-                        System.out.println("Panel " + panel.getName() + " is disconnected");
+//                    if (panel.getConnected() == 1) {
+//                        double power = getPanelPower(panel);
+//                        if (power >= 10) {
+//                            preparePanel(panel);
+//                            findSun(panel);
+//                            updateProducedLogs(panel);
+//                        } else {
+//                            turnPanelEast(panel);
+//                            System.out.println("No sun found");
+//                        }
+//                    } else {
+//                        System.out.println("Panel " + panel.getName() + " is disconnected");
+//                    }
+
+                    Thread thread = new Thread(() -> doTaskForPanel(panel));
+                    thread.start();
+                    threads.add(thread);
+                    if (threads.size() >= panels.size()) {
+                        waitForThreads(threads);
                     }
                 }
             } else {
@@ -65,6 +73,33 @@ public class WorkProcess {
 
             System.out.println("Task executed on " + new Date());
         }
+    }
+
+    public void doTaskForPanel(PanelVO panel){
+        if (panel.getConnected() == 1) {
+            double power = getPanelPower(panel);
+            if (power >= 10) {
+                preparePanel(panel);
+                findSun(panel);
+                updateProducedLogs(panel);
+            } else {
+                turnPanelEast(panel);
+                System.out.println("No sun found");
+            }
+        } else {
+            System.out.println("Panel " + panel.getName() + " is disconnected");
+        }
+    }
+
+    private void waitForThreads(List<Thread> threads) {
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        threads.clear();
     }
 
     private void turnPanelEast(PanelVO panel) {
