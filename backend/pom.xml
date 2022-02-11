@@ -11,7 +11,6 @@
     <modules>
         <module>DiscoveryService</module>
         <module>ControlService</module>
-        <module>GridService</module>
         <module>PowerPlantService</module>
         <module>SunService</module>
     </modules>
