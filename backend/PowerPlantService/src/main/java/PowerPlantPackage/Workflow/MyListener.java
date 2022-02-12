@@ -27,12 +27,14 @@ public class MyListener implements ApplicationListener<ServletWebServerInitializ
 
     @Override
     public void onApplicationEvent(final ServletWebServerInitializedEvent event) {
-        String baseUrl = WorkProcess.getInstance().baseUrl;
+//        String baseUrl = WorkProcess.getInstance().baseUrl;
+        String connectionUrl = WorkProcess.getInstance().connectionUrl;
+        String statisticsUrl = WorkProcess.getInstance().statisticsUrl;
 
         StationVO station = null;
         while (station == null) {
             try {
-                station = StationVO.fromMap(restTemplate.exchange(baseUrl + "stations/" + serviceName, HttpMethod.GET, null, Map.class).getBody());
+                station = StationVO.fromMap(restTemplate.exchange(connectionUrl + "stations/" + serviceName, HttpMethod.GET, null, Map.class).getBody());
                 Thread.sleep(10000L);
             } catch (Exception e) {
             }
@@ -41,10 +43,10 @@ public class MyListener implements ApplicationListener<ServletWebServerInitializ
         WorkProcess.getInstance().station = station;
         WorkProcess.getInstance().setRestTemplate(restTemplate);
         WorkProcess.getInstance().setStateUtils(stateUtils);
-        List<Object> objectList = (List<Object>) restTemplate.exchange(baseUrl + "panels/stationId/" + station.getId(), HttpMethod.GET, null, Iterable.class).getBody();
+        List<Object> objectList = (List<Object>) restTemplate.exchange(connectionUrl + "panels/stationId/" + station.getId(), HttpMethod.GET, null, Iterable.class).getBody();
         for (Object object : objectList){
             WorkProcess.getInstance().panels.add(PanelVO.fromMap((Map) object));
         }
-        restTemplate.exchange(baseUrl + "logs/clear/" + station.getId(), HttpMethod.GET, null, void.class);
+        restTemplate.exchange(statisticsUrl + "logs/clear/" + station.getId(), HttpMethod.GET, null, void.class);
     }
 }

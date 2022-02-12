@@ -23,7 +23,9 @@ public class WorkProcess {
         return workProcess;
     }
 
-    public final String baseUrl = "http://control-service/";
+//    public final String baseUrl = "http://control-service/";
+    public final String connectionUrl = "http://connection-service/";
+    public final String statisticsUrl = "http://statistics-service/";
     public final String sunUrl = "http://sun-service/sun/power-coef/";
     public final String dateTimeUrl = "http://sun-service/sun/datetime/";
 
@@ -266,7 +268,7 @@ public class WorkProcess {
     }
 
     public void updatePanel(PanelVO panelVO){
-        Void response = restTemplate.postForObject(baseUrl + "panels/" + panelVO.getId(), panelVO, void.class);
+        Void response = restTemplate.postForObject(connectionUrl + "panels/" + panelVO.getId(), panelVO, void.class);
     }
 
     public void preparePanel(PanelVO panelVO){
@@ -287,7 +289,7 @@ public class WorkProcess {
 
         station.setEnergy(station.getEnergy() + logVO.getProduced());
         updateStation(station);
-        restTemplate.postForObject(baseUrl + "logs/update/", logVO, void.class);
+        restTemplate.postForObject(statisticsUrl + "logs/update/", logVO, void.class);
     }
 
     public void updateGivenLogs(){
@@ -307,11 +309,11 @@ public class WorkProcess {
         }
 
         updateStation(station);
-        restTemplate.postForObject(baseUrl + "logs/update/", logVO, void.class);
+        restTemplate.postForObject(statisticsUrl + "logs/update/", logVO, void.class);
     }
 
     private void updateStation(StationVO stationVO) {
-        Void response = restTemplate.postForObject(baseUrl + "stations/" + station.getId(), stationVO, void.class);
+        Void response = restTemplate.postForObject(connectionUrl + "stations/" + station.getId(), stationVO, void.class);
     }
 
     public String getDateTime() {
