@@ -12,7 +12,7 @@
         <module>DiscoveryService</module>
         <module>EntryService</module>
 <!--        <module>ControlService</module>-->
-        <module>ConnectionService</module>
+        <module>ManagementService</module>
         <module>UserService</module>
         <module>StatisticsService</module>
         <module>PowerPlantService</module>
