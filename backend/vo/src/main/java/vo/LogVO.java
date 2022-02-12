@@ -1,4 +1,4 @@
-package PowerPlantPackage.Model;
+package vo;
 
 public class LogVO {
     private String id;
@@ -15,7 +15,6 @@ public class LogVO {
     public void setId(String id) {
         this.id = id;
     }
-
 
     public String getStationId() {
         return stationId;

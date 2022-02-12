@@ -1,13 +1,13 @@
 package PowerPlantPackage.Utils;
 
 import PowerPlantPackage.Entities.StateE;
-import PowerPlantPackage.Model.PanelVO;
-import PowerPlantPackage.Model.PreviousVO;
-import PowerPlantPackage.Model.StateVO;
 import PowerPlantPackage.Repositories.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
+import vo.PanelVO;
+import vo.PreviousVO;
+import vo.StateVO;
 
 import java.util.List;
 import java.util.Optional;

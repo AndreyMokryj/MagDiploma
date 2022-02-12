@@ -2,7 +2,7 @@ package ManagementService.Controllers;
 
 import ManagementService.Repositories.PanelRepository;
 import ManagementService.Entities.PanelE;
-import ManagementService.vo.PanelVO;
+import vo.PanelVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;

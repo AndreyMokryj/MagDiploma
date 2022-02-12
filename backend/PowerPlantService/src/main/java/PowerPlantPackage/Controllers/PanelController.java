@@ -1,9 +1,9 @@
 package PowerPlantPackage.Controllers;
 
-import PowerPlantPackage.Model.PanelVO;
 import PowerPlantPackage.Workflow.WorkProcess;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+import vo.PanelVO;
 
 @RestController    // This means that this class is a Controller
 @RequestMapping(path="/panels")

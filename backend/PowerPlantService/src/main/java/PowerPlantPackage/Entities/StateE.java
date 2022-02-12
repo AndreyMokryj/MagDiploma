@@ -1,6 +1,6 @@
 package PowerPlantPackage.Entities;
 
-import PowerPlantPackage.Model.StateVO;
+import vo.StateVO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

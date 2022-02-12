@@ -1,4 +1,4 @@
-package PowerPlantPackage.Model;
+package vo;
 
 public class PreviousVO {
     private String id;

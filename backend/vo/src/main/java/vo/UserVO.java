@@ -1,4 +1,4 @@
-package EntryService.vo;
+package vo;
 
 public class UserVO {
     private String id;

@@ -4,6 +4,7 @@ import PowerPlantPackage.Model.*;
 import PowerPlantPackage.Utils.StateUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
+import vo.*;
 
 import java.util.*;
 

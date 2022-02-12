@@ -1,4 +1,6 @@
-package ManagementService.vo;
+package vo;
+
+import java.util.Map;
 
 public class StationVO {
     private String id;
@@ -7,6 +9,17 @@ public class StationVO {
     private double energy;
     private int gridConnection;
     private int stationConnection;
+
+    public static StationVO fromMap(Map map){
+        StationVO station = new StationVO();
+        station.setId((String) map.get("id"));
+        station.setUserId((String) map.get("userId"));
+        station.setMaxOutputPower((int) map.get("maxOutputPower"));
+        station.setEnergy((double) map.get("energy"));
+        station.setGridConnection((int) map.get("gridConnection"));
+        station.setStationConnection((int) map.get("stationConnection"));
+        return station;
+    }
 
     public String getId() {
         return id;

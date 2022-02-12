@@ -1,4 +1,4 @@
-package PowerPlantPackage.Model;
+package vo;
 
 public class StateVO {
     private String id;

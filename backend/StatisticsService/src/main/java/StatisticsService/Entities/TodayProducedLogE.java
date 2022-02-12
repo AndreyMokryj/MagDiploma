@@ -1,6 +1,6 @@
 package StatisticsService.Entities;
 
-import StatisticsService.vo.LogVO;
+import vo.LogVO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,7 +1,5 @@
 package PowerPlantPackage.Workflow;
 
-import PowerPlantPackage.Model.StationVO;
-import PowerPlantPackage.Model.PanelVO;
 import PowerPlantPackage.Utils.StateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +8,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import vo.PanelVO;
+import vo.StationVO;
 
 import java.util.List;
 import java.util.Map;

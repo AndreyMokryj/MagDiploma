@@ -1,4 +1,6 @@
-package ManagementService.vo;
+package vo;
+
+import java.util.Map;
 
 public class PanelVO {
     private String id;
@@ -9,6 +11,19 @@ public class PanelVO {
     private int azimuth;
     private int altitude;
     private int connected;
+
+    public static PanelVO fromMap(Map map){
+        PanelVO panelVO = new PanelVO();
+        panelVO.setId((String) map.get("id"));
+        panelVO.setName((String) map.get("name"));
+        panelVO.setModel((String) map.get("model"));
+        panelVO.setNominalPower((int) map.get("nominalPower"));
+        panelVO.setStationId((String) map.get("stationId"));
+        panelVO.setAzimuth((int) map.get("azimuth"));
+        panelVO.setAltitude((int) map.get("altitude"));
+        panelVO.setConnected((int) map.get("connected"));
+        return panelVO;
+    }
 
     public String getId() {
         return id;

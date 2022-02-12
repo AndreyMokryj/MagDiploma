@@ -8,7 +8,7 @@ import StatisticsService.Repositories.HistoryGivenLogRepository;
 import StatisticsService.Repositories.HistoryProducedLogRepository;
 import StatisticsService.Repositories.TodayGivenLogRepository;
 import StatisticsService.Repositories.TodayProducedLogRepository;
-import StatisticsService.vo.LogVO;
+import vo.LogVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;

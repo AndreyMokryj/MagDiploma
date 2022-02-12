@@ -1,6 +1,6 @@
 package UserService.Entities;
 
-import UserService.vo.UserVO;
+import vo.UserVO;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

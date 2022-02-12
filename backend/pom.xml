@@ -11,12 +11,12 @@
     <modules>
         <module>DiscoveryService</module>
         <module>EntryService</module>
-<!--        <module>ControlService</module>-->
         <module>ManagementService</module>
         <module>UserService</module>
         <module>StatisticsService</module>
         <module>PowerPlantService</module>
         <module>SunService</module>
+        <module>vo</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -2,7 +2,7 @@ package ManagementService.Controllers;
 
 import ManagementService.Entities.StationE;
 import ManagementService.Repositories.StationRepository;
-import ManagementService.vo.StationVO;
+import vo.StationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;

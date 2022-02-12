@@ -1,6 +1,6 @@
 package ManagementService.Entities;
 
-import ManagementService.vo.PanelVO;
+import vo.PanelVO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
