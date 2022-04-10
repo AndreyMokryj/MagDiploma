@@ -223,9 +223,7 @@ public class WorkProcess {
         }
 
         updatePanel(panel);
-
-//        System.out.println("Panel " + panel.getName() + ": final azimuth: " + panel.getAzimuth() + "; altitude: " + panel.getAltitude() + "; index: " + index + "; power: " + getPanelPower(panel));
-//        System.out.println("Iterations: " + iterator);
+//        printPanelInfo(panel, iterator);
     }
 
     public double getTotalPower(){
@@ -269,7 +267,11 @@ public class WorkProcess {
     }
 
     public void updatePanel(PanelVO panelVO){
-        Void response = restTemplate.postForObject(managementUrl + "panels/" + panelVO.getId(), panelVO, void.class);
+        try {
+            Void response = restTemplate.postForObject(managementUrl + "panels/" + panelVO.getId(), panelVO, void.class);
+        } catch (Exception e) {
+            System.out.println("--------WARNING: Could not update panel information----------");
+        }
     }
 
     public void preparePanel(PanelVO panelVO){
@@ -290,7 +292,7 @@ public class WorkProcess {
 
         station.setEnergy(station.getEnergy() + logVO.getProduced());
         updateStation(station);
-        restTemplate.postForObject(statisticsUrl + "logs/update/", logVO, void.class);
+        updateLog(logVO);
     }
 
     public void updateGivenLogs(){
@@ -310,11 +312,28 @@ public class WorkProcess {
         }
 
         updateStation(station);
-        restTemplate.postForObject(statisticsUrl + "logs/update/", logVO, void.class);
+        updateLog(logVO);
     }
 
     private void updateStation(StationVO stationVO) {
-        Void response = restTemplate.postForObject(managementUrl + "stations/" + station.getId(), stationVO, void.class);
+        try {
+            Void response = restTemplate.postForObject(managementUrl + "stations/" + station.getId(), stationVO, void.class);
+        } catch (Exception e) {
+            System.out.println("--------WARNING: Could not update station information----------");
+        }
+    }
+
+    private void updateLog(LogVO logVO){
+        try {
+            restTemplate.postForObject(statisticsUrl + "logs/update/", logVO, void.class);
+        } catch (Exception e) {
+            System.out.println("--------WARNING: Could not update statistics----------");
+        }
+    }
+
+    private void printPanelInfo(PanelVO panel, int iterator){
+        System.out.println("Panel " + panel.getName() + ": final azimuth: " + panel.getAzimuth() + "; altitude: " + panel.getAltitude() + "; index: " + index + "; power: " + getPanelPower(panel));
+        System.out.println("Iterations: " + iterator);
     }
 
     public String getDateTime() {

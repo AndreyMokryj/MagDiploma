@@ -47,6 +47,10 @@ public class MyListener implements ApplicationListener<ServletWebServerInitializ
         for (Object object : objectList){
             WorkProcess.getInstance().panels.add(PanelVO.fromMap((Map) object));
         }
-        restTemplate.exchange(statisticsUrl + "logs/clear/" + station.getId(), HttpMethod.GET, null, void.class);
+        try {
+            restTemplate.exchange(statisticsUrl + "logs/clear/" + station.getId(), HttpMethod.GET, null, void.class);
+        } catch (Exception e) {
+            System.out.println("--------WARNING: Could not update statistics at initialization----------");
+        }
     }
 }
