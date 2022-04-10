@@ -1,15 +1,13 @@
 package EntryService.Controllers;
 
-import vo.StationVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import vo.StationVO;
 
 @RestController
-@RequestMapping(path="/app/station")
+@RequestMapping(path="/app/stations")
 @Component
 public class StationClientController {
     @Autowired
@@ -18,11 +16,19 @@ public class StationClientController {
     private String managementUrl = "http://management-service/stations/";
 
     @CrossOrigin(origins = "*")
-    @GetMapping(path="/userId/{userId}")
+    @PostMapping(path="/userId/")
     public @ResponseBody
-    StationVO getStationByUserId(@PathVariable String userId) {
-        StationVO response = restTemplate.exchange(managementUrl + "userId/" + userId,
-                HttpMethod.GET, null, new ParameterizedTypeReference<StationVO>() {}).getBody();
+    Iterable<StationVO> getStationsByUserId(@RequestBody String userId) {
+        Iterable<StationVO> response = restTemplate.postForObject(managementUrl + "userId/", userId, Iterable.class);
+
+        return response;
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(path="/ukey/{ukey}")
+    public @ResponseBody
+    StationVO getStationByUkey(@RequestBody String userId, @PathVariable String ukey) {
+        StationVO response = restTemplate.postForObject(managementUrl + "ukey/" + ukey, userId, StationVO.class);
 
         return response;
     }

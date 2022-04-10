@@ -9,6 +9,7 @@ public class StationVO {
     private double energy;
     private int gridConnection;
     private int stationConnection;
+    private String ukey;
 
     public static StationVO fromMap(Map map){
         StationVO station = new StationVO();
@@ -18,6 +19,7 @@ public class StationVO {
         station.setEnergy((double) map.get("energy"));
         station.setGridConnection((int) map.get("gridConnection"));
         station.setStationConnection((int) map.get("stationConnection"));
+        station.setUkey((String) map.get("ukey"));
         return station;
     }
 
@@ -68,5 +70,13 @@ public class StationVO {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUkey() {
+        return ukey;
+    }
+
+    public void setUkey(String ukey) {
+        this.ukey = ukey;
     }
 }
