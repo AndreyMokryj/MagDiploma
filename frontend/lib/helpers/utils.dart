@@ -89,7 +89,7 @@ Future<List<Log>> getAlllTodayLogs(String stationId) async{
   return result;
 }
 
-Future<double> getRequiredPower(String stationId, {Panel panel}) async{
+Future<double> getRequiredPower({String stationId, Panel panel}) async{
   final power = panel == null
     ? await DBProvider.db.getPanelsTotalPower(stationId)
     : await DBProvider.db.getPanelPower(panel);
@@ -97,7 +97,7 @@ Future<double> getRequiredPower(String stationId, {Panel panel}) async{
   return power;
 }
 
-Future<double> getTodayProducedEnergy(String stationId, {Panel panel}) async{
+Future<double> getTodayProducedEnergy({String stationId, Panel panel}) async{
   final logs = panel == null
     ? await getAlllTodayLogs(stationId)
     : await getPanelTodayLogs(panel);
@@ -111,7 +111,7 @@ Future<double> getTodayProducedEnergy(String stationId, {Panel panel}) async{
   return work;
 }
 
-Future<double> getTodayGivenEnergy(String stationId, {Panel panel}) async{
+Future<double> getTodayGivenEnergy({String stationId, Panel panel}) async{
   final logs = panel == null
     ? await getAlllTodayLogs(stationId)
     : await getPanelTodayLogs(panel);
@@ -125,7 +125,7 @@ Future<double> getTodayGivenEnergy(String stationId, {Panel panel}) async{
   return work;
 }
 
-String formatDate( String date){
+String formatDate(String date){
   List<String> dates = date.split('-');
   final year = dates[0];
   final month = monthNames[dates[1]];
@@ -134,7 +134,7 @@ String formatDate( String date){
   return '$day $month $year';
 }
 
-String formatDateTime( String dateTime){
+String formatDateTime(String dateTime){
   final dateTimes = dateTime.split('T');
   final date = dateTimes[0];
   final time = dateTimes[1].substring(0, 5);
@@ -149,7 +149,7 @@ Future<String> getDateTime(String stationId) async{
   return formatDateTime(dt);
 }
 
-Future<double> getAccumulatedEnergy(BuildContext context, String ukey, {Panel panel}) async{
+Future<double> getAccumulatedEnergy(BuildContext context, String ukey) async{
   final user = Provider.of<LoginNotifier>(context, listen: false).user;
   final accumulator = await DBProvider.db.getStation(user.id, ukey);
 

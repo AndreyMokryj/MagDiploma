@@ -1,5 +1,6 @@
 import 'package:SUNMAX/helpers/constants.dart';
 import 'package:SUNMAX/helpers/styles.dart';
+import 'package:SUNMAX/route.dart';
 import 'package:SUNMAX/ui/widgets/refreshable_number_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:SUNMAX/database/database.dart';
@@ -9,8 +10,9 @@ import 'package:timer_builder/timer_builder.dart';
 
 class PanelWidget extends StatefulWidget{
   final Panel panel;
+  final String ukey;
 
-  const PanelWidget({Key key, this.panel}) : super(key: key);
+  const PanelWidget({Key key, this.panel, this.ukey}) : super(key: key);
 
   @override
   _PanelWidgetState createState() => _PanelWidgetState();
@@ -106,7 +108,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                       ),
                     ),
                     onPressed: (){
-                      Navigator.of(context).pushNamed("/details/${widget.panel.id}");
+                      Navigator.of(context).pushNamed("/${RoutePaths.stations}/${widget.ukey}/${RoutePaths.panels}/${widget.panel.id}");
                     },
                   ),
                 ),

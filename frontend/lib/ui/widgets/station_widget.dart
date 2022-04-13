@@ -1,4 +1,5 @@
 import 'package:SUNMAX/helpers/constants.dart';
+import 'package:SUNMAX/route.dart';
 import 'package:flutter/material.dart';
 import 'package:SUNMAX/database/database.dart';
 import 'package:SUNMAX/helpers/utils.dart';
@@ -31,9 +32,20 @@ class _StationWidgetState extends State<StationWidget> {
       children: <Widget>[
         Expanded(
           flex: 2,
-          child: Image.asset(
-            "assets/images/panels.png",
-            fit: BoxFit.fitWidth,
+          child: GestureDetector(
+            onTap: (){
+              Navigator.of(context).pushNamed("/${RoutePaths.stations}/${_accumulator.ukey}/${RoutePaths.panels}");
+            },
+            child: Column(
+              children: [
+                Image.asset(
+                  "assets/images/panels.png",
+                  fit: BoxFit.fitWidth,
+                ),
+
+                Text("Список панелей")
+              ],
+            ),
           ),
         ),
         Container(

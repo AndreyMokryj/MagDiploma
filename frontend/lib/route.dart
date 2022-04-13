@@ -54,35 +54,6 @@ Route<dynamic> getRoute(RouteSettings settings) {
       break;
   }
 
-
-
-  // if (path.startsWith('/details/')) {
-  //   String id = path.substring(9);
-  //   page = MainPage(
-  //     name: 'details',
-  //     panelId: id,
-  //   );
-  // }
-  // else {
-  //   switch (path) {
-  //     case '/' :
-  //     case '/stations' :
-  //       page = StationsList();
-  //       break;
-  //     case '/login' :
-  //       globalLoginNotifier.logOut();
-  //       page = LoginPage(
-  //         created: ((settings.arguments ?? "") as String) == "created",
-  //       );
-  //       break;
-  //     case '/panels' :
-  //       page = MainPage(
-  //         name: 'panels',
-  //       );
-  //       break;
-  //   }
-  // }
-
   return MaterialPageRoute<void>(
     settings: settings,
     builder: (BuildContext context) => Scaffold(body: page),

@@ -109,9 +109,9 @@ class DBProvider {
   }
 
 //  Stations
-  Future<List<Station>> getStations(String userId) async {
+  Future<List> getStations(String userId) async {
     final response = await http.post(
-      Uri.parse("${baseUrl}stations/userId/}"),
+      Uri.parse("${baseUrl}stations/userId/"),
       headers: {
         'content-type': 'application/json'
       },
@@ -119,7 +119,7 @@ class DBProvider {
     );
 
     final responseBody = jsonDecode(response.body);
-    return responseBody.map((e) => Station.fromMap(e)).toList();
+    return responseBody;
   }
 
   Future<Station> getStation(String userId, String ukey) async {
@@ -132,7 +132,7 @@ class DBProvider {
     );
 
     final responseBody = jsonDecode(response.body);
-    return responseBody.map((e) => Station.fromMap(e)).toList();
+    return Station.fromMap(responseBody);
   }
 
   Future<bool> switchGrid(Station station) async {

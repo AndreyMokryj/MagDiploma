@@ -26,16 +26,6 @@ class _PanelPageState extends State<PanelPage> {
   bool connected;
 
   @override
-  void initState() {
-    // final user =
-    // Future(() async{
-    //   await DBProvider.db.getStation(userId, ukey)
-    // });
-    // // _panel = widget.panel;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     User user = Provider.of<LoginNotifier>(context, listen: false).user;
 
@@ -114,6 +104,7 @@ class _PanelPageState extends State<PanelPage> {
                         children: <Widget>[
                           RefreshableNumberWidget(
                             future: getRequiredPower,
+                            stationId: panel.stationId,
                             panel: panel,
                           ),
                           Text(" W"),
@@ -230,6 +221,7 @@ class _PanelPageState extends State<PanelPage> {
                   height: 20,
                 ),
                 DiagramWidget(
+                  stationId: panel.stationId,
                   panel: panel,
                 ),
                 SizedBox(
@@ -240,6 +232,7 @@ class _PanelPageState extends State<PanelPage> {
                 ),
                 HistoryWidget(
                   panel: panel,
+                  stationId: panel.stationId,
                 ),
                 Divider(
                   thickness: 1.1,
@@ -247,6 +240,8 @@ class _PanelPageState extends State<PanelPage> {
               ],
             ),
           );
+        } else {
+          return Container();
         }
       },
     );

@@ -1,5 +1,6 @@
 import 'package:SUNMAX/helpers/constants.dart';
 import 'package:SUNMAX/helpers/utils.dart';
+import 'package:SUNMAX/model/station_model.dart';
 import 'package:SUNMAX/ui/main_page.dart';
 import 'package:SUNMAX/ui/widgets/diagram_widget.dart';
 import 'package:SUNMAX/ui/widgets/history_widget.dart';
@@ -40,16 +41,13 @@ class StationPage extends StatelessWidget{
       future: DBProvider.db.getStation(user.id, ukey),
       builder:(context, snapshot) {
         if (snapshot.hasData) {
+          Station station = snapshot.data as acc.Station;
           return SingleChildScrollView(
             child: Container(
               child: Column(
                 children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    child: Text("Моя станція")
-                  ),
                   StationWidget(
-                    accumulator: snapshot.data as acc.Station,
+                    accumulator: station,
                   ),
                   
                   SizedBox(
@@ -69,6 +67,7 @@ class StationPage extends StatelessWidget{
 
                             RefreshableNumberWidget(
                               future: getRequiredPower,
+                              stationId: station.id,
                             ),
                             Text(" W"),
                           ],
@@ -89,6 +88,7 @@ class StationPage extends StatelessWidget{
                           children: <Widget>[
                             RefreshableNumberWidget(
                               future: getAccumulatedEnergy,
+                              ukey: station.ukey,
                             ),
                             Text(" кВат * год"),
                           ],
@@ -111,6 +111,7 @@ class StationPage extends StatelessWidget{
                           children: <Widget>[
                             RefreshableNumberWidget(
                               future: getTodayProducedEnergy,
+                              stationId: station.id,
                             ),
                             Text(" кВат * год"),
                           ],
@@ -132,6 +133,7 @@ class StationPage extends StatelessWidget{
                           children: <Widget>[
                             RefreshableNumberWidget(
                               future: getTodayGivenEnergy,
+                              stationId: station.id,
                             ),
                             Text(" кВат * год"),
                           ],
@@ -145,7 +147,7 @@ class StationPage extends StatelessWidget{
                     height: 20,
                   ),
                   DiagramWidget(
-                    stationId: snapshot.id,
+                    stationId: station.id,
                   ),
                   SizedBox(
                     height: 20,
@@ -155,7 +157,7 @@ class StationPage extends StatelessWidget{
                   ),
 
                   HistoryWidget(
-                    stationId: snapshot.id,
+                    stationId: station.id,
                   ),
                   Divider(
                     thickness: 1.1,

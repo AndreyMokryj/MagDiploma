@@ -7,9 +7,11 @@ import 'package:SUNMAX/helpers/constants.dart';
 
 class RefreshableNumberWidget extends StatefulWidget {
   final Panel panel;
+  final String stationId;
+  final String ukey;
   final future;
 
-  const RefreshableNumberWidget({Key key, this.panel, this.future}) : super(key: key);
+  const RefreshableNumberWidget({Key key, this.panel, this.future, this.stationId, this.ukey}) : super(key: key);
 
   @override
   _RefreshableNumberWidgetState createState() => _RefreshableNumberWidgetState();
@@ -36,7 +38,9 @@ class _RefreshableNumberWidgetState extends State<RefreshableNumberWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: widget.future(context, panel: widget.panel),
+      future: widget.ukey == null
+          ? widget.future(stationId: widget.stationId, panel: widget.panel)
+          : widget.future(context, widget.ukey),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Text("${formatDouble(snapshot.data, 2)}");

@@ -10,11 +10,10 @@ class MainPage extends StatelessWidget{
   final onWillPop;
   final future;
   final builder;
-  final child;
   final bool automaticallyImplyLeading;
   final String title;
 
-  const MainPage({Key key, this.onWillPop, this.future, this.builder, this.automaticallyImplyLeading = true, this.title = "", this.child}) : super(key: key);
+  const MainPage({Key key, this.onWillPop, this.future, this.builder, this.automaticallyImplyLeading = true, this.title = ""}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +60,10 @@ class MainPage extends StatelessWidget{
                 flex: 4,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: future != null
-                      ? FutureBuilder(
-                          future: future,
-                          builder: builder,
-                        )
-                      : child,
+                  child: FutureBuilder(
+                    future: future,
+                    builder: builder,
+                  ),
                 ),
               ),
             ],
