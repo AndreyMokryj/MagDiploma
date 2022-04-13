@@ -5,7 +5,6 @@ import 'package:SUNMAX/model/log_model.dart';
 import 'package:SUNMAX/model/notifiers/login_notifier.dart';
 import 'package:SUNMAX/model/panel_model.dart';
 import 'package:provider/provider.dart';
-import 'package:timer_builder/timer_builder.dart';
 
 double getWidth(BuildContext context) => MediaQuery.of(context).size.width;
 double getHeight(BuildContext context) => MediaQuery.of(context).size.height;
@@ -46,12 +45,11 @@ Future<List<Log>> getPanelTodayLogs(Panel panel) async{
   return result;
 }
 
-Future<List<Log>> getAlllHistoryLogs(BuildContext context) async{
+Future<List<Log>> getAlllHistoryLogs(String stationId) async{
   List<Log> result = [];
 
-  final user = Provider.of<LoginNotifier>(context, listen: false).user;
-  final logProducedMaps = await DBProvider.db.getHistoryProducedLogs(user.station.id);
-  final logGivenMaps = await DBProvider.db.getHistoryGivenLogs(user.station.id);
+  final logProducedMaps = await DBProvider.db.getHistoryProducedLogs(stationId);
+  final logGivenMaps = await DBProvider.db.getHistoryGivenLogs(stationId);
 
   for(Map element in logGivenMaps) {
     Log resultLog = Log.fromMap(element);
@@ -64,17 +62,16 @@ Future<List<Log>> getAlllHistoryLogs(BuildContext context) async{
       }
     }
     result.add(resultLog);
-  };
+  }
 
   return result;
 }
 
-Future<List<Log>> getAlllTodayLogs(BuildContext context) async{
+Future<List<Log>> getAlllTodayLogs(String stationId) async{
   List<Log> result = [];
 
-  final user = Provider.of<LoginNotifier>(context, listen: false).user;
-  final logProducedMaps = await DBProvider.db.getTodayProducedLogs(user.station.id);
-  final logGivenMaps = await DBProvider.db.getTodayGivenLogs(user.station.id);
+  final logProducedMaps = await DBProvider.db.getTodayProducedLogs(stationId);
+  final logGivenMaps = await DBProvider.db.getTodayGivenLogs(stationId);
 
   logGivenMaps.forEach((element) {
     Log resultLog = Log.fromMap(element);
@@ -92,18 +89,17 @@ Future<List<Log>> getAlllTodayLogs(BuildContext context) async{
   return result;
 }
 
-Future<double> getRequiredPower(BuildContext context, {Panel panel}) async{
-  final user = Provider.of<LoginNotifier>(context, listen: false).user;
+Future<double> getRequiredPower(String stationId, {Panel panel}) async{
   final power = panel == null
-    ? await DBProvider.db.getPanelsTotalPower(user)
+    ? await DBProvider.db.getPanelsTotalPower(stationId)
     : await DBProvider.db.getPanelPower(panel);
 
   return power;
 }
 
-Future<double> getTodayProducedEnergy(BuildContext context, {Panel panel}) async{
+Future<double> getTodayProducedEnergy(String stationId, {Panel panel}) async{
   final logs = panel == null
-    ? await getAlllTodayLogs(context)
+    ? await getAlllTodayLogs(stationId)
     : await getPanelTodayLogs(panel);
 
   double work = 0.0;
@@ -115,9 +111,9 @@ Future<double> getTodayProducedEnergy(BuildContext context, {Panel panel}) async
   return work;
 }
 
-Future<double> getTodayGivenEnergy(BuildContext context, {Panel panel}) async{
+Future<double> getTodayGivenEnergy(String stationId, {Panel panel}) async{
   final logs = panel == null
-    ? await getAlllTodayLogs(context)
+    ? await getAlllTodayLogs(stationId)
     : await getPanelTodayLogs(panel);
 
   double work = 0.0;
@@ -147,23 +143,19 @@ String formatDateTime( String dateTime){
   return '${formatDate(date)} $time';
 }
 
-Future<String> getDateTime(BuildContext context) async{
-  final user = Provider.of<LoginNotifier>(context, listen: false).user;
-  final String dt = await DBProvider.db.getDateTime(user.station.id);
+Future<String> getDateTime(String stationId) async{
+  final String dt = await DBProvider.db.getDateTime(stationId);
 
   return formatDateTime(dt);
 }
 
-Future<double> getAccumulatedEnergy(BuildContext context, {Panel panel}) async{
+Future<double> getAccumulatedEnergy(BuildContext context, String ukey, {Panel panel}) async{
   final user = Provider.of<LoginNotifier>(context, listen: false).user;
-  final accumulator = await DBProvider.db.getStation(user.id);
+  final accumulator = await DBProvider.db.getStation(user.id, ukey);
 
   return accumulator.energy / 3600000;
 }
 
-Future<Panel> getPanelInfo(BuildContext context, {Panel panel}) async{
-  final user = Provider.of<LoginNotifier>(context, listen: false).user;
-  final panel1 = await DBProvider.db.getPanel(panel.id, user);
-
-  return panel1;
+Future<Panel> getPanelInfo(Panel panel) async{
+  return await DBProvider.db.getPanel(panel.id, panel.stationId);
 }

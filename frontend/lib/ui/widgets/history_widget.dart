@@ -5,8 +5,9 @@ import 'package:SUNMAX/model/panel_model.dart';
 
 class HistoryWidget extends StatefulWidget{
   final Panel panel;
+  final String stationId;
 
-  const HistoryWidget({Key key, this.panel}) : super(key: key);
+  const HistoryWidget({Key key, this.panel, this.stationId}) : super(key: key);
 
   @override
   _HistoryWidgetState createState() => _HistoryWidgetState();
@@ -49,7 +50,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
         showHistory ? FutureBuilder(
           future: widget.panel != null
             ? getPanelHistoryLogs(widget.panel)
-            : getAlllHistoryLogs(context),
+            : getAlllHistoryLogs(widget.stationId),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final logMaps = snapshot.data as List;

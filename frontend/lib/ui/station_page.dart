@@ -1,18 +1,22 @@
 import 'package:SUNMAX/helpers/constants.dart';
 import 'package:SUNMAX/helpers/utils.dart';
-import 'package:SUNMAX/views/diagram_widget.dart';
-import 'package:SUNMAX/views/history_widget.dart';
-import 'package:SUNMAX/views/refreshable_number_widget.dart';
+import 'package:SUNMAX/ui/main_page.dart';
+import 'package:SUNMAX/ui/widgets/diagram_widget.dart';
+import 'package:SUNMAX/ui/widgets/history_widget.dart';
+import 'package:SUNMAX/ui/widgets/refreshable_number_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:SUNMAX/database/database.dart';
 import 'package:SUNMAX/model/notifiers/login_notifier.dart';
 import 'package:SUNMAX/model/user_model.dart';
 import 'package:SUNMAX/model/station_model.dart' as acc;
-import 'package:SUNMAX/views/station_widget.dart';
+import 'package:SUNMAX/ui/widgets/station_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:timer_builder/timer_builder.dart';
 
 class StationPage extends StatelessWidget{
+  final String ukey;
+
+  const StationPage({Key key, this.ukey}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     User user = Provider.of<LoginNotifier>(context).user;
@@ -31,8 +35,9 @@ class StationPage extends StatelessWidget{
       count += 1;
     }
 
-    return FutureBuilder(
-      future: DBProvider.db.getStation(user.id),
+    return MainPage(
+      title: "Станція",
+      future: DBProvider.db.getStation(user.id, ukey),
       builder:(context, snapshot) {
         if (snapshot.hasData) {
           return SingleChildScrollView(
@@ -139,7 +144,9 @@ class StationPage extends StatelessWidget{
                   SizedBox(
                     height: 20,
                   ),
-                  DiagramWidget(),
+                  DiagramWidget(
+                    stationId: snapshot.id,
+                  ),
                   SizedBox(
                     height: 20,
                   ),
@@ -147,7 +154,9 @@ class StationPage extends StatelessWidget{
                     thickness: 1.1,
                   ),
 
-                  HistoryWidget(),
+                  HistoryWidget(
+                    stationId: snapshot.id,
+                  ),
                   Divider(
                     thickness: 1.1,
                   ),

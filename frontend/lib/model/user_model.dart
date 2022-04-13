@@ -1,14 +1,11 @@
-import 'package:SUNMAX/model/station_model.dart';
-
 class User{
   String id;
   String username;
   String password;
   String phone;
   String email;
-  Station station;
 
-  User({this.id, this.username, this.password, this.phone, this.email, this.station});
+  User({this.id, this.username, this.password, this.phone, this.email});
 
   Map<String, dynamic> toMap(){
     return {

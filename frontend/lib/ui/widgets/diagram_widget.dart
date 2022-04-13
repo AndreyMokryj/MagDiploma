@@ -10,8 +10,9 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 class DiagramWidget extends StatefulWidget {
   final Panel panel;
+  final String stationId;
 
-  const DiagramWidget({Key key, this.panel}) : super(key: key);
+  const DiagramWidget({Key key, this.panel, this.stationId}) : super(key: key);
 
   @override
   _DiagramWidgetState createState() => _DiagramWidgetState();
@@ -39,8 +40,7 @@ class _DiagramWidgetState extends State<DiagramWidget> {
   @override
   Widget build(BuildContext context) {
     double w = getWidth(context);
-    double h = getHeight(context);
-    future = widget.panel != null ? getPanelTodayLogs(widget.panel) : getAlllTodayLogs(context);
+    future = widget.panel != null ? getPanelTodayLogs(widget.panel) : getAlllTodayLogs(widget.stationId);
 
     return FutureBuilder(
     future: future,
@@ -86,7 +86,7 @@ class _DiagramWidgetState extends State<DiagramWidget> {
                 height: 5,
               ),
               FutureBuilder(
-                future: getDateTime(context),
+                future: getDateTime(widget.stationId),
                 builder: (context1, snapshot1){
                   return Text(snapshot1.hasData ? snapshot1.data : "");
                 },

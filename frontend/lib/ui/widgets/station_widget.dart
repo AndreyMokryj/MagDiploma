@@ -15,12 +15,10 @@ class StationWidget extends StatefulWidget{
 
 class _StationWidgetState extends State<StationWidget> {
   acc.Station _accumulator;
-  bool showHistory;
 
   @override
   void initState() {
     _accumulator = widget.accumulator;
-    showHistory = false;
     super.initState();
   }
 
