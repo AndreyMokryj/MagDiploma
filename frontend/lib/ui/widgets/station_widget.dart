@@ -1,5 +1,6 @@
 import 'package:SUNMAX/helpers/constants.dart';
 import 'package:SUNMAX/route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:SUNMAX/database/database.dart';
 import 'package:SUNMAX/helpers/utils.dart';
@@ -38,12 +39,24 @@ class _StationWidgetState extends State<StationWidget> {
             },
             child: Column(
               children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.more_horiz,
+                    color: Colors.transparent,
+                  ),
+                ),
                 Image.asset(
                   "assets/images/panels.png",
                   fit: BoxFit.fitWidth,
                 ),
-
-                Text("Список панелей")
+                Align(
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.more_horiz,
+                    color: Colors.grey,
+                  ),
+                ),
               ],
             ),
           ),
