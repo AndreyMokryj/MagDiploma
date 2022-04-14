@@ -26,6 +26,8 @@ public class StationE {
     private int stationConnection;
 
     private String ukey;
+    private String name;
+    private String location;
 
     public static StationE fromVO(StationVO stationVO){
         StationE stationE = new StationE();
@@ -36,6 +38,8 @@ public class StationE {
         stationE.setGridConnection(stationVO.getGridConnection());
         stationE.setStationConnection(stationVO.getStationConnection());
         stationE.setUkey(stationVO.getUkey());
+        stationE.setName(stationVO.getName());
+        stationE.setLocation(stationVO.getLocation());
         return stationE;
     }
 
@@ -93,5 +97,21 @@ public class StationE {
 
     public void setUkey(String ukey) {
         this.ukey = ukey;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }
