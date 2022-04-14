@@ -1,7 +1,7 @@
 import 'package:SUNMAX/helpers/constants.dart';
 import 'package:SUNMAX/helpers/utils.dart';
 import 'package:SUNMAX/model/station_model.dart';
-import 'package:SUNMAX/ui/main_page.dart';
+import 'package:SUNMAX/ui/main_view.dart';
 import 'package:SUNMAX/ui/widgets/diagram_widget.dart';
 import 'package:SUNMAX/ui/widgets/history_widget.dart';
 import 'package:SUNMAX/ui/widgets/refreshable_number_widget.dart';
@@ -20,10 +20,9 @@ class StationPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    User user = Provider.of<LoginNotifier>(context).user;
+    User user = Provider.of<LoginNotifier>(context, listen: false).user;
 
     double w = getWidth(context);
-    double h = getHeight(context);
 
     int count = 1;
     if(w >= smallLimit){
@@ -36,7 +35,7 @@ class StationPage extends StatelessWidget{
       count += 1;
     }
 
-    return MainPage(
+    return MainView(
       title: "Станція",
       future: DBProvider.db.getStation(user.id, ukey),
       builder:(context, snapshot) {

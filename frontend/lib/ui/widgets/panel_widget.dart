@@ -29,9 +29,6 @@ class _PanelWidgetState extends State<PanelWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double w = getWidth(context);
-    double h = getHeight(context);
-
     return Container(
       margin: EdgeInsets.only(
         top: 5,

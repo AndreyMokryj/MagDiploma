@@ -2,8 +2,6 @@ import 'package:SUNMAX/helpers/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:SUNMAX/helpers/constants.dart';
 import 'package:SUNMAX/helpers/utils.dart';
-import 'package:SUNMAX/model/notifiers/login_notifier.dart';
-import 'package:provider/provider.dart';
 
 class MenuWidget extends StatelessWidget{
   @override
@@ -34,24 +32,13 @@ class MenuWidget extends StatelessWidget{
             },
           ),
           ListTile(
-            leading: Icon(Icons.power),
-            title: Text(
-              "Мої панелі",
-              style: normalTextStyle,
-            ),
-            onTap: (){
-              Navigator.of(context).pushNamed('/panels');
-            },
-          ),
-          ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text(
               "Вихід",
               style: normalTextStyle,
             ),
-            onTap: (){
-              Provider.of<LoginNotifier>(context, listen: false).logOut();
-              Navigator.of(context).pushNamed('/login');            },
+            onTap: () {
+              Navigator.of(context).pushNamed('/login');},
           ),
         ],
       ),

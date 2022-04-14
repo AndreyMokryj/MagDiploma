@@ -1,5 +1,5 @@
 import 'package:SUNMAX/model/station_model.dart';
-import 'package:SUNMAX/ui/main_page.dart';
+import 'package:SUNMAX/ui/main_view.dart';
 import 'package:SUNMAX/ui/widgets/station_card.dart';
 import 'package:flutter/material.dart';
 import 'package:SUNMAX/database/database.dart';
@@ -12,11 +12,11 @@ class StationsList extends StatelessWidget{
   Widget build(BuildContext context) {
     User user = Provider.of<LoginNotifier>(context, listen: false).user;
 
-    return MainPage(
+    return MainView(
       title: "Мої станції",
-      future: DBProvider.db.getStations(user?.id),
-      builder: (context, snapshot){
-        if (snapshot.hasData){
+      future: DBProvider.db.getStations(user.id),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
           final stationMaps = (snapshot.data as List);
 
           if (stationMaps.length > 0) {
@@ -38,7 +38,7 @@ class StationsList extends StatelessWidget{
             );
           }
         }
-        else{
+        else {
           return Container();
         }
       },

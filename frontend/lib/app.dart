@@ -1,7 +1,6 @@
 import 'package:SUNMAX/helpers/styles.dart';
 import 'package:SUNMAX/model/notifiers/login_notifier.dart';
 import 'package:SUNMAX/route.dart';
-import 'package:SUNMAX/ui/stations_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +25,7 @@ class App extends StatelessWidget {
             button: normalTextStyle,
           ),
         ),
-        home: StationsList(),
+        // home: StationsList(),
         initialRoute: '/',
         onGenerateRoute: getRoute,
       ),

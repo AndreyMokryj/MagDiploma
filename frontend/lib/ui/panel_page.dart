@@ -2,7 +2,7 @@ import 'package:SUNMAX/database/database.dart';
 import 'package:SUNMAX/helpers/constants.dart';
 import 'package:SUNMAX/model/notifiers/login_notifier.dart';
 import 'package:SUNMAX/model/user_model.dart';
-import 'package:SUNMAX/ui/main_page.dart';
+import 'package:SUNMAX/ui/main_view.dart';
 import 'package:SUNMAX/ui/widgets/refreshable_number_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:SUNMAX/helpers/utils.dart';
@@ -42,7 +42,7 @@ class _PanelPageState extends State<PanelPage> {
       count += 1;
     }
 
-    return MainPage(
+    return MainView(
       title: "Інформація про панель",
       future: DBProvider.db.getStation(user.id, widget.ukey)
           .then((value) => DBProvider.db.getPanel(widget.panelId, value.id)),

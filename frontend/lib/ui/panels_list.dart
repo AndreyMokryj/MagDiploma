@@ -1,6 +1,6 @@
 import 'package:SUNMAX/model/notifiers/login_notifier.dart';
 import 'package:SUNMAX/model/user_model.dart';
-import 'package:SUNMAX/ui/main_page.dart';
+import 'package:SUNMAX/ui/main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:SUNMAX/database/database.dart';
 import 'package:SUNMAX/model/panel_model.dart';
@@ -16,7 +16,7 @@ class PanelsList extends StatelessWidget{
   Widget build(BuildContext context) {
     User user = Provider.of<LoginNotifier>(context, listen: false).user;
 
-    return MainPage(
+    return MainView(
       title: "Панелі станції",
       future: DBProvider.db.getStation(user.id, ukey)
           .then((value) => DBProvider.db.getPanels(value.id)),

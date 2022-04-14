@@ -4,6 +4,7 @@ import 'package:SUNMAX/ui/panel_page.dart';
 import 'package:SUNMAX/ui/panels_list.dart';
 import 'package:SUNMAX/ui/station_page.dart';
 import 'package:SUNMAX/ui/stations_list.dart';
+import 'package:SUNMAX/ui/wrap_page.dart';
 import 'package:flutter/material.dart';
 
 class RoutePaths {
@@ -24,10 +25,12 @@ Route<dynamic> getRoute(RouteSettings settings) {
           break;
         case RoutePaths.login:
           globalLoginNotifier.logOut();
-          page = LoginPage(
-            created: ((settings.arguments ?? "") as String) == "created",
+          return MaterialPageRoute<void>(
+            settings: settings,
+            builder: (BuildContext context) => LoginPage(
+              created: ((settings.arguments ?? "") as String) == "created",
+            ),
           );
-          break;
       }
       break;
     case 2:
@@ -52,10 +55,16 @@ Route<dynamic> getRoute(RouteSettings settings) {
         );
       }
       break;
+    default:
+      settings = settings.copyWith(
+        name: "/stations",
+      );
+      page = StationsList();
+      break;
   }
 
   return MaterialPageRoute<void>(
     settings: settings,
-    builder: (BuildContext context) => Scaffold(body: page),
+    builder: (BuildContext context) => WrapPage(child: page),
   );
 }

@@ -25,7 +25,6 @@ class _HistoryWidgetState extends State<HistoryWidget> {
   @override
   Widget build(BuildContext context) {
     double w = getWidth(context);
-    double h = getHeight(context);
 
     int count = 1;
     if(w >= mediumLimit){
