@@ -63,8 +63,15 @@ Route<dynamic> getRoute(RouteSettings settings) {
       break;
   }
 
-  return MaterialPageRoute<void>(
-    settings: settings,
-    builder: (BuildContext context) => WrapPage(child: page),
-  );
+  if(settings.arguments == true) {
+    return MaterialPageRoute<void>(
+      settings: settings,
+      builder: (BuildContext context) => WrapPage(child: page),
+    );
+  } else {
+    return PageRouteBuilder(
+      settings: settings,
+      pageBuilder: (BuildContext context, a1, a2) => WrapPage(child: page),
+    );
+  }
 }

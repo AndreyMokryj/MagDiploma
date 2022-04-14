@@ -45,10 +45,7 @@ class _LoginPageState extends State<LoginPage> {
     double w = getWidth(context);
 
     return WillPopScope(
-      onWillPop: () {
-        Navigator.of(context).popUntil((route) => false);
-        Navigator.of(context).pop();
-      },
+      onWillPop: () {},
       child: Scaffold(
         primary: false,
         body: SafeArea(
@@ -141,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
       User regUser = await DBProvider.db.checkUser(newUser);
       if (regUser != null) {
         Provider.of<LoginNotifier>(context, listen: false).logIn(regUser);
-        Navigator.of(context).pushNamed('/');
+        Navigator.of(context).pushNamed('/', arguments: true);
       }
       else{
         setState(() {
