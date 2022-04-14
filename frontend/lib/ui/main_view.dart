@@ -15,14 +15,18 @@ class MainView extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     double w = getWidth(context);
+    final _onWillPop = onWillPop ?? () {
+      Navigator.of(context).pop();
+    };
 
     return WillPopScope(
-      onWillPop: onWillPop ?? () {
-        Navigator.of(context).pop();
-      },
+      onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: automaticallyImplyLeading,
+          leading: automaticallyImplyLeading ? IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: _onWillPop,
+          ) : null,
           title: Text(title),
           centerTitle: true,
           actions: <Widget>[

@@ -1,5 +1,6 @@
 import 'package:SUNMAX/model/notifiers/login_notifier.dart';
 import 'package:SUNMAX/model/user_model.dart';
+import 'package:SUNMAX/route.dart';
 import 'package:SUNMAX/ui/main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:SUNMAX/database/database.dart';
@@ -18,6 +19,10 @@ class PanelsList extends StatelessWidget{
 
     return MainView(
       title: "Панелі станції",
+      onWillPop: (){
+        Navigator.of(context).pushNamed("/${RoutePaths.stations}/${ukey}");
+        return Future.value(true);
+      },
       future: DBProvider.db.getStation(user.id, ukey)
           .then((value) => DBProvider.db.getPanels(value.id)),
       builder: (context, snapshot){

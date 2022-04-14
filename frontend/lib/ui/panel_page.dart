@@ -2,6 +2,7 @@ import 'package:SUNMAX/database/database.dart';
 import 'package:SUNMAX/helpers/constants.dart';
 import 'package:SUNMAX/model/notifiers/login_notifier.dart';
 import 'package:SUNMAX/model/user_model.dart';
+import 'package:SUNMAX/route.dart';
 import 'package:SUNMAX/ui/main_view.dart';
 import 'package:SUNMAX/ui/widgets/refreshable_number_widget.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,10 @@ class _PanelPageState extends State<PanelPage> {
 
     return MainView(
       title: "Інформація про панель",
+      onWillPop: (){
+        Navigator.of(context).pushNamed("/${RoutePaths.stations}/${widget.ukey}/${RoutePaths.panels}");
+        return Future.value(true);
+      },
       future: DBProvider.db.getStation(user.id, widget.ukey)
           .then((value) => DBProvider.db.getPanel(widget.panelId, value.id)),
       builder: (context, panelSnapshot) {

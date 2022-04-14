@@ -1,6 +1,7 @@
 import 'package:SUNMAX/helpers/constants.dart';
 import 'package:SUNMAX/helpers/utils.dart';
 import 'package:SUNMAX/model/station_model.dart';
+import 'package:SUNMAX/route.dart';
 import 'package:SUNMAX/ui/main_view.dart';
 import 'package:SUNMAX/ui/widgets/diagram_widget.dart';
 import 'package:SUNMAX/ui/widgets/history_widget.dart';
@@ -36,6 +37,11 @@ class StationPage extends StatelessWidget{
     }
 
     return MainView(
+      automaticallyImplyLeading: true,
+      onWillPop: (){
+        Navigator.of(context).pushNamed("/${RoutePaths.stations}");
+        return Future.value(true);
+      },
       title: "Станція",
       future: DBProvider.db.getStation(user.id, ukey),
       builder:(context, snapshot) {

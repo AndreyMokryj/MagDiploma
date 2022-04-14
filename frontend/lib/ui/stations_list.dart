@@ -1,4 +1,5 @@
 import 'package:SUNMAX/model/station_model.dart';
+import 'package:SUNMAX/route.dart';
 import 'package:SUNMAX/ui/main_view.dart';
 import 'package:SUNMAX/ui/widgets/station_card.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,12 @@ class StationsList extends StatelessWidget{
 
     return MainView(
       title: "Мої станції",
+      onWillPop: (){
+        Navigator.of(context).pushNamed("/${RoutePaths.login}");
+        return Future.value(true);
+      },
       future: DBProvider.db.getStations(user.id),
+      automaticallyImplyLeading: false,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final stationMaps = (snapshot.data as List);
