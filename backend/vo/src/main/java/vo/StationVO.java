@@ -11,7 +11,6 @@ public class StationVO {
     private int stationConnection;
     private String ukey;
     private String name;
-    private String location;
 
     public static StationVO fromMap(Map map){
         StationVO station = new StationVO();
@@ -23,7 +22,6 @@ public class StationVO {
         station.setStationConnection((int) map.get("stationConnection"));
         station.setUkey((String) map.get("ukey"));
         station.setName((String) map.get("name"));
-        station.setLocation((String) map.get("location"));
         return station;
     }
 
@@ -90,13 +88,5 @@ public class StationVO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 }
