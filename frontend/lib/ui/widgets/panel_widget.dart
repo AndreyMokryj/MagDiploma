@@ -54,7 +54,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                   children: <Widget>[
                     Text("${_panel.name}"),
                     SizedBox(
-                      width: 30,
+                      width: 50,
                     ),
                     RefreshableNumberWidget(
                       future: getRequiredPower,
@@ -72,16 +72,33 @@ class _PanelWidgetState extends State<PanelWidget> {
                   builder : (context) => FutureBuilder(
                     future: getPanelInfo(_panel),
                     builder: (context, snapshot) {
-                      return Text(
-                        "Азимут: ${snapshot.data?.azimuth}, Висота: ${snapshot.data?.altitude}",
-                        style: lightTextStyle,
+                      return Row(
+                        children: [
+                          Text(
+                            "Азимут: ${snapshot.data?.azimuth}",
+                            style: lightTextStyle,
+                          ),
+                          SizedBox(
+                            width: 30,
+                          ),
+                          Text(
+                            "Висота: ${snapshot.data?.altitude}",
+                            style: lightTextStyle,
+                          ),
+                        ],
                       );
                     }
                   ),
                 ),
+                SizedBox(
+                  height: 3,
+                ),
                 Text(
                   _panel.model,
                   style: lightTextStyle,
+                ),
+                SizedBox(
+                  height: 3,
                 ),
                 Text(
                   "${_panel.nominalPower} W",
@@ -89,14 +106,16 @@ class _PanelWidgetState extends State<PanelWidget> {
                 ),
                 Container(
                   margin: EdgeInsets.only(
-                    top: 5,
+                    top: 15,
                     left: 10,
                     bottom: 5,
                   ),
-                  child: FlatButton(
-                    color: Colors.red,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                      ),
                     ),
                     child: Text(
                       "Деталі",
