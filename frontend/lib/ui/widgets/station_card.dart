@@ -12,17 +12,16 @@ class StationCard extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
+      borderRadius: BorderRadius.circular(10),
+      hoverColor: Colors.orange.withOpacity(0.12),
+      splashColor: Colors.orange.withOpacity(0.12),
+      highlightColor: Colors.orange.withOpacity(0.12),
+      focusColor: Colors.orange.withOpacity(0.12),
       onTap: (){
         Navigator.of(context).pushNamed("/stations/${station.ukey}");
       },
       child: Container(
-        margin: EdgeInsets.only(
-          top: 5,
-          left: 5,
-          right: 5,
-          bottom: 10,
-        ),
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),

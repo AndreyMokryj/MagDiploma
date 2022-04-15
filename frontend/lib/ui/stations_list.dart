@@ -43,6 +43,7 @@ class StationsList extends StatelessWidget{
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,
               childAspectRatio: 1.5,
+              padding: EdgeInsets.all(5),
               children: stationMaps.map((map) {
                 Station station = Station.fromMap(map);
 
@@ -51,15 +52,6 @@ class StationsList extends StatelessWidget{
                 );
               }).toList(),
               physics: NeverScrollableScrollPhysics(),
-            );
-            return Column(
-              children: stationMaps.map((map) {
-                Station station = Station.fromMap(map);
-
-                return StationCard(
-                  station: station,
-                );
-              }).toList(),
             );
           }
           else {

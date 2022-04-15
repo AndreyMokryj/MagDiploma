@@ -1,6 +1,5 @@
 import 'package:SUNMAX/helpers/constants.dart';
 import 'package:SUNMAX/route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:SUNMAX/database/database.dart';
 import 'package:SUNMAX/helpers/utils.dart';
@@ -19,6 +18,8 @@ class StationWidget extends StatefulWidget{
 class _StationWidgetState extends State<StationWidget> {
   Station _station;
   bool interactive = false;
+  Color inkWellColor = Colors.black12;
+  Color inkWellBatteryColor = Colors.blueAccent.withOpacity(0.12);
 
   @override
   void initState() {
@@ -36,10 +37,14 @@ class _StationWidgetState extends State<StationWidget> {
       children: <Widget>[
         Expanded(
           flex: 2,
-          child: GestureDetector(
+          child: InkWell(
             onTap: interactive ? (){
               Navigator.of(context).pushNamed("/${RoutePaths.stations}/${_station.ukey}/${RoutePaths.panels}");
             } : null,
+            hoverColor: inkWellBatteryColor,
+            splashColor: inkWellBatteryColor,
+            highlightColor: inkWellBatteryColor,
+            focusColor: inkWellBatteryColor,
             child: Column(
               children: [
                 Align(
@@ -57,7 +62,7 @@ class _StationWidgetState extends State<StationWidget> {
                   alignment: Alignment.center,
                   child: Icon(
                     Icons.more_horiz,
-                    color: interactive ? Colors.grey : Colors.transparent,
+                    color: interactive ? Colors.blueAccent : Colors.transparent,
                   ),
                 ),
               ],
@@ -71,15 +76,18 @@ class _StationWidgetState extends State<StationWidget> {
         ),
         Expanded(
           flex: w > mediumLimit && interactive ? 0 : 1,
-          child: FlatButton(
-            padding: EdgeInsets.zero,
+          child: InkWell(
+            hoverColor: inkWellColor,
+            splashColor: inkWellColor,
+            highlightColor: inkWellColor,
+            focusColor: inkWellColor,
             child: Image.asset(
               _station.stationConnection == 1
                 ? "assets/images/switch/h_switch_on.png"
                 : "assets/images/switch/h_switch_off.png",
               fit: BoxFit.fitWidth,
             ),
-            onPressed: interactive ? () async {
+            onTap: interactive ? () async {
               _station.stationConnection =
                 1 - _station.stationConnection;
               await DBProvider.db.switchStation(_station);
@@ -108,15 +116,18 @@ class _StationWidgetState extends State<StationWidget> {
         ),
         Expanded(
           flex: w > mediumLimit && interactive ? 0 : 1,
-          child: FlatButton(
-            padding: EdgeInsets.zero,
+          child: InkWell(
+            hoverColor: inkWellColor,
+            splashColor: inkWellColor,
+            highlightColor: inkWellColor,
+            focusColor: inkWellColor,
             child: Image.asset(
               _station.gridConnection == 1
                 ? "assets/images/switch/h_switch_on.png"
                 : "assets/images/switch/h_switch_off.png",
               fit: BoxFit.fitWidth,
             ),
-            onPressed: interactive ? () async {
+            onTap: interactive ? () async {
               _station.gridConnection = 1 - _station.gridConnection;
               await DBProvider.db.switchGrid(_station);
 
