@@ -1,5 +1,5 @@
-import 'package:SUNMAX/model/notifiers/login_notifier.dart';
-import 'package:SUNMAX/model/user_model.dart';
+import 'package:SUNMAX/helpers/utils.dart';
+import 'package:SUNMAX/model/notifiers/name_notifier.dart';
 import 'package:SUNMAX/route.dart';
 import 'package:SUNMAX/ui/main_view.dart';
 import 'package:flutter/material.dart';
@@ -15,15 +15,15 @@ class PanelsList extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    User user = Provider.of<LoginNotifier>(context, listen: false).user;
+    String stationName = Provider.of<NameNotifier>(context).name;
 
     return MainView(
-      title: "Панелі станції",
+      title: "Панелі станції ${stationName ?? ""}",
       onWillPop: (){
         Navigator.of(context).pushNamed("/${RoutePaths.stations}/${ukey}");
         return Future.value(true);
       },
-      future: DBProvider.db.getStation(user.id, ukey)
+      future: getStation(context, ukey)
           .then((value) => DBProvider.db.getPanels(value.id)),
       builder: (context, snapshot){
         if (snapshot.hasData){
