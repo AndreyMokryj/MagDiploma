@@ -12,6 +12,7 @@ class App extends StatelessWidget {
       value: globalLoginNotifier,
       child: MaterialApp(
         title: 'SUNMAX',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
           textTheme: TextTheme(
