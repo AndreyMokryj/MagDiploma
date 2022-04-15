@@ -56,7 +56,7 @@ class _PanelPageState extends State<PanelPage> {
           Panel panel = panelSnapshot.data;
           connected = panel.connected == 1;
 
-          return SingleChildScrollView(
+          return Container(
             padding: EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

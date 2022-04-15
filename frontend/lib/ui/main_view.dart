@@ -16,6 +16,8 @@ class MainView extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     double w = getWidth(context);
+    double h = getHeight(context);
+
     final _onWillPop = onWillPop ?? () {
       Navigator.of(context).pop();
     };
@@ -72,30 +74,49 @@ class MainView extends StatelessWidget{
                 ),
           ],
         ),
-        body: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            w > largeLimit ?
-            Expanded(
-              flex: 1,
-              child: Container(),
-            ) : Container(),
-            Expanded(
-              flex: 8,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: FutureBuilder(
-                  future: future,
-                  builder: builder,
+        backgroundColor: w > largeLimit ? Color.fromRGBO(190, 190, 190, 1.0) : Colors.white,
+        body: SingleChildScrollView(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              w > largeLimit ?
+              Expanded(
+                flex: 1,
+                child: Container(),
+              ) : Container(),
+              Expanded(
+                flex: 8,
+                child: Container(
+                  constraints: BoxConstraints(
+                    minHeight: h - kToolbarHeight,
+                  ),
+                  child: w > largeLimit ? Material(
+                    color: Colors.white,
+                    shadowColor: Colors.black,
+                    elevation: 10.0,
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FutureBuilder(
+                        future: future,
+                        builder: builder,
+                      ),
+                    ),
+                  ) : Container(
+                    padding: const EdgeInsets.all(8.0),
+                    child: FutureBuilder(
+                      future: future,
+                      builder: builder,
+                    ),
+                  ),
                 ),
               ),
-            ),
-            w > largeLimit ?
-            Expanded(
-              flex: 1,
-              child: Container(),
-            ) : Container(),
-          ],
+              w > largeLimit ?
+              Expanded(
+                flex: 1,
+                child: Container(),
+              ) : Container(),
+            ],
+          ),
         ),
 
         endDrawer: w <= largeLimit ? Drawer(

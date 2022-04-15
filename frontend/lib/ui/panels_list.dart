@@ -30,17 +30,15 @@ class PanelsList extends StatelessWidget{
           final panelMaps = (snapshot.data as List);
 
           if (panelMaps.length > 0) {
-            return SingleChildScrollView(
-              child: Column(
-                children: panelMaps.map((map) {
-                  Panel panel = Panel.fromMap(map);
+            return Column(
+              children: panelMaps.map((map) {
+                Panel panel = Panel.fromMap(map);
 
-                  return PanelWidget(
-                    panel: panel,
-                    ukey: ukey,
-                  );
-                }).toList(),
-              ),
+                return PanelWidget(
+                  panel: panel,
+                  ukey: ukey,
+                );
+              }).toList(),
             );
           }
           else {

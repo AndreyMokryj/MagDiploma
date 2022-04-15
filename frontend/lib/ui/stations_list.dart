@@ -26,16 +26,14 @@ class StationsList extends StatelessWidget{
           final stationMaps = (snapshot.data as List);
 
           if (stationMaps.length > 0) {
-            return SingleChildScrollView(
-              child: Column(
-                children: stationMaps.map((map) {
-                  Station station = Station.fromMap(map);
+            return Column(
+              children: stationMaps.map((map) {
+                Station station = Station.fromMap(map);
 
-                  return StationCard(
-                    station: station,
-                  );
-                }).toList(),
-              ),
+                return StationCard(
+                  station: station,
+                );
+              }).toList(),
             );
           }
           else {
