@@ -12,13 +12,32 @@ class MenuWidget extends StatelessWidget{
       color: Color.fromRGBO(180, 180, 180, 1),
       child: ListView(
         children: <Widget>[
-          w <= largeLimit ? Align(
-            alignment: Alignment.centerLeft,
-            child: IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: (){
-                Navigator.of(context).pop();
-              },
+          w <= largeLimit ? Container(
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                    icon: Icon(Icons.menu),
+                    onPressed: (){
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    height: kToolbarHeight - 12,
+                    margin: EdgeInsets.only(
+                      bottom: 20,
+                    ),
+                    child: Image.asset(
+                      "assets/images/logo.png",
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                )
+              ],
             ),
           ) : Container(),
           ListTile(
