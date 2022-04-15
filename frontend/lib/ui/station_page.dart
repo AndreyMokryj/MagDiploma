@@ -50,7 +50,7 @@ class StationPage extends StatelessWidget{
           return Column(
             children: <Widget>[
               StationWidget(
-                accumulator: station,
+                station: station,
               ),
 
               SizedBox(

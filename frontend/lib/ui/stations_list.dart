@@ -1,3 +1,5 @@
+import 'package:SUNMAX/helpers/constants.dart';
+import 'package:SUNMAX/helpers/utils.dart';
 import 'package:SUNMAX/model/station_model.dart';
 import 'package:SUNMAX/route.dart';
 import 'package:SUNMAX/ui/main_view.dart';
@@ -13,6 +15,15 @@ class StationsList extends StatelessWidget{
   Widget build(BuildContext context) {
     User user = Provider.of<LoginNotifier>(context, listen: false).user;
 
+    int count = 1;
+    double w = getWidth(context);
+    if (w > smallLimit) {
+      count += 1;
+    }
+    if (w > mediumLimit) {
+      count += 1;
+    }
+
     return MainView(
       title: "Мої станції",
       onWillPop: (){
@@ -26,6 +37,21 @@ class StationsList extends StatelessWidget{
           final stationMaps = (snapshot.data as List);
 
           if (stationMaps.length > 0) {
+            return GridView.count(
+              crossAxisCount: count,
+              shrinkWrap: true,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              childAspectRatio: 1.5,
+              children: stationMaps.map((map) {
+                Station station = Station.fromMap(map);
+
+                return StationCard(
+                  station: station,
+                );
+              }).toList(),
+              physics: NeverScrollableScrollPhysics(),
+            );
             return Column(
               children: stationMaps.map((map) {
                 Station station = Station.fromMap(map);

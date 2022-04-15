@@ -151,9 +151,9 @@ Future<String> getDateTime(String stationId) async{
 
 Future<double> getAccumulatedEnergy(BuildContext context, String ukey) async{
   final user = Provider.of<LoginNotifier>(context, listen: false).user;
-  final accumulator = await DBProvider.db.getStation(user.id, ukey);
+  final station = await DBProvider.db.getStation(user.id, ukey);
 
-  return accumulator.energy / 3600000;
+  return station.energy / 3600000;
 }
 
 Future<Panel> getPanelInfo(Panel panel) async{

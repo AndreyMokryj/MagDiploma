@@ -4,23 +4,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:SUNMAX/database/database.dart';
 import 'package:SUNMAX/helpers/utils.dart';
-import 'package:SUNMAX/model/station_model.dart' as acc;
+import 'package:SUNMAX/model/station_model.dart';
 
 class StationWidget extends StatefulWidget{
-  final acc.Station accumulator;
+  final Station station;
+  final bool primary;
 
-  const StationWidget({Key key, this.accumulator}) : super(key: key);
+  const StationWidget({Key key, this.station, this.primary = true}) : super(key: key);
 
   @override
   _StationWidgetState createState() => _StationWidgetState();
 }
 
 class _StationWidgetState extends State<StationWidget> {
-  acc.Station _accumulator;
+  Station _station;
+  bool interactive = false;
 
   @override
   void initState() {
-    _accumulator = widget.accumulator;
+    _station = widget.station;
+    interactive = widget.primary;
     super.initState();
   }
 
@@ -34,9 +37,9 @@ class _StationWidgetState extends State<StationWidget> {
         Expanded(
           flex: 2,
           child: GestureDetector(
-            onTap: (){
-              Navigator.of(context).pushNamed("/${RoutePaths.stations}/${_accumulator.ukey}/${RoutePaths.panels}");
-            },
+            onTap: interactive ? (){
+              Navigator.of(context).pushNamed("/${RoutePaths.stations}/${_station.ukey}/${RoutePaths.panels}");
+            } : null,
             child: Column(
               children: [
                 Align(
@@ -54,7 +57,7 @@ class _StationWidgetState extends State<StationWidget> {
                   alignment: Alignment.center,
                   child: Icon(
                     Icons.more_horiz,
-                    color: Colors.grey,
+                    color: interactive ? Colors.grey : Colors.transparent,
                   ),
                 ),
               ],
@@ -67,23 +70,23 @@ class _StationWidgetState extends State<StationWidget> {
           color: Colors.black,
         ),
         Expanded(
-          flex: w > mediumLimit ? 0 : 1,
+          flex: w > mediumLimit && interactive ? 0 : 1,
           child: FlatButton(
             padding: EdgeInsets.zero,
             child: Image.asset(
-              _accumulator.stationConnection == 1
+              _station.stationConnection == 1
                 ? "assets/images/switch/h_switch_on.png"
                 : "assets/images/switch/h_switch_off.png",
               fit: BoxFit.fitWidth,
             ),
-            onPressed: () async {
-              _accumulator.stationConnection =
-                1 - _accumulator.stationConnection;
-              await DBProvider.db.switchStation(_accumulator);
+            onPressed: interactive ? () async {
+              _station.stationConnection =
+                1 - _station.stationConnection;
+              await DBProvider.db.switchStation(_station);
               setState(() {
-                _accumulator = _accumulator;
+                _station = _station;
               });
-            },
+            } : null,
           ),
         ),
         Container(
@@ -104,23 +107,23 @@ class _StationWidgetState extends State<StationWidget> {
           color: Colors.black,
         ),
         Expanded(
-          flex: w > mediumLimit ? 0 : 1,
+          flex: w > mediumLimit && interactive ? 0 : 1,
           child: FlatButton(
             padding: EdgeInsets.zero,
             child: Image.asset(
-              _accumulator.gridConnection == 1
+              _station.gridConnection == 1
                 ? "assets/images/switch/h_switch_on.png"
                 : "assets/images/switch/h_switch_off.png",
               fit: BoxFit.fitWidth,
             ),
-            onPressed: () async {
-              _accumulator.gridConnection = 1 - _accumulator.gridConnection;
-              await DBProvider.db.switchGrid(_accumulator);
+            onPressed: interactive ? () async {
+              _station.gridConnection = 1 - _station.gridConnection;
+              await DBProvider.db.switchGrid(_station);
 
               setState(() {
-                _accumulator = _accumulator;
+                _station = _station;
               });
-            },
+            } : null,
           ),
         ),
         Container(
