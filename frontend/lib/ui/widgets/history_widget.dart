@@ -67,74 +67,84 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                   Divider(
                     thickness: 1.1,
                   ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          "Дата",
-                          textAlign: dateAlign,
+                  Container(
+                    padding: EdgeInsets.only(
+                      left: 15,
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            "Дата",
+                            textAlign: dateAlign,
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        flex: count,
-                        child: Text(
-                          "Вироблено енергії, кВт-год",
-                          textAlign: TextAlign.center,
+                        Expanded(
+                          flex: count,
+                          child: Text(
+                            "Вироблено енергії, кВт-год",
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ),
-                      widget.panel == null
-                        ? Expanded(
-                        flex: count,
-                        child: Text(
-                          "Продано енергії, кВт-год",
-                          textAlign: TextAlign.center,
-                        ),
-                      )
-                        : Container(),
-                      showSpacer
+                        widget.panel == null
                           ? Expanded(
-                        flex: 1,
-                        child: Container(),
-                      )
+                          flex: count,
+                          child: Text(
+                            "Продано енергії, кВт-год",
+                            textAlign: TextAlign.center,
+                          ),
+                        )
                           : Container(),
-                    ],
+                        showSpacer
+                            ? Expanded(
+                          flex: 1,
+                          child: Container(),
+                        )
+                            : Container(),
+                      ],
+                    ),
                   ),
                 ] +
                   logMaps.map((e) {
                     return Column(
                       children: <Widget>[
                         Divider(),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Text(
-                                formatDate(e.date),
-                                textAlign: dateAlign,
+                        Container(
+                          padding: EdgeInsets.only(
+                            left: 15,
+                          ),
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Text(
+                                  formatDate(e.date),
+                                  textAlign: dateAlign,
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              flex: count,
-                              child: Text(
-                                "${formatDouble(e.produced / 3600000, 2)}",
-                                textAlign: TextAlign.center,
+                              Expanded(
+                                flex: count,
+                                child: Text(
+                                  "${formatDouble(e.produced / 3600000, 2)}",
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
-                            ),
-                            widget.panel == null
-                              ? Expanded(
-                              flex: count,
-                              child: Text(
-                                "${formatDouble(e.given / 3600000, 2)}",
-                                textAlign: TextAlign.center,
-                              ),
-                            )
-                              : Container(),
-                            showSpacer
+                              widget.panel == null
                                 ? Expanded(
-                              flex: 1,
-                              child: Container(),
-                            )
+                                flex: count,
+                                child: Text(
+                                  "${formatDouble(e.given / 3600000, 2)}",
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
                                 : Container(),
-                          ],
+                              showSpacer
+                                  ? Expanded(
+                                flex: 1,
+                                child: Container(),
+                              )
+                                  : Container(),
+                            ],
+                          ),
                         ),
                       ],
                     );

@@ -24,13 +24,7 @@ class StationPage extends StatelessWidget{
     double w = getWidth(context);
 
     int count = 1;
-    if(w >= smallLimit){
-      count += 1;
-    }
     if(w >= mediumLimit){
-      count += 1;
-    }
-    if(w >= largeLimit){
       count += 1;
     }
 
@@ -47,108 +41,136 @@ class StationPage extends StatelessWidget{
           Station station = snapshot.data as acc.Station;
           return Column(
             children: <Widget>[
-              StationWidget(
-                station: station,
+              Container(
+                padding: EdgeInsets.all(10),
+                child: StationWidget(
+                  station: station,
+                ),
               ),
 
               SizedBox(
                 height: 10,
               ),
-
-              Row(
-                children: <Widget>[
-                  Expanded(child: Text("Поточна потужність:")),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    flex: count,
-                    child: Row(
-                      children: <Widget>[
-
-                        RefreshableNumberWidget(
-                          future: getRequiredPower,
-                          stationId: station.id,
-                        ),
-                        Text(" W"),
-                      ],
+              Divider(),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(child: Text("Поточна потужність:")),
+                    SizedBox(
+                      width: 10,
                     ),
-                  ),
-                ],
+                    Expanded(
+                      flex: count,
+                      child: Row(
+                        children: <Widget>[
+
+                          RefreshableNumberWidget(
+                            future: getRequiredPower,
+                            stationId: station.id,
+                          ),
+                          Text(" W"),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Divider(),
-              Row(
-                children: <Widget>[
-                  Expanded(child: Text("Запас енергії накопичувача:")),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    flex: count,
-                    child: Row(
-                      children: <Widget>[
-                        RefreshableNumberWidget(
-                          future: getAccumulatedEnergy,
-                          ukey: station.ukey,
-                        ),
-                        Text(" кВат * год"),
-                      ],
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(child: Text("Запас енергії накопичувача:")),
+                    SizedBox(
+                      width: 10,
                     ),
-                  ),
-                ],
+                    Expanded(
+                      flex: count,
+                      child: Row(
+                        children: <Widget>[
+                          RefreshableNumberWidget(
+                            future: getAccumulatedEnergy,
+                            ukey: station.ukey,
+                          ),
+                          Text(" кВат * год"),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
               Divider(),
 
-              Row(
-                children: <Widget>[
-                  Expanded(child: Text("Вироблено з початку дня:")),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    flex: count,
-                    child: Row(
-                      children: <Widget>[
-                        RefreshableNumberWidget(
-                          future: getTodayProducedEnergy,
-                          stationId: station.id,
-                        ),
-                        Text(" кВат * год"),
-                      ],
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(child: Text("Вироблено з початку дня:")),
+                    SizedBox(
+                      width: 10,
                     ),
-                  ),
-                ],
+                    Expanded(
+                      flex: count,
+                      child: Row(
+                        children: <Widget>[
+                          RefreshableNumberWidget(
+                            future: getTodayProducedEnergy,
+                            stationId: station.id,
+                          ),
+                          Text(" кВат * год"),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Divider(),
 
-              Row(
-                children: <Widget>[
-                  Expanded(child: Text("Продано з початку дня:")),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    flex: count,
-                    child: Row(
-                      children: <Widget>[
-                        RefreshableNumberWidget(
-                          future: getTodayGivenEnergy,
-                          stationId: station.id,
-                        ),
-                        Text(" кВат * год"),
-                      ],
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(child: Text("Продано з початку дня:")),
+                    SizedBox(
+                      width: 10,
                     ),
-                  ),
-                ],
+                    Expanded(
+                      flex: count,
+                      child: Row(
+                        children: <Widget>[
+                          RefreshableNumberWidget(
+                            future: getTodayGivenEnergy,
+                            stationId: station.id,
+                          ),
+                          Text(" кВат * год"),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
               Divider(),
               SizedBox(
                 height: 20,
               ),
-              DiagramWidget(
-                stationId: station.id,
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10
+                ),
+                child: DiagramWidget(
+                  stationId: station.id,
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -162,6 +184,9 @@ class StationPage extends StatelessWidget{
               ),
               Divider(
                 thickness: 1.1,
+              ),
+              SizedBox(
+                height: 10,
               ),
             ],
           );

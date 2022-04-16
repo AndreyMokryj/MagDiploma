@@ -33,13 +33,7 @@ class _PanelPageState extends State<PanelPage> {
     double w = getWidth(context);
 
     int count = 1;
-    if(w >= smallLimit){
-      count += 1;
-    }
     if(w >= mediumLimit){
-      count += 1;
-    }
-    if(w >= largeLimit){
       count += 1;
     }
 
@@ -57,87 +51,114 @@ class _PanelPageState extends State<PanelPage> {
           connected = panel.connected == 1;
 
           return Container(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.symmetric(
+              vertical: 10
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Expanded(child: Text("Назва панелі:")),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                        flex: count,
-                        child: Text("${panel.name}")),
-                  ],
-                ),
-                Divider(),
-                Row(
-                  children: <Widget>[
-                    Expanded(child: Text("Модель панелі:")),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                        flex: count,
-                        child: Text("${panel.model}")),
-                  ],
-                ),
-                Divider(),
-                Row(
-                  children: <Widget>[
-                    Expanded(child: Text("Номінальна потужність:")),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                        flex: count,
-                        child: Text("${panel.nominalPower} W")),
-                  ],
-                ),
-                Divider(),
-                Row(
-                  children: <Widget>[
-                    Expanded(child: Text("Поточна потужність:")),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      flex: count,
-                      child: Row(
-                        children: <Widget>[
-                          RefreshableNumberWidget(
-                            future: getRequiredPower,
-                            stationId: panel.stationId,
-                            panel: panel,
-                          ),
-                          Text(" W"),
-                        ],
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(child: Text("Назва панелі:")),
+                      SizedBox(
+                        width: 10,
                       ),
-                    ),
-                  ],
+                      Expanded(
+                          flex: count,
+                          child: Text("${panel.name}")),
+                    ],
+                  ),
                 ),
                 Divider(),
-                Row(
-                  children: <Widget>[
-                    Expanded(child: Text("Вироблено з початку дня:")),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      flex: count,
-                      child: Row(
-                        children: <Widget>[
-                          RefreshableNumberWidget(
-                            future: getTodayProducedEnergy,
-                            panel: panel,
-                          ),
-                          Text(" кВат * год"),
-                        ],
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(child: Text("Модель панелі:")),
+                      SizedBox(
+                        width: 10,
                       ),
-                    ),
-                  ],
+                      Expanded(
+                          flex: count,
+                          child: Text("${panel.model}")),
+                    ],
+                  ),
+                ),
+                Divider(),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(child: Text("Номінальна потужність:")),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          flex: count,
+                          child: Text("${panel.nominalPower} W")),
+                    ],
+                  ),
+                ),
+                Divider(),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(child: Text("Поточна потужність:")),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        flex: count,
+                        child: Row(
+                          children: <Widget>[
+                            RefreshableNumberWidget(
+                              future: getRequiredPower,
+                              stationId: panel.stationId,
+                              panel: panel,
+                            ),
+                            Text(" W"),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(child: Text("Вироблено з початку дня:")),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        flex: count,
+                        child: Row(
+                          children: <Widget>[
+                            RefreshableNumberWidget(
+                              future: getTodayProducedEnergy,
+                              panel: panel,
+                            ),
+                            Text(" кВат * год"),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Divider(),
 
@@ -149,30 +170,40 @@ class _PanelPageState extends State<PanelPage> {
                           builder: (context, snapshot) {
                             return Column(
                               children: [
-                                Row(
-                                  children: <Widget>[
-                                    Expanded(child: Text("Азимут:")),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Expanded(
-                                      flex: count,
-                                      child: Text("${snapshot.data?.azimuth}"),
-                                    ),
-                                  ],
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                  ),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Expanded(child: Text("Азимут:")),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Expanded(
+                                        flex: count,
+                                        child: Text("${snapshot.data?.azimuth}"),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 Divider(),
-                                Row(
-                                  children: <Widget>[
-                                    Expanded(child: Text("Висота:")),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Expanded(
-                                      flex: count,
-                                      child: Text("${snapshot.data?.altitude}"),
-                                    ),
-                                  ],
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                  ),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Expanded(child: Text("Висота:")),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Expanded(
+                                        flex: count,
+                                        child: Text("${snapshot.data?.altitude}"),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 Divider(),
                               ],
@@ -181,43 +212,48 @@ class _PanelPageState extends State<PanelPage> {
                       ),
                 ),
 
-                Row(
-                  children: <Widget>[
-                    Expanded(child: Text("Статус:")),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      flex: count,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            connected ? "Підключено" : "Відключено",
-                            style: TextStyle(
-                              color: connected
-                                  ? Colors.green
-                                  : Colors.red,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Switch(
-                            value: connected,
-                            onChanged: (val) async {
-                              panel.connected = val ? 1 : 0;
-                              bool s = await DBProvider.db.switchPanel(panel);
-                              if (s) {
-                                setState(() {
-                                  connected = val;
-                                });
-                              }
-                            },
-                          ),
-                        ],
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(child: Text("Статус:")),
+                      SizedBox(
+                        width: 10,
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        flex: count,
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              connected ? "Підключено" : "Відключено",
+                              style: TextStyle(
+                                color: connected
+                                    ? Colors.green
+                                    : Colors.red,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Switch(
+                              value: connected,
+                              onChanged: (val) async {
+                                panel.connected = val ? 1 : 0;
+                                bool s = await DBProvider.db.switchPanel(panel);
+                                if (s) {
+                                  setState(() {
+                                    connected = val;
+                                  });
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Divider(
                   thickness: 1.1,
@@ -225,9 +261,14 @@ class _PanelPageState extends State<PanelPage> {
                 SizedBox(
                   height: 20,
                 ),
-                DiagramWidget(
-                  stationId: panel.stationId,
-                  panel: panel,
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10,
+                  ),
+                  child: DiagramWidget(
+                    stationId: panel.stationId,
+                    panel: panel,
+                  ),
                 ),
                 SizedBox(
                   height: 30,
