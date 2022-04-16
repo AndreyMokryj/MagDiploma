@@ -25,6 +25,9 @@ public class StationE {
     @Column(name = "station_connection")
     private int stationConnection;
 
+    private String ukey;
+    private String name;
+
     public static StationE fromVO(StationVO stationVO){
         StationE stationE = new StationE();
         stationE.setId(stationVO.getId());
@@ -33,6 +36,8 @@ public class StationE {
         stationE.setEnergy(stationVO.getEnergy());
         stationE.setGridConnection(stationVO.getGridConnection());
         stationE.setStationConnection(stationVO.getStationConnection());
+        stationE.setUkey(stationVO.getUkey());
+        stationE.setName(stationVO.getName());
         return stationE;
     }
 
@@ -82,5 +87,21 @@ public class StationE {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUkey() {
+        return ukey;
+    }
+
+    public void setUkey(String ukey) {
+        this.ukey = ukey;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

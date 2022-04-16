@@ -36,22 +36,16 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       if (widget.created) {
-        Scaffold.of(context).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Новий користувач створений!")),
         );
       }
     });
 
-    bool loggedIn = Provider
-      .of<LoginNotifier>(context, listen: false)
-      .loggedIn ?? false;
-
     double w = getWidth(context);
 
     return WillPopScope(
-      onWillPop: () {
-        Navigator.of(context).pushNamed('/');
-      },
+      onWillPop: () {},
       child: Scaffold(
         primary: false,
         body: SafeArea(
@@ -83,7 +77,6 @@ class _LoginPageState extends State<LoginPage> {
                           ? "Введіть ім'я користувача"
                           : null,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        // autovalidate: validate,
                         onSaved: (val) => newUser.username = val,
                       ),
                       const SizedBox(height: 20.0),
@@ -99,7 +92,6 @@ class _LoginPageState extends State<LoginPage> {
                         val.isEmpty
                           ? "Введіть пароль"
                           : null,
-                        // autovalidate: validate,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         onSaved: (val) => newUser.password = val,
                       ),
@@ -146,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
       User regUser = await DBProvider.db.checkUser(newUser);
       if (regUser != null) {
         Provider.of<LoginNotifier>(context, listen: false).logIn(regUser);
-        Navigator.of(context).pushNamed('/');
+        Navigator.of(context).pushNamed('/', arguments: true);
       }
       else{
         setState(() {

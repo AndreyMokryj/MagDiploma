@@ -56,7 +56,6 @@ class _SignupPageState extends State<SignupPage> {
                         validator: (val) => val.isEmpty ? "Введіть ім'я користувача" :
                           val.length < 5 ? "Має містити мінімум 5 символів" : null,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        // autovalidate: validate,
                         onSaved: (val) => newUser.username = val,
                       ),
                       const SizedBox(height: 20.0),
@@ -70,7 +69,6 @@ class _SignupPageState extends State<SignupPage> {
                         obscureText: true,
                         validator: (val) => val.isEmpty ? "Введіть пароль" :
                         val.length < 5 ? "Має містити мінімум 5 символів" : null,
-                        // autovalidate: validate,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         onSaved: (val) => newUser.password = val,
                       ),

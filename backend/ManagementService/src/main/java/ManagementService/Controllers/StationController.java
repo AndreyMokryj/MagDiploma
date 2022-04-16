@@ -43,15 +43,18 @@ public class StationController {
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(path="/userId/{userId}")
+    @PostMapping(path="/userId/")
     public @ResponseBody
-    StationE getStationByUserId(@PathVariable String userId) {
-        Iterable<StationE> stations = stationRepository.findByUserId(userId);
-        StationE result = null;
-        for (StationE stationE : stations) {
-            result = stationE;
-        }
-        return result;
+    Iterable<StationE> getByUserId(@RequestBody String userId) {
+        return stationRepository.findByUserId(userId);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(path="/ukey/{ukey}")
+    public @ResponseBody
+    StationE getByUkey(@RequestBody String userId, @PathVariable String ukey) {
+        Optional<StationE> station =  stationRepository.findByUkey(userId, ukey);
+        return station.get();
     }
 
     @CrossOrigin(origins = "*")

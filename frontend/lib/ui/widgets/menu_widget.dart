@@ -2,8 +2,6 @@ import 'package:SUNMAX/helpers/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:SUNMAX/helpers/constants.dart';
 import 'package:SUNMAX/helpers/utils.dart';
-import 'package:SUNMAX/model/notifiers/login_notifier.dart';
-import 'package:provider/provider.dart';
 
 class MenuWidget extends StatelessWidget{
   @override
@@ -14,13 +12,32 @@ class MenuWidget extends StatelessWidget{
       color: Color.fromRGBO(180, 180, 180, 1),
       child: ListView(
         children: <Widget>[
-          w <= largeLimit ? Align(
-            alignment: Alignment.centerLeft,
-            child: IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: (){
-                Navigator.of(context).pop();
-              },
+          w <= largeLimit ? Container(
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                    icon: Icon(Icons.menu),
+                    onPressed: (){
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    height: kToolbarHeight - 12,
+                    margin: EdgeInsets.only(
+                      bottom: 20,
+                    ),
+                    child: Image.asset(
+                      "assets/images/logo.png",
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                )
+              ],
             ),
           ) : Container(),
           ListTile(
@@ -34,24 +51,13 @@ class MenuWidget extends StatelessWidget{
             },
           ),
           ListTile(
-            leading: Icon(Icons.power),
-            title: Text(
-              "Мої панелі",
-              style: normalTextStyle,
-            ),
-            onTap: (){
-              Navigator.of(context).pushNamed('/panels');
-            },
-          ),
-          ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text(
               "Вихід",
               style: normalTextStyle,
             ),
-            onTap: (){
-              Provider.of<LoginNotifier>(context, listen: false).logOut();
-              Navigator.of(context).pushNamed('/login');            },
+            onTap: () {
+              Navigator.of(context).pushNamed('/login');},
           ),
         ],
       ),

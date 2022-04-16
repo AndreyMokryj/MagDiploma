@@ -39,31 +39,30 @@ class DBProvider {
 
     final responseBody = jsonDecode(response.body);
     u.User _user = u.User.fromMap(responseBody);
-    _user.station = await getStation(_user.id);
     return _user;
   }
 
 //  Panels
-  Future<List> getPanels(u.User user) async {
+  Future<List> getPanels(String stationId) async {
     final response = await http.post(
       Uri.parse("${baseUrl}panels/"),
       headers: {
         'content-type': 'application/json'
       },
-      body: user.station.id,
+      body: stationId,
     );
 
     final responseBody = jsonDecode(response.body);
     return responseBody;
   }
 
-  Future<Panel> getPanel(String panelId, u.User user) async {
+  Future<Panel> getPanel(String panelId, String stationId) async {
     final response = await http.post(
       Uri.parse("${baseUrl}panels/${panelId}"),
       headers: {
         'content-type': 'application/json'
       },
-      body: user.station.id,
+      body: stationId,
     );
 
     final responseBody = jsonDecode(response.body);
@@ -96,26 +95,40 @@ class DBProvider {
     return responseBody;
   }
 
-  Future<double> getPanelsTotalPower(u.User user) async {
+  Future<double> getPanelsTotalPower(String stationId) async {
     final response = await http.post(
       Uri.parse("${baseUrl}panels/power/total/"),
       headers: {
         'content-type': 'application/json'
       },
-      body: user.station.id,
+      body: stationId,
     );
 
     final responseBody = jsonDecode(response.body);
     return responseBody;
   }
 
-//  Station
-  Future<Station> getStation(String userId) async {
-    final response = await http.get(
-      Uri.parse("${baseUrl}station/userId/${userId}"),
+//  Stations
+  Future<List> getStations(String userId) async {
+    final response = await http.post(
+      Uri.parse("${baseUrl}stations/userId/"),
       headers: {
         'content-type': 'application/json'
-      }
+      },
+      body: userId,
+    );
+
+    final responseBody = jsonDecode(response.body);
+    return responseBody;
+  }
+
+  Future<Station> getStation(String userId, String ukey) async {
+    final response = await http.post(
+        Uri.parse("${baseUrl}stations/ukey/${ukey}"),
+        headers: {
+          'content-type': 'application/json'
+        },
+      body: userId,
     );
 
     final responseBody = jsonDecode(response.body);
@@ -124,7 +137,7 @@ class DBProvider {
 
   Future<bool> switchGrid(Station station) async {
     final response = await http.post(
-      Uri.parse("${baseUrl}station/turn-grid-${station.gridConnection}"),
+      Uri.parse("${baseUrl}stations/turn-grid-${station.gridConnection}"),
       headers: {
         'content-type': 'application/json'
       },
@@ -137,7 +150,7 @@ class DBProvider {
 
   Future<bool> switchStation(Station station) async {
     final response = await http.post(
-      Uri.parse("${baseUrl}station/turn-station-${station.stationConnection}"),
+      Uri.parse("${baseUrl}stations/turn-station-${station.stationConnection}"),
       headers: {
         'content-type': 'application/json'
       },
