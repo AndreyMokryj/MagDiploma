@@ -5,7 +5,9 @@ class NameNotifier extends ChangeNotifier {
   get name => _name;
 
   void setName(String newName)  {
-    _name = newName;
-    notifyListeners();
+    if (_name != newName) {
+      _name = newName;
+      notifyListeners();
+    }
   }
 }
