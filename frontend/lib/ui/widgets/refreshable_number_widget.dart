@@ -45,7 +45,7 @@ class _RefreshableNumberWidgetState extends State<RefreshableNumberWidget> {
         if (snapshot.hasData) {
           return Text("${formatDouble(snapshot.data, 2)}");
         }
-        return Container();
+        return Text("0");
       }
     );
   }
