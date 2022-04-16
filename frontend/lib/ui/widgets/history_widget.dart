@@ -27,7 +27,14 @@ class _HistoryWidgetState extends State<HistoryWidget> {
     double w = getWidth(context);
 
     int count = 1;
+    bool showSpacer = false;
+    TextAlign dateAlign = TextAlign.left;
     if(w >= mediumLimit){
+      count += 1;
+      dateAlign = TextAlign.center;
+      showSpacer = widget.panel != null;
+    }
+    if(widget.panel != null) {
       count += 1;
     }
 
@@ -63,18 +70,33 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                   Row(
                     children: <Widget>[
                       Expanded(
-                        child: Text("Дата"),
+                        child: Text(
+                          "Дата",
+                          textAlign: dateAlign,
+                        ),
                       ),
                       Expanded(
                         flex: count,
-                        child: Text("Вироблено енергії, кВт-год"),
+                        child: Text(
+                          "Вироблено енергії, кВт-год",
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                       widget.panel == null
                         ? Expanded(
                         flex: count,
-                        child: Text("Продано енергії, кВт-год"),
+                        child: Text(
+                          "Продано енергії, кВт-год",
+                          textAlign: TextAlign.center,
+                        ),
                       )
                         : Container(),
+                      showSpacer
+                          ? Expanded(
+                        flex: 1,
+                        child: Container(),
+                      )
+                          : Container(),
                     ],
                   ),
                 ] +
@@ -85,20 +107,33 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                         Row(
                           children: <Widget>[
                             Expanded(
-                              child: Text(formatDate(e.date)),
+                              child: Text(
+                                formatDate(e.date),
+                                textAlign: dateAlign,
+                              ),
                             ),
                             Expanded(
                               flex: count,
                               child: Text(
-                                "${formatDouble(e.produced / 3600000, 2)}"
+                                "${formatDouble(e.produced / 3600000, 2)}",
+                                textAlign: TextAlign.center,
                               ),
                             ),
                             widget.panel == null
                               ? Expanded(
                               flex: count,
-                              child: Text("${formatDouble(e.given / 3600000, 2)}"),
+                              child: Text(
+                                "${formatDouble(e.given / 3600000, 2)}",
+                                textAlign: TextAlign.center,
+                              ),
                             )
                               : Container(),
+                            showSpacer
+                                ? Expanded(
+                              flex: 1,
+                              child: Container(),
+                            )
+                                : Container(),
                           ],
                         ),
                       ],
