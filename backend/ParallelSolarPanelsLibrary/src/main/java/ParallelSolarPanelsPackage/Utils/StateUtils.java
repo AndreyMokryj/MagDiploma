@@ -6,6 +6,7 @@ import ParallelSolarPanelsPackage.Model.PreviousVO;
 import ParallelSolarPanelsPackage.Model.StateVO;
 import ParallelSolarPanelsPackage.Repositories.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
@@ -15,6 +16,11 @@ import java.util.UUID;
 @Component
 public class StateUtils {
     @Autowired
+
+//    public StateUtils(StateRepository stateRepository) {
+//        this.stateRepository = stateRepository;
+//    }
+
     StateRepository stateRepository;
 
     public StateE fetchState(StateVO stateVO) {

@@ -1,18 +1,27 @@
 package PowerPlantPackage;
 
-import PowerPlantPackage.Workflow.WorkProcess;
+import ParallelSolarPanelsPackage.WorkProcess;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.Entity;
 import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"ParallelSolarPanelsPackage.*"})
+@EnableJpaRepositories(basePackages = "ParallelSolarPanelsPackage.*")
+@ComponentScan("ParallelSolarPanelsPackage.*")
+@EntityScan("ParallelSolarPanelsPackage.*")
 @RestController
 public class PowerPlantService {
     public static void main(String[] args) throws Exception {

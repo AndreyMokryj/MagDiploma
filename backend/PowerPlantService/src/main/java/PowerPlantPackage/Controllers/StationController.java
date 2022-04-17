@@ -1,9 +1,9 @@
 package PowerPlantPackage.Controllers;
 
-import PowerPlantPackage.Workflow.WorkProcess;
+import ParallelSolarPanelsPackage.Model.StationVO;
+import ParallelSolarPanelsPackage.WorkProcess;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
-import vo.StationVO;
 
 @RestController
 @RequestMapping(path="/station")
