@@ -1,7 +1,7 @@
 package UserService.Controllers;
 
+import ParallelSolarPanelsPackage.Model.UserVO;
 import UserService.Entities.UserE;
-import vo.UserVO;
 import UserService.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

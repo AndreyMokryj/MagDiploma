@@ -1,19 +1,20 @@
 package PowerPlantPackage;
 
-import PowerPlantPackage.Workflow.WorkProcess;
+import ParallelSolarPanelsPackage.WorkProcess;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+@EntityScan("ParallelSolarPanelsPackage.*")
+//@RestController
 @EnableDiscoveryClient
-@SpringBootApplication
-@RestController
+@SpringBootApplication//(scanBasePackages = {"ParallelSolarPanelsPackage.*"})
 public class PowerPlantService {
     public static void main(String[] args) throws Exception {
         System.out.println("Before");

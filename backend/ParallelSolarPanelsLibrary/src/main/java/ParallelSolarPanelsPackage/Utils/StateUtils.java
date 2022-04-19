@@ -1,27 +1,26 @@
-package PowerPlantPackage.Utils;
+package ParallelSolarPanelsPackage.Utils;
 
-import PowerPlantPackage.Entities.StateE;
-import PowerPlantPackage.Repositories.StateRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import ParallelSolarPanelsPackage.Entities.StateE;
+import ParallelSolarPanelsPackage.Model.PanelVO;
+import ParallelSolarPanelsPackage.Model.PreviousVO;
+import ParallelSolarPanelsPackage.Model.StateVO;
+import ParallelSolarPanelsPackage.Repositories.IStateRepository;
 import org.springframework.web.bind.annotation.PathVariable;
-import vo.PanelVO;
-import vo.PreviousVO;
-import vo.StateVO;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Component
-public class StateUtils {
-    @Autowired
-    StateRepository stateRepository;
+public class StateUtils<T> {
+    IStateRepository iStateRepository;
+
+    public StateUtils(IStateRepository iStateRepository) {
+        this.iStateRepository = iStateRepository;
+    }
 
     public StateE fetchState(StateVO stateVO) {
         StateE state = StateE.fromVO(stateVO);
         try {
-            Optional<StateE> state1 = stateRepository.findByParams(
+            Optional<StateE> state1 = iStateRepository.findByParams(
                     state.getPanelId(),
                     state.getAzimuth(),
                     state.getAltitude()
@@ -30,7 +29,7 @@ public class StateUtils {
         }
         catch (Exception ex){
             state.setId(UUID.randomUUID().toString());
-            StateE saved = stateRepository.save(state);
+            StateE saved = iStateRepository.save(state);
             return saved;
         }
     }
@@ -41,18 +40,18 @@ public class StateUtils {
         state.setAltMinus(state.getAltMinus() + previousVO.getAltMinus());
         state.setAzPlus(state.getAzPlus() + previousVO.getAzPlus());
         state.setAzMinus(state.getAzMinus() + previousVO.getAzMinus());
-        stateRepository.save(state);
+        iStateRepository.save(state);
     }
 
     StateE getById(String id) {
-        Optional<StateE> direction = stateRepository.findById(id);
+        Optional<StateE> direction = iStateRepository.findById(id);
         return direction.get();
     }
 
     public void reduceByPanelId(@PathVariable String panelId) {
         int k = 10;
 
-        List<StateE> states = (List<StateE>) stateRepository.findByPanelId(panelId);
+        List<StateE> states = (List<StateE>) iStateRepository.findByPanelId(panelId);
         for (StateE state : states) {
             state.setAzPlus(state.getAzPlus() / k);
             state.setAzMinus(state.getAzMinus() / k);
@@ -60,7 +59,7 @@ public class StateUtils {
             state.setAltMinus(state.getAltMinus() / k);
         }
 
-        stateRepository.saveAll(states);
+        iStateRepository.saveAll(states);
     }
 
     public void preparePanel(PanelVO panel) {
@@ -74,7 +73,7 @@ public class StateUtils {
         currentState.setAzMinus(0);
         currentState.setAltPlus(0);
         currentState.setAltMinus(0);
-        stateRepository.save(currentState);
+        iStateRepository.save(currentState);
 
         stateVO.setAzimuth((stateVO.getAzimuth() + 1) % 360);
         StateE nextState = fetchState(stateVO);
@@ -82,6 +81,6 @@ public class StateUtils {
         nextState.setAzMinus(0);
         nextState.setAltPlus(0);
         nextState.setAltMinus(0);
-        stateRepository.save(nextState);
+        iStateRepository.save(nextState);
     }
 }

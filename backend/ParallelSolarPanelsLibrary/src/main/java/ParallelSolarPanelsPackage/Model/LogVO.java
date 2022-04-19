@@ -1,4 +1,4 @@
-package vo;
+package ParallelSolarPanelsPackage.Model;
 
 public class LogVO {
     private String id;

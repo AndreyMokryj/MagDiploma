@@ -1,5 +1,6 @@
 package StatisticsService.Controllers;
 
+import ParallelSolarPanelsPackage.Model.LogVO;
 import StatisticsService.Entities.HistoryGivenLogE;
 import StatisticsService.Entities.HistoryProducedLogE;
 import StatisticsService.Entities.TodayGivenLogE;
@@ -8,7 +9,6 @@ import StatisticsService.Repositories.HistoryGivenLogRepository;
 import StatisticsService.Repositories.HistoryProducedLogRepository;
 import StatisticsService.Repositories.TodayGivenLogRepository;
 import StatisticsService.Repositories.TodayProducedLogRepository;
-import vo.LogVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;

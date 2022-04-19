@@ -1,6 +1,6 @@
 package UserService.Entities;
 
-import vo.UserVO;
+import ParallelSolarPanelsPackage.Model.UserVO;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

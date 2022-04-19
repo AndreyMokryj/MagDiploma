@@ -1,6 +1,6 @@
 package ManagementService.Entities;
 
-import vo.PanelVO;
+import ParallelSolarPanelsPackage.Model.PanelVO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,4 +1,4 @@
-package vo;
+package ParallelSolarPanelsPackage.Model;
 
 import java.util.Map;
 

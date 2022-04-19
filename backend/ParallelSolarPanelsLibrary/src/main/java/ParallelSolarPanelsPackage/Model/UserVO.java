@@ -1,4 +1,4 @@
-package vo;
+package ParallelSolarPanelsPackage.Model;
 
 public class UserVO {
     private String id;

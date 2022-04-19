@@ -1,12 +1,14 @@
-package PowerPlantPackage.Workflow;
+package ParallelSolarPanelsPackage;
 
-import PowerPlantPackage.Model.*;
-import PowerPlantPackage.Utils.StateUtils;
+import ParallelSolarPanelsPackage.Model.*;
+import ParallelSolarPanelsPackage.Utils.StateUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
-import vo.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 public class WorkProcess {
     private static WorkProcess workProcess;
@@ -24,7 +26,7 @@ public class WorkProcess {
         return workProcess;
     }
 
-//    public final String baseUrl = "http://control-service/";
+    //    public final String baseUrl = "http://control-service/";
     public final String managementUrl = "http://management-service/";
     public final String statisticsUrl = "http://statistics-service/";
     public final String sunUrl = "http://sun-service/sun/power-coef/";
@@ -244,10 +246,10 @@ public class WorkProcess {
         }
         double coef = 0;
         try {
-            coef = restTemplate.postForObject(sunUrl + index, new Coordinates(panel.getAzimuth(), 0,0,panel.getAltitude(),0,0), Double.class);
+            coef = restTemplate.postForObject(sunUrl + index, new CoordinatesVO(panel.getAzimuth(), 0,0,panel.getAltitude(),0,0), Double.class);
         }
         catch (Exception e){
-            coef = restTemplate.postForObject(sunUrl + "0", new Coordinates(panel.getAzimuth(), 0,0,panel.getAltitude(),0,0), Double.class);
+            coef = restTemplate.postForObject(sunUrl + "0", new CoordinatesVO(panel.getAzimuth(), 0,0,panel.getAltitude(),0,0), Double.class);
             index = 0;
         }
         return coef > 0 ? coef * panel.getNominalPower() : 0;

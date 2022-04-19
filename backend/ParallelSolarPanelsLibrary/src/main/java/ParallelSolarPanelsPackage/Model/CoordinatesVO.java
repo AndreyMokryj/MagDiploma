@@ -1,10 +1,10 @@
-package PowerPlantPackage.Model;
+package ParallelSolarPanelsPackage.Model;
 
-public class Coordinates {
+public class CoordinatesVO {
     private double azimuth;
     private double altitude;
 
-    public Coordinates(double azdeg, double azmin, double azsec, double altdeg, double altmin, double altsec){
+    public CoordinatesVO(double azdeg, double azmin, double azsec, double altdeg, double altmin, double altsec){
         this.azimuth = azdeg + (azmin * 60 + azsec) / 3600;
         this.altitude = altdeg + (altmin * 60 + altsec) / 3600;;
     }

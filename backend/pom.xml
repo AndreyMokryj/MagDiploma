@@ -16,7 +16,7 @@
         <module>StatisticsService</module>
         <module>PowerPlantService</module>
         <module>SunService</module>
-        <module>vo</module>
+        <module>ParallelSolarPanelsLibrary</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

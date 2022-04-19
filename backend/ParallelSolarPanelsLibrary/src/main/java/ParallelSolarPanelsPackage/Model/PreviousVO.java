@@ -1,11 +1,8 @@
-package vo;
+package ParallelSolarPanelsPackage.Model;
 
-public class StateVO {
+public class PreviousVO {
     private String id;
-    private String panelId;
-//    private double power;
-    private int azimuth;
-    private int altitude;
+
     private double azPlus;
     private double azMinus;
     private double altPlus;
@@ -17,39 +14,6 @@ public class StateVO {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-
-    public String getPanelId() {
-        return panelId;
-    }
-
-    public void setPanelId(String panelId) {
-        this.panelId = panelId;
-    }
-
-//    public double getPower() {
-//        return power;
-//    }
-//
-//    public void setPower(double power) {
-//        this.power = power;
-//    }
-
-    public int getAzimuth() {
-        return azimuth;
-    }
-
-    public void setAzimuth(int azimuth) {
-        this.azimuth = azimuth;
-    }
-
-    public int getAltitude() {
-        return altitude;
-    }
-
-    public void setAltitude(int altitude) {
-        this.altitude = altitude;
     }
 
 

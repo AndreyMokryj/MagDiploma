@@ -1,6 +1,6 @@
 package StatisticsService.Entities;
 
-import vo.LogVO;
+import ParallelSolarPanelsPackage.Model.LogVO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

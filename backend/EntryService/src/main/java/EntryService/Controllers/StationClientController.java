@@ -1,10 +1,10 @@
 package EntryService.Controllers;
 
+import ParallelSolarPanelsPackage.Model.StationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import vo.StationVO;
 
 @RestController
 @RequestMapping(path="/app/stations")

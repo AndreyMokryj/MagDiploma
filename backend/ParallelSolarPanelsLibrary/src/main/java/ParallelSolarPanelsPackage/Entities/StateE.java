@@ -1,7 +1,6 @@
-package PowerPlantPackage.Entities;
+package ParallelSolarPanelsPackage.Entities;
 
-import vo.StateVO;
-
+import ParallelSolarPanelsPackage.Model.StateVO;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;

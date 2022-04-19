@@ -1,6 +1,10 @@
-package PowerPlantPackage.Workflow;
+package PowerPlantPackage.Listener;
 
-import PowerPlantPackage.Utils.StateUtils;
+import ParallelSolarPanelsPackage.Model.PanelVO;
+import ParallelSolarPanelsPackage.Model.StationVO;
+import ParallelSolarPanelsPackage.Utils.StateUtils;
+import ParallelSolarPanelsPackage.WorkProcess;
+import PowerPlantPackage.Repositories.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.context.ServletWebServerInitializedEvent;
@@ -8,14 +12,12 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import vo.PanelVO;
-import vo.StationVO;
 
 import java.util.List;
 import java.util.Map;
 
 @Component
-public class MyListener implements ApplicationListener<ServletWebServerInitializedEvent> {
+public class PowerPlantServiceListener implements ApplicationListener<ServletWebServerInitializedEvent> {
     @Value("${spring.application.name}")
     private String serviceName;
 
@@ -23,7 +25,7 @@ public class MyListener implements ApplicationListener<ServletWebServerInitializ
     RestTemplate restTemplate;
 
     @Autowired
-    StateUtils stateUtils;
+    StateRepository stateRepository;
 
     @Override
     public void onApplicationEvent(final ServletWebServerInitializedEvent event) {
@@ -42,6 +44,8 @@ public class MyListener implements ApplicationListener<ServletWebServerInitializ
 
         WorkProcess.getInstance().station = station;
         WorkProcess.getInstance().setRestTemplate(restTemplate);
+        StateUtils stateUtils = new StateUtils(stateRepository);
+
         WorkProcess.getInstance().setStateUtils(stateUtils);
         List<Object> objectList = (List<Object>) restTemplate.exchange(managementUrl + "panels/stationId/" + station.getId(), HttpMethod.GET, null, Iterable.class).getBody();
         for (Object object : objectList){
