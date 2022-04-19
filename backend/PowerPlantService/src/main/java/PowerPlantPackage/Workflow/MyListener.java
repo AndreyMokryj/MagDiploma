@@ -2,9 +2,9 @@ package PowerPlantPackage.Workflow;
 
 import ParallelSolarPanelsPackage.Model.PanelVO;
 import ParallelSolarPanelsPackage.Model.StationVO;
-import ParallelSolarPanelsPackage.Repositories.StateRepository;
 import ParallelSolarPanelsPackage.Utils.StateUtils;
 import ParallelSolarPanelsPackage.WorkProcess;
+import PowerPlantPackage.Repositories.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.context.ServletWebServerInitializedEvent;
@@ -24,10 +24,8 @@ public class MyListener implements ApplicationListener<ServletWebServerInitializ
     @Autowired
     RestTemplate restTemplate;
 
-//    @Autowired
-//    StateRepository stateRepository;
     @Autowired
-    StateUtils stateUtils;
+    StateRepository stateRepository;
 
     @Override
     public void onApplicationEvent(final ServletWebServerInitializedEvent event) {
@@ -46,7 +44,7 @@ public class MyListener implements ApplicationListener<ServletWebServerInitializ
 
         WorkProcess.getInstance().station = station;
         WorkProcess.getInstance().setRestTemplate(restTemplate);
-//        StateUtils stateUtils = new StateUtils(stateRepository);
+        StateUtils stateUtils = new StateUtils(stateRepository);
 
         WorkProcess.getInstance().setStateUtils(stateUtils);
         List<Object> objectList = (List<Object>) restTemplate.exchange(managementUrl + "panels/stationId/" + station.getId(), HttpMethod.GET, null, Iterable.class).getBody();
