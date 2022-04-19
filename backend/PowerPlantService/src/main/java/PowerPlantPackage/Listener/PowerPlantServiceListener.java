@@ -1,4 +1,4 @@
-package PowerPlantPackage.Workflow;
+package PowerPlantPackage.Listener;
 
 import ParallelSolarPanelsPackage.Model.PanelVO;
 import ParallelSolarPanelsPackage.Model.StationVO;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class MyListener implements ApplicationListener<ServletWebServerInitializedEvent> {
+public class PowerPlantServiceListener implements ApplicationListener<ServletWebServerInitializedEvent> {
     @Value("${spring.application.name}")
     private String serviceName;
 
