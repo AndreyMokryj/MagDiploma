@@ -16,7 +16,7 @@ public class WorkProcess {
     private WorkProcess(){
         panels = new ArrayList<PanelDTO>();
         station = null;
-        index = 50;
+        index = 25;
     }
 
     public static WorkProcess getInstance(){
@@ -56,7 +56,7 @@ public class WorkProcess {
                 System.out.println("Station is disconnected");
             }
             updateGivenLogs();
-            index += 2;
+            index += 1;
 
             Date endTime = new Date();
             System.out.println("Time to correct all panels: " + (endTime.getTime() - startTime.getTime()));
