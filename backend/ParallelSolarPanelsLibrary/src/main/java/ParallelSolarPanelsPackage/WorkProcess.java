@@ -39,6 +39,9 @@ public class WorkProcess {
 
     private int index;
 
+    private double mediumIterations = 0;
+    private double mediumTime = 0;
+
     public void execute(){
         Date startTime = new Date();
         if(!(station == null)) {
@@ -59,10 +62,25 @@ public class WorkProcess {
             index += 1;
 
             Date endTime = new Date();
-            System.out.println("Time to correct all panels: " + (endTime.getTime() - startTime.getTime()));
-
+            processTime(endTime.getTime() - startTime.getTime());
 
             System.out.println("Task executed on " + new Date());
+        }
+    }
+
+    private void processTime(long time) {
+        System.out.println("Time to correct all panels: " + time);
+
+        int _index = index % 144;
+        if (_index == 0) {
+            int _day = index / 144;
+            System.out.println("-------Day " + _day + ":  medium time: " + (mediumTime / panels.size() / 84.0) + "------------");
+
+            mediumTime = 0;
+        }
+
+        if(_index >= 36 && _index < 120) {
+            mediumTime += time;
         }
     }
 
@@ -225,7 +243,7 @@ public class WorkProcess {
         }
 
         updatePanel(panel);
-//        printPanelInfo(panel, iterator);
+        printPanelInfo(panel, iterator);
     }
 
     public double getTotalPower(){
@@ -336,6 +354,18 @@ public class WorkProcess {
     private void printPanelInfo(PanelDTO panel, int iterator){
         System.out.println("Panel " + panel.getName() + ": final azimuth: " + panel.getAzimuth() + "; altitude: " + panel.getAltitude() + "; index: " + index + "; power: " + getPanelPower(panel));
         System.out.println("Iterations: " + iterator);
+
+        int _index = index % 144;
+        if (_index == 0) {
+            int _day = index / 144;
+            System.out.println("-------Day " + _day + ":  medium iterations: " + (mediumIterations / panels.size() / 84.0) + "------------");
+
+            mediumIterations = 0;
+        }
+
+        if(_index >= 36 && _index < 120) {
+            mediumIterations += iterator;
+        }
     }
 
     public String getDateTime() {
