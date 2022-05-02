@@ -8,7 +8,6 @@ import ParallelSolarPanelsPackage.Repositories.IStateRepository;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public class StateUtils<T> {
     IStateRepository iStateRepository;
@@ -20,15 +19,18 @@ public class StateUtils<T> {
     public StateE fetchState(StateDTO stateDTO) {
         StateE state = StateE.fromDTO(stateDTO);
         try {
-            Optional<StateE> state1 = iStateRepository.findByParams(
-                    state.getPanelId(),
-                    state.getAzimuth(),
+            return getById(
+                    state.getPanelId() + " " +
+                    state.getAzimuth() + " " +
                     state.getAltitude()
             );
-            return state1.get();
         }
         catch (Exception ex){
-            state.setId(UUID.randomUUID().toString());
+            state.setId(
+                state.getPanelId() + " " +
+                state.getAzimuth() + " " +
+                state.getAltitude()
+            );
             StateE saved = iStateRepository.save(state);
             return saved;
         }
