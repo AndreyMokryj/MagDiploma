@@ -1,6 +1,6 @@
 package StatisticsService.Entities;
 
-import ParallelSolarPanelsPackage.Model.LogVO;
+import ParallelSolarPanelsPackage.Model.LogDTO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,12 +18,12 @@ public class TodayGivenLogE {
 
     private double given;
 
-    public static TodayGivenLogE fromVO(LogVO logVO){
+    public static TodayGivenLogE fromDTO(LogDTO logDTO){
         TodayGivenLogE todayLog = new TodayGivenLogE();
-        todayLog.setId(logVO.getId());
-        todayLog.setStationId(logVO.getStationId());
+        todayLog.setId(logDTO.getId());
+        todayLog.setStationId(logDTO.getStationId());
 
-        String time = logVO.getDateTime().substring(11, 13) + ":00:00";
+        String time = logDTO.getDateTime().substring(11, 13) + ":00:00";
         todayLog.setTime(time);
 
         return todayLog;

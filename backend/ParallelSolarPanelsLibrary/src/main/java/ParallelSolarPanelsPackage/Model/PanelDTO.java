@@ -2,7 +2,7 @@ package ParallelSolarPanelsPackage.Model;
 
 import java.util.Map;
 
-public class PanelVO {
+public class PanelDTO {
     private String id;
     private String name;
     private String model;
@@ -12,17 +12,17 @@ public class PanelVO {
     private int altitude;
     private int connected;
 
-    public static PanelVO fromMap(Map map){
-        PanelVO panelVO = new PanelVO();
-        panelVO.setId((String) map.get("id"));
-        panelVO.setName((String) map.get("name"));
-        panelVO.setModel((String) map.get("model"));
-        panelVO.setNominalPower((int) map.get("nominalPower"));
-        panelVO.setStationId((String) map.get("stationId"));
-        panelVO.setAzimuth((int) map.get("azimuth"));
-        panelVO.setAltitude((int) map.get("altitude"));
-        panelVO.setConnected((int) map.get("connected"));
-        return panelVO;
+    public static PanelDTO fromMap(Map map){
+        PanelDTO panelDTO = new PanelDTO();
+        panelDTO.setId((String) map.get("id"));
+        panelDTO.setName((String) map.get("name"));
+        panelDTO.setModel((String) map.get("model"));
+        panelDTO.setNominalPower((int) map.get("nominalPower"));
+        panelDTO.setStationId((String) map.get("stationId"));
+        panelDTO.setAzimuth((int) map.get("azimuth"));
+        panelDTO.setAltitude((int) map.get("altitude"));
+        panelDTO.setConnected((int) map.get("connected"));
+        return panelDTO;
     }
 
     public String getId() {

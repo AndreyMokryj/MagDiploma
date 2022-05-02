@@ -1,10 +1,10 @@
 package ParallelSolarPanelsPackage.Model;
 
-public class CoordinatesVO {
+public class CoordinatesDTO {
     private double azimuth;
     private double altitude;
 
-    public CoordinatesVO(double azdeg, double azmin, double azsec, double altdeg, double altmin, double altsec){
+    public CoordinatesDTO(double azdeg, double azmin, double azsec, double altdeg, double altmin, double altsec){
         this.azimuth = azdeg + (azmin * 60 + azsec) / 3600;
         this.altitude = altdeg + (altmin * 60 + altsec) / 3600;;
     }

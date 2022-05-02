@@ -1,6 +1,6 @@
 package ManagementService.Entities;
 
-import ParallelSolarPanelsPackage.Model.StationVO;
+import ParallelSolarPanelsPackage.Model.StationDTO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,16 +28,16 @@ public class StationE {
     private String ukey;
     private String name;
 
-    public static StationE fromVO(StationVO stationVO){
+    public static StationE fromDTO(StationDTO stationDTO){
         StationE stationE = new StationE();
-        stationE.setId(stationVO.getId());
-        stationE.setUserId(stationVO.getUserId());
-        stationE.setMaxOutputPower(stationVO.getMaxOutputPower());
-        stationE.setEnergy(stationVO.getEnergy());
-        stationE.setGridConnection(stationVO.getGridConnection());
-        stationE.setStationConnection(stationVO.getStationConnection());
-        stationE.setUkey(stationVO.getUkey());
-        stationE.setName(stationVO.getName());
+        stationE.setId(stationDTO.getId());
+        stationE.setUserId(stationDTO.getUserId());
+        stationE.setMaxOutputPower(stationDTO.getMaxOutputPower());
+        stationE.setEnergy(stationDTO.getEnergy());
+        stationE.setGridConnection(stationDTO.getGridConnection());
+        stationE.setStationConnection(stationDTO.getStationConnection());
+        stationE.setUkey(stationDTO.getUkey());
+        stationE.setName(stationDTO.getName());
         return stationE;
     }
 

@@ -14,7 +14,7 @@ public class WorkProcess {
     private static WorkProcess workProcess;
 
     private WorkProcess(){
-        panels = new ArrayList<PanelVO>();
+        panels = new ArrayList<PanelDTO>();
         station = null;
         index = 50;
     }
@@ -32,10 +32,10 @@ public class WorkProcess {
     public final String sunUrl = "http://sun-service/sun/power-coef/";
     public final String dateTimeUrl = "http://sun-service/sun/datetime/";
 
-    public List<PanelVO> panels;
+    public List<PanelDTO> panels;
     private RestTemplate restTemplate;
     private StateUtils stateUtils;
-    public StationVO station;
+    public StationDTO station;
 
     private int index;
 
@@ -44,7 +44,7 @@ public class WorkProcess {
         if(!(station == null)) {
             if(station.getStationConnection() == 1) {
                 List<Thread> threads = new ArrayList<>();
-                for (PanelVO panel : panels) {
+                for (PanelDTO panel : panels) {
                     Thread thread = new Thread(() -> doTaskForPanel(panel));
                     thread.start();
                     threads.add(thread);
@@ -66,7 +66,7 @@ public class WorkProcess {
         }
     }
 
-    public void doTaskForPanel(PanelVO panel){
+    public void doTaskForPanel(PanelDTO panel){
         if (panel.getConnected() == 1) {
             double power = getPanelPower(panel);
             if (power >= 10) {
@@ -93,7 +93,7 @@ public class WorkProcess {
         threads.clear();
     }
 
-    private void turnPanelEast(PanelVO panel) {
+    private void turnPanelEast(PanelDTO panel) {
         if(panel.getAzimuth() != 90 && panel.getAltitude() != 10){
             panel.setAzimuth(90);
             panel.setAltitude(10);
@@ -102,7 +102,7 @@ public class WorkProcess {
         }
     }
 
-    public void findSun(PanelVO panel) {
+    public void findSun(PanelDTO panel) {
         double azPlus = 0;
         double azMinus = 0;
         double altPlus = 0;
@@ -113,7 +113,7 @@ public class WorkProcess {
             double prevPower = getPanelPower(panel);
             Random random = new Random();
 
-            StateVO prevState = getState(panel);
+            StateDTO prevState = getState(panel);
             azPlus = prevState.getAzPlus();
             azMinus = prevState.getAzMinus();
             altPlus = prevState.getAltPlus();
@@ -139,7 +139,7 @@ public class WorkProcess {
                 }
             }
 
-            PreviousVO previousVO = new PreviousVO();
+            PreviousDTO previousDTO = new PreviousDTO();
 
             switch (code) {
                 case 0:
@@ -147,7 +147,7 @@ public class WorkProcess {
                         panel.setAltitude(panel.getAltitude() + 1);
                         break;
                     } else {
-                        previousVO.setAltPlus(-1);
+                        previousDTO.setAltPlus(-1);
                         code++;
                     }
 
@@ -156,7 +156,7 @@ public class WorkProcess {
                         panel.setAltitude(panel.getAltitude() - 1);
                         break;
                     } else {
-                        previousVO.setAltMinus(-1);
+                        previousDTO.setAltMinus(-1);
                         code++;
                     }
 
@@ -176,49 +176,49 @@ public class WorkProcess {
                     break;
             }
 
-            StateVO newState = getState(panel);
+            StateDTO newState = getState(panel);
             double newPower = getPanelPower(panel);
 
             double diff = newPower - prevPower;
 
-            PreviousVO currentVO = new PreviousVO();
-            previousVO.setId(prevState.getId());
-            currentVO.setId(newState.getId());
+            PreviousDTO currentDTO = new PreviousDTO();
+            previousDTO.setId(prevState.getId());
+            currentDTO.setId(newState.getId());
 
             double k = 10;
             switch (code) {
                 case 0:
-                    previousVO.setAltPlus(diff);
-                    currentVO.setAltPlus(diff / k);
+                    previousDTO.setAltPlus(diff);
+                    currentDTO.setAltPlus(diff / k);
 
-                    previousVO.setAltMinus(-diff / k);
-                    currentVO.setAltMinus(-diff / k / k);
+                    previousDTO.setAltMinus(-diff / k);
+                    currentDTO.setAltMinus(-diff / k / k);
                     break;
                 case 1:
-                    previousVO.setAltMinus(diff);
-                    currentVO.setAltMinus(diff / k);
+                    previousDTO.setAltMinus(diff);
+                    currentDTO.setAltMinus(diff / k);
 
-                    previousVO.setAltPlus(-diff / k);
-                    currentVO.setAltPlus(-diff / k / k);
+                    previousDTO.setAltPlus(-diff / k);
+                    currentDTO.setAltPlus(-diff / k / k);
                     break;
                 case 2:
-                    previousVO.setAzPlus(diff);
-                    currentVO.setAzPlus(diff / k);
+                    previousDTO.setAzPlus(diff);
+                    currentDTO.setAzPlus(diff / k);
 
-                    previousVO.setAzMinus(-diff / k);
-                    currentVO.setAzMinus(-diff / k / k);
+                    previousDTO.setAzMinus(-diff / k);
+                    currentDTO.setAzMinus(-diff / k / k);
                     break;
                 case 3:
-                    previousVO.setAzMinus(diff);
-                    currentVO.setAzMinus(diff / k);
+                    previousDTO.setAzMinus(diff);
+                    currentDTO.setAzMinus(diff / k);
 
-                    previousVO.setAzPlus(-diff / k);
-                    currentVO.setAzPlus(-diff / k / k);
+                    previousDTO.setAzPlus(-diff / k);
+                    currentDTO.setAzPlus(-diff / k / k);
                     break;
             }
 
-            sendUpdate(previousVO);
-            sendUpdate(currentVO);
+            sendUpdate(previousDTO);
+            sendUpdate(currentDTO);
 //            updatePanel(panel);
 
             iterator++;
@@ -234,106 +234,106 @@ public class WorkProcess {
         }
 
         double power = 0;
-        for (PanelVO panel : panels){
+        for (PanelDTO panel : panels){
             power += getPanelPower(panel);
         }
         return power;
     }
 
-    public double getPanelPower(PanelVO panel){
+    public double getPanelPower(PanelDTO panel){
         if (panel.getConnected() == 0 || station.getStationConnection() == 0){
             return 0;
         }
         double coef = 0;
         try {
-            coef = restTemplate.postForObject(sunUrl + index, new CoordinatesVO(panel.getAzimuth(), 0,0,panel.getAltitude(),0,0), Double.class);
+            coef = restTemplate.postForObject(sunUrl + index, new CoordinatesDTO(panel.getAzimuth(), 0,0,panel.getAltitude(),0,0), Double.class);
         }
         catch (Exception e){
-            coef = restTemplate.postForObject(sunUrl + "0", new CoordinatesVO(panel.getAzimuth(), 0,0,panel.getAltitude(),0,0), Double.class);
+            coef = restTemplate.postForObject(sunUrl + "0", new CoordinatesDTO(panel.getAzimuth(), 0,0,panel.getAltitude(),0,0), Double.class);
             index = 0;
         }
         return coef > 0 ? coef * panel.getNominalPower() : 0;
     }
 
-    public StateVO getState(PanelVO panel){
-        StateVO stateVOSent = new StateVO();
-        stateVOSent.setPanelId(panel.getId());
-        stateVOSent.setAzimuth(panel.getAzimuth());
-        stateVOSent.setAltitude(panel.getAltitude());
+    public StateDTO getState(PanelDTO panel){
+        StateDTO stateDTOSent = new StateDTO();
+        stateDTOSent.setPanelId(panel.getId());
+        stateDTOSent.setAzimuth(panel.getAzimuth());
+        stateDTOSent.setAltitude(panel.getAltitude());
 
-        return (stateUtils.fetchState(stateVOSent)).toVO();
+        return (stateUtils.fetchState(stateDTOSent)).toDTO();
     }
 
-    public void sendUpdate(PreviousVO previousVO){
-        stateUtils.updatePrevState(previousVO);
+    public void sendUpdate(PreviousDTO previousDTO){
+        stateUtils.updatePrevState(previousDTO);
     }
 
-    public void updatePanel(PanelVO panelVO){
+    public void updatePanel(PanelDTO panelDTO){
         try {
-            Void response = restTemplate.postForObject(managementUrl + "panels/" + panelVO.getId(), panelVO, void.class);
+            Void response = restTemplate.postForObject(managementUrl + "panels/" + panelDTO.getId(), panelDTO, void.class);
         } catch (Exception e) {
             System.out.println("--------WARNING: Could not update panel information----------");
         }
     }
 
-    public void preparePanel(PanelVO panelVO){
-        stateUtils.preparePanel(panelVO);
+    public void preparePanel(PanelDTO panelDTO){
+        stateUtils.preparePanel(panelDTO);
     }
 
     public void reduceForPanel(String panelId){
         stateUtils.reduceByPanelId(panelId);
     }
 
-    public void updateProducedLogs(PanelVO panelVO){
-        LogVO logVO = new LogVO();
-        logVO.setStationId(station.getId());
-        logVO.setPanelId(panelVO.getId());
+    public void updateProducedLogs(PanelDTO panelDTO){
+        LogDTO logDTO = new LogDTO();
+        logDTO.setStationId(station.getId());
+        logDTO.setPanelId(panelDTO.getId());
         String dateTime = restTemplate.exchange(dateTimeUrl + index, HttpMethod.GET, null, String.class).getBody();
-        logVO.setDateTime(dateTime);
-        logVO.setProduced(getPanelPower(panelVO) * 60 * 10);
+        logDTO.setDateTime(dateTime);
+        logDTO.setProduced(getPanelPower(panelDTO) * 60 * 10);
 
-        station.setEnergy(station.getEnergy() + logVO.getProduced());
+        station.setEnergy(station.getEnergy() + logDTO.getProduced());
         updateStation(station);
-        updateLog(logVO);
+        updateLog(logDTO);
     }
 
     public void updateGivenLogs(){
-        LogVO logVO = new LogVO();
-        logVO.setStationId(station.getId());
+        LogDTO logDTO = new LogDTO();
+        logDTO.setStationId(station.getId());
         String dateTime = restTemplate.exchange(dateTimeUrl + index, HttpMethod.GET, null, String.class).getBody();
-        logVO.setDateTime(dateTime);
+        logDTO.setDateTime(dateTime);
 
         if (station.getGridConnection() == 1){
             double maxEnergyGiven = station.getMaxOutputPower() * 60 * 10;
             double additionalEnergy = Math.min(station.getEnergy(), maxEnergyGiven);
-            logVO.setGiven(additionalEnergy);
+            logDTO.setGiven(additionalEnergy);
             station.setEnergy(station.getEnergy() - additionalEnergy);
         }
         else {
-            logVO.setGiven(0);
+            logDTO.setGiven(0);
         }
 
         updateStation(station);
-        updateLog(logVO);
+        updateLog(logDTO);
     }
 
-    private void updateStation(StationVO stationVO) {
+    private void updateStation(StationDTO stationDTO) {
         try {
-            Void response = restTemplate.postForObject(managementUrl + "stations/" + station.getId(), stationVO, void.class);
+            Void response = restTemplate.postForObject(managementUrl + "stations/" + station.getId(), stationDTO, void.class);
         } catch (Exception e) {
             System.out.println("--------WARNING: Could not update station information----------");
         }
     }
 
-    private void updateLog(LogVO logVO){
+    private void updateLog(LogDTO logDTO){
         try {
-            restTemplate.postForObject(statisticsUrl + "logs/update/", logVO, void.class);
+            restTemplate.postForObject(statisticsUrl + "logs/update/", logDTO, void.class);
         } catch (Exception e) {
             System.out.println("--------WARNING: Could not update statistics----------");
         }
     }
 
-    private void printPanelInfo(PanelVO panel, int iterator){
+    private void printPanelInfo(PanelDTO panel, int iterator){
         System.out.println("Panel " + panel.getName() + ": final azimuth: " + panel.getAzimuth() + "; altitude: " + panel.getAltitude() + "; index: " + index + "; power: " + getPanelPower(panel));
         System.out.println("Iterations: " + iterator);
     }

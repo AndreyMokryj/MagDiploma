@@ -1,7 +1,7 @@
 package PowerPlantPackage.Listener;
 
-import ParallelSolarPanelsPackage.Model.PanelVO;
-import ParallelSolarPanelsPackage.Model.StationVO;
+import ParallelSolarPanelsPackage.Model.PanelDTO;
+import ParallelSolarPanelsPackage.Model.StationDTO;
 import ParallelSolarPanelsPackage.Utils.StateUtils;
 import ParallelSolarPanelsPackage.WorkProcess;
 import PowerPlantPackage.Repositories.StateRepository;
@@ -33,10 +33,10 @@ public class PowerPlantServiceListener implements ApplicationListener<ServletWeb
         String managementUrl = WorkProcess.getInstance().managementUrl;
         String statisticsUrl = WorkProcess.getInstance().statisticsUrl;
 
-        StationVO station = null;
+        StationDTO station = null;
         while (station == null) {
             try {
-                station = StationVO.fromMap(restTemplate.exchange(managementUrl + "stations/" + serviceName, HttpMethod.GET, null, Map.class).getBody());
+                station = StationDTO.fromMap(restTemplate.exchange(managementUrl + "stations/" + serviceName, HttpMethod.GET, null, Map.class).getBody());
                 Thread.sleep(10000L);
             } catch (Exception e) {
             }
@@ -49,7 +49,7 @@ public class PowerPlantServiceListener implements ApplicationListener<ServletWeb
         WorkProcess.getInstance().setStateUtils(stateUtils);
         List<Object> objectList = (List<Object>) restTemplate.exchange(managementUrl + "panels/stationId/" + station.getId(), HttpMethod.GET, null, Iterable.class).getBody();
         for (Object object : objectList){
-            WorkProcess.getInstance().panels.add(PanelVO.fromMap((Map) object));
+            WorkProcess.getInstance().panels.add(PanelDTO.fromMap((Map) object));
         }
         try {
             restTemplate.exchange(statisticsUrl + "logs/clear/" + station.getId(), HttpMethod.GET, null, void.class);

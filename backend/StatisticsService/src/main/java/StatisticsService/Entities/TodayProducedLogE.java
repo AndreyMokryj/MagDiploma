@@ -1,6 +1,6 @@
 package StatisticsService.Entities;
 
-import ParallelSolarPanelsPackage.Model.LogVO;
+import ParallelSolarPanelsPackage.Model.LogDTO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,13 +21,13 @@ public class TodayProducedLogE {
 
     private double produced;
 
-    public static TodayProducedLogE fromVO(LogVO logVO){
+    public static TodayProducedLogE fromDTO(LogDTO logDTO){
         TodayProducedLogE todayLog = new TodayProducedLogE();
-        todayLog.setId(logVO.getId());
-        todayLog.setStationId(logVO.getStationId());
-        todayLog.setPanelId(logVO.getPanelId());
+        todayLog.setId(logDTO.getId());
+        todayLog.setStationId(logDTO.getStationId());
+        todayLog.setPanelId(logDTO.getPanelId());
 
-        String time = logVO.getDateTime().substring(11, 13) + ":00:00";
+        String time = logDTO.getDateTime().substring(11, 13) + ":00:00";
         todayLog.setTime(time);
 
         return todayLog;

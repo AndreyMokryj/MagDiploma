@@ -1,6 +1,6 @@
 package ParallelSolarPanelsPackage.Entities;
 
-import ParallelSolarPanelsPackage.Model.StateVO;
+import ParallelSolarPanelsPackage.Model.StateDTO;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -27,21 +27,21 @@ public class StateE {
     @Column(name = "alt_minus")
     private double altMinus;
 
-    public static StateE fromVO(StateVO stateVO){
+    public static StateE fromDTO(StateDTO stateDTO){
         StateE direction = new StateE();
-        direction.setId(stateVO.getId());
-        direction.setPanelId(stateVO.getPanelId());
-        direction.setAzimuth(stateVO.getAzimuth());
-        direction.setAltitude(stateVO.getAltitude());
-        direction.setAzPlus(stateVO.getAzPlus());
-        direction.setAzMinus(stateVO.getAzMinus());
-        direction.setAltPlus(stateVO.getAltPlus());
-        direction.setAltMinus(stateVO.getAltMinus());
+        direction.setId(stateDTO.getId());
+        direction.setPanelId(stateDTO.getPanelId());
+        direction.setAzimuth(stateDTO.getAzimuth());
+        direction.setAltitude(stateDTO.getAltitude());
+        direction.setAzPlus(stateDTO.getAzPlus());
+        direction.setAzMinus(stateDTO.getAzMinus());
+        direction.setAltPlus(stateDTO.getAltPlus());
+        direction.setAltMinus(stateDTO.getAltMinus());
         return direction;
     }
 
-    public StateVO toVO(){
-        StateVO direction = new StateVO();
+    public StateDTO toDTO(){
+        StateDTO direction = new StateDTO();
         direction.setId(this.getId());
         direction.setPanelId(this.getPanelId());
         direction.setAzimuth(this.getAzimuth());

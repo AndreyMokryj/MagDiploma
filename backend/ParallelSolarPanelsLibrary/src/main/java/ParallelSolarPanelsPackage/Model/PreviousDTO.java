@@ -1,6 +1,6 @@
 package ParallelSolarPanelsPackage.Model;
 
-public class PreviousVO {
+public class PreviousDTO {
     private String id;
 
     private double azPlus;

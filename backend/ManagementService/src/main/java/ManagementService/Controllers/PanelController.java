@@ -2,7 +2,7 @@ package ManagementService.Controllers;
 
 import ManagementService.Repositories.PanelRepository;
 import ManagementService.Entities.PanelE;
-import ParallelSolarPanelsPackage.Model.PanelVO;
+import ParallelSolarPanelsPackage.Model.PanelDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -43,8 +43,8 @@ public class PanelController {
 
     @PostMapping(path="/{id}")
     public @ResponseBody
-    void updateById(@PathVariable String id, @RequestBody PanelVO panelVO) {
-        PanelE panel = PanelE.fromVO(panelVO);
+    void updateById(@PathVariable String id, @RequestBody PanelDTO panelDTO) {
+        PanelE panel = PanelE.fromDTO(panelDTO);
         panelRepository.save(panel);
     }
 
@@ -56,11 +56,11 @@ public class PanelController {
             return false;
         }
 
-        PanelVO response = restTemplate.exchange("http://" + sid + "/panels/turn-" + action + "/" + id,
-                HttpMethod.GET, null, new ParameterizedTypeReference<PanelVO>() {}).getBody();
+        PanelDTO response = restTemplate.exchange("http://" + sid + "/panels/turn-" + action + "/" + id,
+                HttpMethod.GET, null, new ParameterizedTypeReference<PanelDTO>() {}).getBody();
 
         if(!(response == null)){
-            PanelE panel = PanelE.fromVO(response);
+            PanelE panel = PanelE.fromDTO(response);
             panelRepository.save(panel);
 
             return true;

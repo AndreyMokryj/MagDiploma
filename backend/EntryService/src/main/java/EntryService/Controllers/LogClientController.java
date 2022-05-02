@@ -1,6 +1,6 @@
 package EntryService.Controllers;
 
-import ParallelSolarPanelsPackage.Model.LogVO;
+import ParallelSolarPanelsPackage.Model.LogDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -18,32 +18,32 @@ public class LogClientController {
     @CrossOrigin(origins = "*")
     @PostMapping(path="/history-produced/")
     public @ResponseBody
-    Iterable<LogVO> getHistoryProducedLogs(@RequestBody String stationId) {
-        Iterable<LogVO> response = restTemplate.postForObject( statisticsUrl + "history-produced/", stationId, Iterable.class);
+    Iterable<LogDTO> getHistoryProducedLogs(@RequestBody String stationId) {
+        Iterable<LogDTO> response = restTemplate.postForObject( statisticsUrl + "history-produced/", stationId, Iterable.class);
         return response;
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping(path="/history-given/")
     public @ResponseBody
-    Iterable<LogVO> getHistoryGivenLogs(@RequestBody String stationId) {
-        Iterable<LogVO> response = restTemplate.postForObject( statisticsUrl + "history-given/", stationId, Iterable.class);
+    Iterable<LogDTO> getHistoryGivenLogs(@RequestBody String stationId) {
+        Iterable<LogDTO> response = restTemplate.postForObject( statisticsUrl + "history-given/", stationId, Iterable.class);
         return response;
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping(path="/today-produced/")
     public @ResponseBody
-    Iterable<LogVO> getTodayProducedLogs(@RequestBody String stationId) {
-        Iterable<LogVO> response = restTemplate.postForObject( statisticsUrl + "today-produced/", stationId, Iterable.class);
+    Iterable<LogDTO> getTodayProducedLogs(@RequestBody String stationId) {
+        Iterable<LogDTO> response = restTemplate.postForObject( statisticsUrl + "today-produced/", stationId, Iterable.class);
         return response;
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping(path="/today-given/")
     public @ResponseBody
-    Iterable<LogVO> getTodayGivenLogs(@RequestBody String stationId) {
-        Iterable<LogVO> response = restTemplate.postForObject( statisticsUrl + "today-given/", stationId, Iterable.class);
+    Iterable<LogDTO> getTodayGivenLogs(@RequestBody String stationId) {
+        Iterable<LogDTO> response = restTemplate.postForObject( statisticsUrl + "today-given/", stationId, Iterable.class);
         return response;
     }
 }

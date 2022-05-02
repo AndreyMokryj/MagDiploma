@@ -2,7 +2,7 @@ package ParallelSolarPanelsPackage.Model;
 
 import java.util.Map;
 
-public class StationVO {
+public class StationDTO {
     private String id;
     private String userId;
     private int maxOutputPower;
@@ -12,8 +12,8 @@ public class StationVO {
     private String ukey;
     private String name;
 
-    public static StationVO fromMap(Map map){
-        StationVO station = new StationVO();
+    public static StationDTO fromMap(Map map){
+        StationDTO station = new StationDTO();
         station.setId((String) map.get("id"));
         station.setUserId((String) map.get("userId"));
         station.setMaxOutputPower((int) map.get("maxOutputPower"));

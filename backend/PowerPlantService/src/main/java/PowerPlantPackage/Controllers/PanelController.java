@@ -1,6 +1,6 @@
 package PowerPlantPackage.Controllers;
 
-import ParallelSolarPanelsPackage.Model.PanelVO;
+import ParallelSolarPanelsPackage.Model.PanelDTO;
 import ParallelSolarPanelsPackage.WorkProcess;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 public class PanelController {
     @GetMapping(path="/")
     public @ResponseBody
-    Iterable<PanelVO> getAll() {
+    Iterable<PanelDTO> getAll() {
         return WorkProcess.getInstance().panels;
     }
 
     @GetMapping(path="/{id}")
     public @ResponseBody
-    PanelVO getById(@PathVariable String id) {
-        for (PanelVO panel : WorkProcess.getInstance().panels){
+    PanelDTO getById(@PathVariable String id) {
+        for (PanelDTO panel : WorkProcess.getInstance().panels){
             if (panel.getId().equals(id)){
                 return panel;
             }
@@ -28,11 +28,11 @@ public class PanelController {
 
     @GetMapping(path="/turn-{action}/{id}")
     public @ResponseBody
-    PanelVO turn(@PathVariable int action, @PathVariable String id) {
+    PanelDTO turn(@PathVariable int action, @PathVariable String id) {
         if(action != 0 && action != 1){
             return null;
         }
-        for (PanelVO panel : WorkProcess.getInstance().panels){
+        for (PanelDTO panel : WorkProcess.getInstance().panels){
             if (panel.getId().equals(id)){
                 panel.setConnected(action);
                 return panel;
@@ -44,7 +44,7 @@ public class PanelController {
     @GetMapping(path="/power/{id}")
     public @ResponseBody
     double getPanelPower(@PathVariable String id) {
-        for (PanelVO panel : WorkProcess.getInstance().panels){
+        for (PanelDTO panel : WorkProcess.getInstance().panels){
             if (panel.getId().equals(id)){
                 return WorkProcess.getInstance().getPanelPower(panel);
             }

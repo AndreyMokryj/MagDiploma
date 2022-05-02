@@ -1,6 +1,6 @@
 package EntryService.Controllers;
 
-import ParallelSolarPanelsPackage.Model.StationVO;
+import ParallelSolarPanelsPackage.Model.StationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +18,8 @@ public class StationClientController {
     @CrossOrigin(origins = "*")
     @PostMapping(path="/userId/")
     public @ResponseBody
-    Iterable<StationVO> getStationsByUserId(@RequestBody String userId) {
-        Iterable<StationVO> response = restTemplate.postForObject(managementUrl + "userId/", userId, Iterable.class);
+    Iterable<StationDTO> getStationsByUserId(@RequestBody String userId) {
+        Iterable<StationDTO> response = restTemplate.postForObject(managementUrl + "userId/", userId, Iterable.class);
 
         return response;
     }
@@ -27,8 +27,8 @@ public class StationClientController {
     @CrossOrigin(origins = "*")
     @PostMapping(path="/ukey/{ukey}")
     public @ResponseBody
-    StationVO getStationByUkey(@RequestBody String userId, @PathVariable String ukey) {
-        StationVO response = restTemplate.postForObject(managementUrl + "ukey/" + ukey, userId, StationVO.class);
+    StationDTO getStationByUkey(@RequestBody String userId, @PathVariable String ukey) {
+        StationDTO response = restTemplate.postForObject(managementUrl + "ukey/" + ukey, userId, StationDTO.class);
 
         return response;
     }

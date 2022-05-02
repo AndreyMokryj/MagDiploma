@@ -1,6 +1,6 @@
 package UserService.Controllers;
 
-import ParallelSolarPanelsPackage.Model.UserVO;
+import ParallelSolarPanelsPackage.Model.UserDTO;
 import UserService.Entities.UserE;
 import UserService.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +29,8 @@ public class UserController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/")
-    public boolean createUser(@RequestBody UserVO userVO) {
-        UserE user = UserE.fromVO(userVO);
+    public boolean createUser(@RequestBody UserDTO userDTO) {
+        UserE user = UserE.fromDTO(userDTO);
         UserE savedUser;
         if (retrieveUser(user.getUsername()) == null) {
             user.setId(UUID.randomUUID().toString());
@@ -42,8 +42,8 @@ public class UserController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/check/")
-    public UserE checkUser(@RequestBody UserVO userVO) {
-        UserE user = UserE.fromVO((UserVO) userVO);
+    public UserE checkUser(@RequestBody UserDTO userDTO) {
+        UserE user = UserE.fromDTO((UserDTO) userDTO);
         UserE savedUser;
         try {
             savedUser = retrieveUser(user.getUsername());
@@ -56,9 +56,9 @@ public class UserController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/update/")
-    public boolean updateUser(@RequestBody UserVO userVO) {
+    public boolean updateUser(@RequestBody UserDTO userDTO) {
         try {
-            UserE newUser = UserE.fromVO(userVO);
+            UserE newUser = UserE.fromDTO(userDTO);
             userRepository.save(newUser);
             return true;
         }

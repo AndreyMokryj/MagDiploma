@@ -1,6 +1,6 @@
 package PowerPlantPackage.Controllers;
 
-import ParallelSolarPanelsPackage.Model.StationVO;
+import ParallelSolarPanelsPackage.Model.StationDTO;
 import ParallelSolarPanelsPackage.WorkProcess;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 public class StationController {
     @GetMapping(path="/")
     public @ResponseBody
-    StationVO get() {
+    StationDTO get() {
         return WorkProcess.getInstance().station;
     }
 
     @GetMapping(path="/turn-station-{action}")
     public @ResponseBody
-    StationVO turnStation(@PathVariable int action) {
+    StationDTO turnStation(@PathVariable int action) {
         if(action != 0 && action != 1){
             return null;
         }
@@ -27,7 +27,7 @@ public class StationController {
 
     @GetMapping(path="/turn-grid-{action}")
     public @ResponseBody
-    StationVO turnGrid(@PathVariable int action) {
+    StationDTO turnGrid(@PathVariable int action) {
         if(action != 0 && action != 1){
             return null;
         }

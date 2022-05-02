@@ -2,7 +2,7 @@ package ManagementService.Controllers;
 
 import ManagementService.Entities.StationE;
 import ManagementService.Repositories.StationRepository;
-import ParallelSolarPanelsPackage.Model.StationVO;
+import ParallelSolarPanelsPackage.Model.StationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -37,8 +37,8 @@ public class StationController {
 
     @PostMapping(path="/{id}")
     public @ResponseBody
-    void updateById(@PathVariable String id, @RequestBody StationVO stationVO) {
-        StationE station = StationE.fromVO(stationVO);
+    void updateById(@PathVariable String id, @RequestBody StationDTO stationDTO) {
+        StationE station = StationE.fromDTO(stationDTO);
         stationRepository.save(station);
     }
 
@@ -65,11 +65,11 @@ public class StationController {
             return false;
         }
 
-        StationVO response = restTemplate.exchange("http://" + sid + "/station/turn-station-" + action,
-                HttpMethod.GET, null, new ParameterizedTypeReference<StationVO>() {}).getBody();
+        StationDTO response = restTemplate.exchange("http://" + sid + "/station/turn-station-" + action,
+                HttpMethod.GET, null, new ParameterizedTypeReference<StationDTO>() {}).getBody();
 
         if(!(response == null)){
-            StationE station = StationE.fromVO(response);
+            StationE station = StationE.fromDTO(response);
             stationRepository.save(station);
             return true;
         }
@@ -84,11 +84,11 @@ public class StationController {
             return false;
         }
 
-        StationVO response = restTemplate.exchange("http://" + sid + "/station/turn-grid-" + action,
-                HttpMethod.GET, null, new ParameterizedTypeReference<StationVO>() {}).getBody();
+        StationDTO response = restTemplate.exchange("http://" + sid + "/station/turn-grid-" + action,
+                HttpMethod.GET, null, new ParameterizedTypeReference<StationDTO>() {}).getBody();
 
         if(!(response == null)){
-            StationE station = StationE.fromVO(response);
+            StationE station = StationE.fromDTO(response);
             stationRepository.save(station);
             return true;
         }

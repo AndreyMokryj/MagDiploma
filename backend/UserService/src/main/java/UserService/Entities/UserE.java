@@ -1,6 +1,6 @@
 package UserService.Entities;
 
-import ParallelSolarPanelsPackage.Model.UserVO;
+import ParallelSolarPanelsPackage.Model.UserDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -30,13 +30,13 @@ public class UserE {
         this.password = name;
     }
 
-    public static UserE fromVO(UserVO userVO){
+    public static UserE fromDTO(UserDTO userDTO){
         UserE user = new UserE();
-        user.setId(userVO.getId());
-        user.setUsername(userVO.getUsername());
-        user.setPassword(userVO.getPassword());
-        user.setPhone(userVO.getPhone());
-        user.setEmail(userVO.getEmail());
+        user.setId(userDTO.getId());
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(userDTO.getPassword());
+        user.setPhone(userDTO.getPhone());
+        user.setEmail(userDTO.getEmail());
         return user;
     }
 

@@ -1,6 +1,6 @@
 package StatisticsService.Controllers;
 
-import ParallelSolarPanelsPackage.Model.LogVO;
+import ParallelSolarPanelsPackage.Model.LogDTO;
 import StatisticsService.Entities.HistoryGivenLogE;
 import StatisticsService.Entities.HistoryProducedLogE;
 import StatisticsService.Entities.TodayGivenLogE;
@@ -60,8 +60,8 @@ public class LogController {
         return todayGivenLogRepository.findByStationId(stationId);
     }
 
-    private HistoryProducedLogE getHistoryProducedLog(LogVO logVO) {
-        HistoryProducedLogE historyLog = HistoryProducedLogE.fromVO(logVO);
+    private HistoryProducedLogE getHistoryProducedLog(LogDTO logDTO) {
+        HistoryProducedLogE historyLog = HistoryProducedLogE.fromDTO(logDTO);
         try {
             Optional<HistoryProducedLogE> historyLog1 = historyProducedLogRepository.findByParams(
                     historyLog.getStationId(),
@@ -77,8 +77,8 @@ public class LogController {
         }
     }
 
-    private HistoryGivenLogE getHistoryGivenLog(LogVO logVO) {
-        HistoryGivenLogE historyLog = HistoryGivenLogE.fromVO(logVO);
+    private HistoryGivenLogE getHistoryGivenLog(LogDTO logDTO) {
+        HistoryGivenLogE historyLog = HistoryGivenLogE.fromDTO(logDTO);
         try {
             Optional<HistoryGivenLogE> historyLog1 = historyGivenLogRepository.findByParams(
                     historyLog.getStationId(),
@@ -93,8 +93,8 @@ public class LogController {
         }
     }
 
-    private TodayProducedLogE getTodayProducedLog(LogVO logVO) {
-        TodayProducedLogE todayLog = TodayProducedLogE.fromVO(logVO);
+    private TodayProducedLogE getTodayProducedLog(LogDTO logDTO) {
+        TodayProducedLogE todayLog = TodayProducedLogE.fromDTO(logDTO);
         try {
             Optional<TodayProducedLogE> todayLog1 = todayProducedLogRepository.findByParams(
                     todayLog.getStationId(),
@@ -110,8 +110,8 @@ public class LogController {
         }
     }
 
-    private TodayGivenLogE getTodayGivenLog(LogVO logVO) {
-        TodayGivenLogE todayLog = TodayGivenLogE.fromVO(logVO);
+    private TodayGivenLogE getTodayGivenLog(LogDTO logDTO) {
+        TodayGivenLogE todayLog = TodayGivenLogE.fromDTO(logDTO);
         try {
             Optional<TodayGivenLogE> todayLog1 = todayGivenLogRepository.findByParams(
                     todayLog.getStationId(),
@@ -128,28 +128,28 @@ public class LogController {
 
     @PostMapping(path="/update/")
     public @ResponseBody
-    void updateLogs(@RequestBody LogVO logVO) {
-        if (logVO.getPanelId() == null){
-            HistoryGivenLogE historyLog = getHistoryGivenLog(logVO);
-            historyLog.setGiven(historyLog.getGiven() + logVO.getGiven());
+    void updateLogs(@RequestBody LogDTO logDTO) {
+        if (logDTO.getPanelId() == null){
+            HistoryGivenLogE historyLog = getHistoryGivenLog(logDTO);
+            historyLog.setGiven(historyLog.getGiven() + logDTO.getGiven());
             historyGivenLogRepository.save(historyLog);
 
-            if(logVO.getDateTime().contains("00:00:00")){
-                todayGivenLogRepository.deleteByStationId(logVO.getStationId());
-                todayProducedLogRepository.deleteByStationId(logVO.getStationId());
+            if(logDTO.getDateTime().contains("00:00:00")){
+                todayGivenLogRepository.deleteByStationId(logDTO.getStationId());
+                todayProducedLogRepository.deleteByStationId(logDTO.getStationId());
             }
 
-            TodayGivenLogE todayLog = getTodayGivenLog(logVO);
-            todayLog.setGiven(todayLog.getGiven() + logVO.getGiven());
+            TodayGivenLogE todayLog = getTodayGivenLog(logDTO);
+            todayLog.setGiven(todayLog.getGiven() + logDTO.getGiven());
             todayGivenLogRepository.save(todayLog);
         }
         else {
-            HistoryProducedLogE historyLog = getHistoryProducedLog(logVO);
-            historyLog.setProduced(historyLog.getProduced() + logVO.getProduced());
+            HistoryProducedLogE historyLog = getHistoryProducedLog(logDTO);
+            historyLog.setProduced(historyLog.getProduced() + logDTO.getProduced());
             historyProducedLogRepository.save(historyLog);
 
-            TodayProducedLogE todayLog = getTodayProducedLog(logVO);
-            todayLog.setProduced(todayLog.getProduced() + logVO.getProduced());
+            TodayProducedLogE todayLog = getTodayProducedLog(logDTO);
+            todayLog.setProduced(todayLog.getProduced() + logDTO.getProduced());
             todayProducedLogRepository.save(todayLog);
         }
     }

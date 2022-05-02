@@ -1,6 +1,6 @@
 package ManagementService.Entities;
 
-import ParallelSolarPanelsPackage.Model.PanelVO;
+import ParallelSolarPanelsPackage.Model.PanelDTO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,16 +28,16 @@ public class PanelE {
     private int connected;
 
 
-    public static PanelE fromVO(PanelVO panelVO){
+    public static PanelE fromDTO(PanelDTO panelDTO){
         PanelE panel = new PanelE();
-        panel.setId(panelVO.getId());
-        panel.setName(panelVO.getName());
-        panel.setModel(panelVO.getModel());
-        panel.setNominalPower(panelVO.getNominalPower());
-        panel.setStationId(panelVO.getStationId());
-        panel.setAzimuth(panelVO.getAzimuth());
-        panel.setAltitude(panelVO.getAltitude());
-        panel.setConnected(panelVO.getConnected());
+        panel.setId(panelDTO.getId());
+        panel.setName(panelDTO.getName());
+        panel.setModel(panelDTO.getModel());
+        panel.setNominalPower(panelDTO.getNominalPower());
+        panel.setStationId(panelDTO.getStationId());
+        panel.setAzimuth(panelDTO.getAzimuth());
+        panel.setAltitude(panelDTO.getAltitude());
+        panel.setConnected(panelDTO.getConnected());
         return panel;
     }
 

@@ -1,6 +1,6 @@
 package ParallelSolarPanelsPackage.Model;
 
-public class UserVO {
+public class UserDTO {
     private String id;
     private String username;
     private String password;

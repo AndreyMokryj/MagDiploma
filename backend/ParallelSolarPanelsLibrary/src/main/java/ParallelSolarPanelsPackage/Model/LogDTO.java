@@ -1,6 +1,6 @@
 package ParallelSolarPanelsPackage.Model;
 
-public class LogVO {
+public class LogDTO {
     private String id;
     private String stationId;
     private String panelId;

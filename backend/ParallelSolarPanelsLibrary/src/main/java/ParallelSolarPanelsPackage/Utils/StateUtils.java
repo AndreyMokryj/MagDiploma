@@ -1,9 +1,9 @@
 package ParallelSolarPanelsPackage.Utils;
 
 import ParallelSolarPanelsPackage.Entities.StateE;
-import ParallelSolarPanelsPackage.Model.PanelVO;
-import ParallelSolarPanelsPackage.Model.PreviousVO;
-import ParallelSolarPanelsPackage.Model.StateVO;
+import ParallelSolarPanelsPackage.Model.PanelDTO;
+import ParallelSolarPanelsPackage.Model.PreviousDTO;
+import ParallelSolarPanelsPackage.Model.StateDTO;
 import ParallelSolarPanelsPackage.Repositories.IStateRepository;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
@@ -17,8 +17,8 @@ public class StateUtils<T> {
         this.iStateRepository = iStateRepository;
     }
 
-    public StateE fetchState(StateVO stateVO) {
-        StateE state = StateE.fromVO(stateVO);
+    public StateE fetchState(StateDTO stateDTO) {
+        StateE state = StateE.fromDTO(stateDTO);
         try {
             Optional<StateE> state1 = iStateRepository.findByParams(
                     state.getPanelId(),
@@ -34,12 +34,12 @@ public class StateUtils<T> {
         }
     }
 
-    public void updatePrevState(PreviousVO previousVO) {
-        StateE state = getById(previousVO.getId());
-        state.setAltPlus(state.getAltPlus() + previousVO.getAltPlus());
-        state.setAltMinus(state.getAltMinus() + previousVO.getAltMinus());
-        state.setAzPlus(state.getAzPlus() + previousVO.getAzPlus());
-        state.setAzMinus(state.getAzMinus() + previousVO.getAzMinus());
+    public void updatePrevState(PreviousDTO previousDTO) {
+        StateE state = getById(previousDTO.getId());
+        state.setAltPlus(state.getAltPlus() + previousDTO.getAltPlus());
+        state.setAltMinus(state.getAltMinus() + previousDTO.getAltMinus());
+        state.setAzPlus(state.getAzPlus() + previousDTO.getAzPlus());
+        state.setAzMinus(state.getAzMinus() + previousDTO.getAzMinus());
         iStateRepository.save(state);
     }
 
@@ -62,21 +62,21 @@ public class StateUtils<T> {
         iStateRepository.saveAll(states);
     }
 
-    public void preparePanel(PanelVO panel) {
-        StateVO stateVO = new StateVO();
-        stateVO.setPanelId(panel.getId());
-        stateVO.setAzimuth(panel.getAzimuth());
-        stateVO.setAltitude(panel.getAltitude());
+    public void preparePanel(PanelDTO panel) {
+        StateDTO stateDTO = new StateDTO();
+        stateDTO.setPanelId(panel.getId());
+        stateDTO.setAzimuth(panel.getAzimuth());
+        stateDTO.setAltitude(panel.getAltitude());
 
-        StateE currentState = fetchState(stateVO);
+        StateE currentState = fetchState(stateDTO);
         currentState.setAzPlus(0.00001);
         currentState.setAzMinus(0);
         currentState.setAltPlus(0);
         currentState.setAltMinus(0);
         iStateRepository.save(currentState);
 
-        stateVO.setAzimuth((stateVO.getAzimuth() + 1) % 360);
-        StateE nextState = fetchState(stateVO);
+        stateDTO.setAzimuth((stateDTO.getAzimuth() + 1) % 360);
+        StateE nextState = fetchState(stateDTO);
         nextState.setAzPlus(0);
         nextState.setAzMinus(0);
         nextState.setAltPlus(0);

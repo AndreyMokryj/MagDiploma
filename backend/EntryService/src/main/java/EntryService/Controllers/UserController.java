@@ -1,6 +1,6 @@
 package EntryService.Controllers;
 
-import ParallelSolarPanelsPackage.Model.UserVO;
+import ParallelSolarPanelsPackage.Model.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -17,22 +17,22 @@ public class UserController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/")
-    public boolean createUser(@RequestBody UserVO userVO) {
-        boolean response = restTemplate.postForObject( userUrl, userVO, Boolean.class);
+    public boolean createUser(@RequestBody UserDTO userDTO) {
+        boolean response = restTemplate.postForObject( userUrl, userDTO, Boolean.class);
         return response;
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/check/")
-    public UserVO checkUser(@RequestBody UserVO userVO) {
-        UserVO response = restTemplate.postForObject( userUrl + "check/", userVO, UserVO.class);
+    public UserDTO checkUser(@RequestBody UserDTO userDTO) {
+        UserDTO response = restTemplate.postForObject( userUrl + "check/", userDTO, UserDTO.class);
         return response;
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/update/")
-    public boolean updateUser(@RequestBody UserVO userVO) {
-        boolean response = restTemplate.postForObject( userUrl + "update/", userVO, Boolean.class);
+    public boolean updateUser(@RequestBody UserDTO userDTO) {
+        boolean response = restTemplate.postForObject( userUrl + "update/", userDTO, Boolean.class);
         return response;
     }
 }

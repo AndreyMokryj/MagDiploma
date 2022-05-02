@@ -1,6 +1,6 @@
 package ParallelSolarPanelsPackage.Model;
 
-public class StateVO {
+public class StateDTO {
     private String id;
     private String panelId;
 //    private double power;
