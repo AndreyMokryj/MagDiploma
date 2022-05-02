@@ -74,7 +74,7 @@ public class WorkProcess {
         int _index = index % 144;
         if (_index == 0) {
             int _day = index / 144;
-            System.out.println("-------Day " + _day + ":  medium time: " + (mediumTime / panels.size() / 84.0) + "------------");
+            System.out.println("-------Day " + _day + ":  medium time: " + (mediumTime / 84.0) + "------------");
 
             mediumTime = 0;
         }
@@ -356,7 +356,7 @@ public class WorkProcess {
         System.out.println("Iterations: " + iterator);
 
         int _index = index % 144;
-        if (_index == 0) {
+        if (_index == 120) {
             int _day = index / 144;
             System.out.println("-------Day " + _day + ":  medium iterations: " + (mediumIterations / panels.size() / 84.0) + "------------");
 
