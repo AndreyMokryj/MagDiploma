@@ -52,7 +52,9 @@ class PanelsList extends StatelessWidget{
           }
         }
         else{
-          return Container();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
     );

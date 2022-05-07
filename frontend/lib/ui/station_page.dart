@@ -36,7 +36,9 @@ class StationPage extends StatelessWidget{
           if (snapshot.hasData) {
             return Text( ("Станція ${snapshot.data.name ?? ""}"));
           }
-          return Container();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
       future: getStation(context, ukey),

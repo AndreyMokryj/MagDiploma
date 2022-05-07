@@ -139,7 +139,9 @@ class _DiagramWidgetState extends State<DiagramWidget> {
           );
         }
         else {
-          return Container();
+          return Center(
+              child: CircularProgressIndicator()
+          );
         }
       },
     );

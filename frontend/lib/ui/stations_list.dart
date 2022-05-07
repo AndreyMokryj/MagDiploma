@@ -30,8 +30,8 @@ class StationsList extends StatelessWidget{
         Navigator.of(context).pushNamed("/${RoutePaths.login}");
         return Future.value(true);
       },
-      future: DBProvider.db.getStations(user.id),
       automaticallyImplyLeading: false,
+      future: DBProvider.db.getStations(user.id),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final stationMaps = (snapshot.data as List);
@@ -61,7 +61,9 @@ class StationsList extends StatelessWidget{
           }
         }
         else {
-          return Container();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
     );

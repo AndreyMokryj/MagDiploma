@@ -153,7 +153,9 @@ class _HistoryWidgetState extends State<HistoryWidget> {
               );
             }
             else {
-              return Container();
+              return Center(
+                child: CircularProgressIndicator()
+              );
             }
           },
         ) : Container(),

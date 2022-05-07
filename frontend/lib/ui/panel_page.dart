@@ -287,7 +287,9 @@ class _PanelPageState extends State<PanelPage> {
             ),
           );
         } else {
-          return Container();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
     );
