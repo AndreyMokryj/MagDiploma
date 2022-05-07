@@ -14,9 +14,11 @@
         <module>ManagementService</module>
         <module>UserService</module>
         <module>StatisticsService</module>
-        <module>PowerPlantService</module>
         <module>SunService</module>
+
         <module>ParallelSolarPanelsLibrary</module>
+        <module>PowerPlantService</module>
+        <module>PowerPlantService2</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
