@@ -1,6 +1,5 @@
 import 'package:SUNMAX/helpers/constants.dart';
 import 'package:SUNMAX/helpers/utils.dart';
-import 'package:SUNMAX/model/notifiers/name_notifier.dart';
 import 'package:SUNMAX/model/station_model.dart';
 import 'package:SUNMAX/route.dart';
 import 'package:SUNMAX/ui/main_view.dart';
@@ -10,7 +9,6 @@ import 'package:SUNMAX/ui/widgets/refreshable_number_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:SUNMAX/model/station_model.dart' as acc;
 import 'package:SUNMAX/ui/widgets/station_widget.dart';
-import 'package:provider/provider.dart';
 
 class StationPage extends StatelessWidget{
   final String ukey;
@@ -19,8 +17,6 @@ class StationPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    String stationName = Provider.of<NameNotifier>(context).name;
-
     double w = getWidth(context);
 
     int count = 1;
@@ -34,7 +30,15 @@ class StationPage extends StatelessWidget{
         Navigator.of(context).pushNamed("/${RoutePaths.stations}");
         return Future.value(true);
       },
-      title: "Станція ${stationName ?? ""}",
+      title: FutureBuilder(
+        future: getStation(context, ukey),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Text( ("Станція ${snapshot.data.name ?? ""}"));
+          }
+          return Container();
+        },
+      ),
       future: getStation(context, ukey),
       builder:(context, snapshot) {
         if (snapshot.hasData) {

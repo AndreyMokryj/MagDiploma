@@ -1,12 +1,10 @@
 import 'package:SUNMAX/helpers/utils.dart';
-import 'package:SUNMAX/model/notifiers/name_notifier.dart';
 import 'package:SUNMAX/route.dart';
 import 'package:SUNMAX/ui/main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:SUNMAX/database/database.dart';
 import 'package:SUNMAX/model/panel_model.dart';
 import 'package:SUNMAX/ui/widgets/panel_widget.dart';
-import 'package:provider/provider.dart';
 
 class PanelsList extends StatelessWidget{
   final String ukey;
@@ -15,10 +13,16 @@ class PanelsList extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    String stationName = Provider.of<NameNotifier>(context).name;
-
     return MainView(
-      title: "Панелі станції ${stationName ?? ""}",
+      title: FutureBuilder(
+        future: getStation(context, ukey),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Text("Панелі станції ${snapshot.data.name ?? ""}");
+          }
+          return Container();
+        },
+      ),
       onWillPop: (){
         Navigator.of(context).pushNamed("/${RoutePaths.stations}/${ukey}");
         return Future.value(true);

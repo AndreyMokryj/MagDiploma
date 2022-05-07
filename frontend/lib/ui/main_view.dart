@@ -9,9 +9,9 @@ class MainView extends StatelessWidget{
   final future;
   final builder;
   final bool automaticallyImplyLeading;
-  final String title;
+  final Widget title;
 
-  const MainView({Key key, this.onWillPop, this.future, this.builder, this.automaticallyImplyLeading = true, this.title = ""}) : super(key: key);
+  const MainView({Key key, this.onWillPop, this.future, this.builder, this.automaticallyImplyLeading = true, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class MainView extends StatelessWidget{
             height: kToolbarHeight,
             child: Stack(
               children:  [
-                Align(child: Text(title)),
+                Align(child: title),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: w > largeLimit ? Container(

@@ -38,7 +38,7 @@ class _PanelPageState extends State<PanelPage> {
     }
 
     return MainView(
-      title: "Інформація про панель",
+      title: Text("Інформація про панель"),
       onWillPop: (){
         Navigator.of(context).pushNamed("/${RoutePaths.stations}/${widget.ukey}/${RoutePaths.panels}");
         return Future.value(true);

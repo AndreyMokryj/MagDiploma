@@ -25,7 +25,7 @@ class StationsList extends StatelessWidget{
     }
 
     return MainView(
-      title: "Мої станції",
+      title: Text("Мої станції"),
       onWillPop: (){
         Navigator.of(context).pushNamed("/${RoutePaths.login}");
         return Future.value(true);

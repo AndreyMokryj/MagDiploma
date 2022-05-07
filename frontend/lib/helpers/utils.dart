@@ -1,5 +1,4 @@
 import 'package:SUNMAX/helpers/constants.dart';
-import 'package:SUNMAX/model/notifiers/name_notifier.dart';
 import 'package:SUNMAX/model/station_model.dart';
 import 'package:flutter/material.dart';
 import 'package:SUNMAX/database/database.dart';
@@ -161,8 +160,6 @@ Future<double> getAccumulatedEnergy(BuildContext context, String ukey) async{
 Future<Station> getStation(BuildContext context, String ukey) async{
   final user = Provider.of<LoginNotifier>(context, listen: false).user;
   final station = await DBProvider.db.getStation(user.id, ukey);
-  Provider.of<NameNotifier>(context, listen: false).setName(station.name);
-
   return station;
 }
 
