@@ -72,7 +72,7 @@ public class WorkProcess {
         System.out.println("Time to correct all panels: " + time);
 
         int _index = index % 144;
-        if (_index == 0) {
+        if (_index == 123) {
             int _day = index / 144;
             System.out.println("-------Day " + _day + ":  medium time: " + (mediumTime / 84.0) + "------------");
 
