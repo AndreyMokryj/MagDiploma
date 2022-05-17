@@ -15,7 +15,9 @@ public class WorkProcess {
     private WorkProcess(){
         panels = new ArrayList<PanelVO>();
         station = null;
-        index = 50;
+        index = 25;
+        mediumTime = 0;
+        mediumIterations = 0;
     }
 
     public static WorkProcess getInstance(){
@@ -34,8 +36,11 @@ public class WorkProcess {
     public StationVO station;
 
     private int index;
+    private double mediumTime;
+    private double mediumIterations;
 
     public void execute(){
+        Date startTime = new Date();
         if(!(station == null)) {
             if(station.getStationConnection() == 1) {
                 for (PanelVO panel : panels) {
@@ -57,8 +62,28 @@ public class WorkProcess {
                 System.out.println("Station is disconnected");
             }
             updateGivenLogs();
-            index += 2;
+            index += 1;
+
+            Date endTime = new Date();
+            processTime(endTime.getTime() - startTime.getTime());
+
             System.out.println("Task executed on " + new Date());
+        }
+    }
+
+    private void processTime(long time) {
+        System.out.println("Time to correct all panels: " + time);
+
+        int _index = index % 144;
+        if (_index == 123) {
+            int _day = index / 144;
+            System.out.println("-------Day " + _day + ":  medium time: " + (mediumTime / 84.0) + "------------");
+
+            mediumTime = 0;
+        }
+
+        if(_index >= 36 && _index < 120) {
+            mediumTime += time;
         }
     }
 
@@ -188,13 +213,31 @@ public class WorkProcess {
 
             sendUpdate(previousVO);
             sendUpdate(currentVO);
-            updatePanel(panel);
+//            updatePanel(panel);
 
             iterator++;
         }
 
+        updatePanel(panel);
+
+        printPanelInfo(panel, iterator);
+    }
+
+    private void printPanelInfo(PanelVO panel, int iterator){
         System.out.println("Panel " + panel.getName() + ": final azimuth: " + panel.getAzimuth() + "; altitude: " + panel.getAltitude() + "; index: " + index + "; power: " + getPanelPower(panel));
         System.out.println("Iterations: " + iterator);
+
+        int _index = index % 144;
+        if (_index == 120) {
+            int _day = index / 144;
+            System.out.println("-------Day " + _day + ":  medium iterations: " + (mediumIterations / panels.size() / 84.0) + "------------");
+
+            mediumIterations = 0;
+        }
+
+        if(_index >= 36 && _index < 120) {
+            mediumIterations += iterator;
+        }
     }
 
     public double getTotalPower(){
@@ -258,7 +301,7 @@ public class WorkProcess {
         logVO.setProduced(getPanelPower(panelVO) * 60 * 10);
 
         station.setEnergy(station.getEnergy() + logVO.getProduced());
-        updateAccumulator(station);
+        updateStation(station);
         restTemplate.postForObject(baseUrl + "logs/update/", logVO, void.class);
     }
 
@@ -278,11 +321,11 @@ public class WorkProcess {
             logVO.setGiven(0);
         }
 
-        updateAccumulator(station);
+        updateStation(station);
         restTemplate.postForObject(baseUrl + "logs/update/", logVO, void.class);
     }
 
-    private void updateAccumulator(StationVO stationVO) {
+    private void updateStation(StationVO stationVO) {
         Void response = restTemplate.postForObject(baseUrl + "stations/" + station.getId(), stationVO, void.class);
     }
 
