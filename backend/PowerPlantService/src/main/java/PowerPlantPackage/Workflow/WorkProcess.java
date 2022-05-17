@@ -13,7 +13,9 @@ public class WorkProcess {
     private WorkProcess(){
         panels = new ArrayList<PanelVO>();
         station = null;
-        index = 50;
+        index = 25;
+        mediumTime = 0;
+        mediumIterations = 0;
     }
 
     public static WorkProcess getInstance(){
@@ -33,6 +35,8 @@ public class WorkProcess {
     public StationVO station;
 
     private int index;
+    private double mediumTime;
+    private double mediumIterations;
 
     public void execute(){
         Date startTime = new Date();
@@ -57,13 +61,28 @@ public class WorkProcess {
                 System.out.println("Station is disconnected");
             }
             updateGivenLogs();
-            index += 2;
+            index += 1;
 
             Date endTime = new Date();
-            System.out.println("Time to correct all panels: " + (endTime.getTime() - startTime.getTime()));
-
+            processTime(endTime.getTime() - startTime.getTime());
 
             System.out.println("Task executed on " + new Date());
+        }
+    }
+
+    private void processTime(long time) {
+        System.out.println("Time to correct all panels: " + time);
+
+        int _index = index % 144;
+        if (_index == 123) {
+            int _day = index / 144;
+            System.out.println("-------Day " + _day + ":  medium time: " + (mediumTime / 84.0) + "------------");
+
+            mediumTime = 0;
+        }
+
+        if(_index >= 36 && _index < 120) {
+            mediumTime += time;
         }
     }
 
@@ -200,8 +219,24 @@ public class WorkProcess {
 
         updatePanel(panel);
 
-//        System.out.println("Panel " + panel.getName() + ": final azimuth: " + panel.getAzimuth() + "; altitude: " + panel.getAltitude() + "; index: " + index + "; power: " + getPanelPower(panel));
-//        System.out.println("Iterations: " + iterator);
+        printPanelInfo(panel, iterator);
+    }
+
+    private void printPanelInfo(PanelVO panel, int iterator){
+        System.out.println("Panel " + panel.getName() + ": final azimuth: " + panel.getAzimuth() + "; altitude: " + panel.getAltitude() + "; index: " + index + "; power: " + getPanelPower(panel));
+        System.out.println("Iterations: " + iterator);
+
+        int _index = index % 144;
+        if (_index == 120) {
+            int _day = index / 144;
+            System.out.println("-------Day " + _day + ":  medium iterations: " + (mediumIterations / panels.size() / 84.0) + "------------");
+
+            mediumIterations = 0;
+        }
+
+        if(_index >= 36 && _index < 120) {
+            mediumIterations += iterator;
+        }
     }
 
     public double getTotalPower(){
