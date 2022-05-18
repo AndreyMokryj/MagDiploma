@@ -21,15 +21,19 @@ public class StateUtils {
     public StateE fetchState(StateVO stateVO) {
         StateE state = StateE.fromVO(stateVO);
         try {
-            Optional<StateE> state1 = stateRepository.findByParams(
-                    state.getPanelId(),
-                    state.getAzimuth(),
+            Optional<StateE> state1 = stateRepository.findById(
+                    state.getPanelId() + " " +
+                    state.getAzimuth() + " " +
                     state.getAltitude()
             );
             return state1.get();
         }
         catch (Exception ex){
-            state.setId(UUID.randomUUID().toString());
+            state.setId(
+                    state.getPanelId() + " " +
+                    state.getAzimuth() + " " +
+                    state.getAltitude()
+            );
             StateE saved = stateRepository.save(state);
             return saved;
         }
