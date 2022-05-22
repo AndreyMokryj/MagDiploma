@@ -26,7 +26,6 @@ public class WorkProcess {
         return workProcess;
     }
 
-    //    public final String baseUrl = "http://control-service/";
     public final String managementUrl = "http://management-service/";
     public final String statisticsUrl = "http://statistics-service/";
     public final String sunUrl = "http://sun-service/sun/power-coef/";
@@ -237,7 +236,6 @@ public class WorkProcess {
 
             sendUpdate(previousDTO);
             sendUpdate(currentDTO);
-//            updatePanel(panel);
 
             iterator++;
         }
