@@ -1,7 +1,12 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 //const baseUrl = kReleaseMode ? "https://mavlabs.hopto.org/" : "http://localhost:4444/" ;
-const baseUrl = "http://localhost:4444/app/" ;
+const _baseUrl = "http://localhost:4444/app/";
+const _baseAndroidUrl = "http://10.0.2.2:4444/app/";
+String baseUrl = (!kIsWeb && Platform.isAndroid) ? _baseAndroidUrl : _baseUrl;
 
 const pageNames = {
   'home' : 'Головна',
