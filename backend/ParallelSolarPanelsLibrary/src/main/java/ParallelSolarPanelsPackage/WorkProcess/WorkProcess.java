@@ -1,4 +1,4 @@
-package ParallelSolarPanelsPackage;
+package ParallelSolarPanelsPackage.WorkProcess;
 
 import ParallelSolarPanelsPackage.Model.*;
 import ParallelSolarPanelsPackage.Utils.StateUtils;

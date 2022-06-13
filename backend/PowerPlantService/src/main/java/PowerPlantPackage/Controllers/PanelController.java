@@ -1,7 +1,7 @@
 package PowerPlantPackage.Controllers;
 
 import ParallelSolarPanelsPackage.Model.PanelDTO;
-import ParallelSolarPanelsPackage.WorkProcess;
+import ParallelSolarPanelsPackage.WorkProcess.WorkProcess;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 

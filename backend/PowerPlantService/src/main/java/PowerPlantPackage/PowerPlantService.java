@@ -1,6 +1,6 @@
 package PowerPlantPackage;
 
-import ParallelSolarPanelsPackage.WorkProcess;
+import ParallelSolarPanelsPackage.WorkProcess.WorkProcess;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;

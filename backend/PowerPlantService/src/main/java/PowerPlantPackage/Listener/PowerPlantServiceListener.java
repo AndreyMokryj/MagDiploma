@@ -3,7 +3,7 @@ package PowerPlantPackage.Listener;
 import ParallelSolarPanelsPackage.Model.PanelDTO;
 import ParallelSolarPanelsPackage.Model.StationDTO;
 import ParallelSolarPanelsPackage.Utils.StateUtils;
-import ParallelSolarPanelsPackage.WorkProcess;
+import ParallelSolarPanelsPackage.WorkProcess.WorkProcess;
 import PowerPlantPackage.Repositories.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
